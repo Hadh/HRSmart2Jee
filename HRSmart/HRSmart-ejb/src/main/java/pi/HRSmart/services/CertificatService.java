@@ -22,7 +22,8 @@ import pi.HRSmart.persistence.Skill;
 public class CertificatService implements CertificatServiceLocal {
 
 	/**
-	 * Default constructor.
+	 * @author yesmine
+	 *
 	 */
 
 	@PersistenceContext(unitName = "HRSmart-ejb")

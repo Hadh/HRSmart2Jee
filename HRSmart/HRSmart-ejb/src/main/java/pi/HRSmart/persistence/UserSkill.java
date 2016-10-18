@@ -10,7 +10,7 @@ import pi.HRSmart.persistence.Skill;
 import pi.HRSmart.persistence.User;
 
 /**
- * Entity implementation class for Entity: UserSkill
+ * @author yesmine
  *
  */
 @Entity
