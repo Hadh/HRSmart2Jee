@@ -1,12 +1,13 @@
 package pi.HRSmart.persistence;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by alaa on 17/10/16.
  */
 @Entity
-public class Choice {
+public class Choice implements Serializable{
 
     private int id;
     private int body;
@@ -39,7 +40,7 @@ public class Choice {
         isCorrect = correct;
     }
 
-    @OneToOne
+    @ManyToOne
     public Question getQuestion() {
         return question;
     }
