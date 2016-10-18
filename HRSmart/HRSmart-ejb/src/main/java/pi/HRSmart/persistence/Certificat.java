@@ -9,7 +9,9 @@ import javax.persistence.*;
 /**
  * Entity implementation class for Entity: Certificat
  *
+ *
  */
+
 @Entity
 
 public class Certificat implements Serializable {

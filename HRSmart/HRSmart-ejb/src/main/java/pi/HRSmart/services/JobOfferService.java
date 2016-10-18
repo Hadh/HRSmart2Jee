@@ -18,7 +18,11 @@ import pi.HRSmart.persistence.Rewards;
 
 /**
  * Session Bean implementation class JobOfferService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class JobOfferService implements JobOfferServiceLocal {
 

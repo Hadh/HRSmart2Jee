@@ -9,7 +9,11 @@ import javax.persistence.*;
 /**
  * Entity implementation class for Entity: Buisness
  *
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class Buisness implements Serializable {

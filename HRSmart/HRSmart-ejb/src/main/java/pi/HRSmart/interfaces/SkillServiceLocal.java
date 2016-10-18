@@ -6,6 +6,10 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.Skill;
+/**
+ * @author Khaled Romdhane
+ *
+ */
 
 @Local
 public interface SkillServiceLocal {

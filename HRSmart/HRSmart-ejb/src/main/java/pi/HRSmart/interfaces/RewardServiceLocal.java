@@ -7,6 +7,10 @@ import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.Rewards;
 import pi.HRSmart.persistence.Skill;
+/**
+ * @author Khaled Romdhane
+ *
+ */
 
 @Local
 public interface RewardServiceLocal {

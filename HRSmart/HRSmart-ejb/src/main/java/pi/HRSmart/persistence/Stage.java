@@ -7,7 +7,10 @@ import javax.persistence.*;
 /**
  * Entity implementation class for Entity: Stage
  *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class Stage implements Serializable {

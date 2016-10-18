@@ -11,7 +11,10 @@ import pi.HRSmart.persistence.Buisness;
 /**
  * Entity implementation class for Entity: JobOffer
  *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class JobOffer implements Serializable {

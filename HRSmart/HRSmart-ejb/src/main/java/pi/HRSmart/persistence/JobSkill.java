@@ -9,7 +9,10 @@ import pi.HRSmart.persistence.Skill;
 /**
  * Entity implementation class for Entity: JobSkill
  *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class JobSkill implements Serializable {

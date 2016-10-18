@@ -9,7 +9,10 @@ import javax.persistence.*;
 /**
  * Entity implementation class for Entity: Skill
  *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class Skill implements Serializable {

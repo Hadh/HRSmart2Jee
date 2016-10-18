@@ -9,7 +9,10 @@ import pi.HRSmart.persistence.Stage;
 /**
  * Entity implementation class for Entity: Rewards
  *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class Rewards implements Serializable {

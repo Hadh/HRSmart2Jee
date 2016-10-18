@@ -7,6 +7,11 @@ import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.JobOffer;
 
+/**
+ * @author Khaled Romdhane
+ *
+ */
+
 @Remote
 public interface JobOfferServiceLocal {
 	 void add(JobOffer jobOffer);

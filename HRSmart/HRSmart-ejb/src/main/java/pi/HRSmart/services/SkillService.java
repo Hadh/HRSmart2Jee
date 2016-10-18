@@ -13,7 +13,11 @@ import pi.HRSmart.persistence.Skill;
 
 /**
  * Session Bean implementation class SkillService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class SkillService implements SkillServiceLocal {
 
