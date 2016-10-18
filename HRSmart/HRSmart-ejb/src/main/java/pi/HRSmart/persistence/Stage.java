@@ -16,6 +16,7 @@ public class Stage implements Serializable {
 	
 	private int id;
 	private String name;
+	private Buisness buisness;
 	private static final long serialVersionUID = 1L;
 	
 	public Stage() {
@@ -36,5 +37,13 @@ public class Stage implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@ManyToOne
+	public Buisness getBuisness() {
+		return buisness;
+	}
+	public void setBuisness(Buisness buisness) {
+		this.buisness = buisness;
 	}
 }

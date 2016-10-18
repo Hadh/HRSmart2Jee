@@ -20,6 +20,7 @@ public class Buisness implements Serializable {
 	private String name;
 	private List<JobOffer> jobOffers;
 	private  List<UserBuisness> userBuisness;
+	private List<Stage> stages;
 	private static final long serialVersionUID = 1L;
 
 	public Buisness() {
@@ -55,5 +56,13 @@ public class Buisness implements Serializable {
 	}
 	public void setJobOffers(List<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
+	}
+	
+	@OneToMany(mappedBy="buisness")
+	public List<Stage> getStages() {
+		return stages;
+	}
+	public void setStages(List<Stage> stages) {
+		this.stages = stages;
 	}
 }
