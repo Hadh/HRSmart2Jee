@@ -22,6 +22,8 @@ public class User implements Serializable {
 
 	private List <UserSkill> userSkills;
 	private List<Notification> userNotifications;
+
+	private List<Postulation> postulations;
 	
 	public User() {
 		super();
@@ -74,5 +76,14 @@ public class User implements Serializable {
 
 	public void setUserNotifications(List<Notification> userNotifications) {
 		this.userNotifications = userNotifications;
+	}
+
+	@OneToMany(mappedBy = "postulant")
+	public List<Postulation> getPostulations() {
+		return postulations;
+	}
+
+	public void setPostulations(List<Postulation> postulations) {
+		this.postulations = postulations;
 	}
 }

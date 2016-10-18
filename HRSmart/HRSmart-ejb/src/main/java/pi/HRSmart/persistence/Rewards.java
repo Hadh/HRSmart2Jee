@@ -1,6 +1,7 @@
 package pi.HRSmart.persistence;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 
 import pi.HRSmart.persistence.JobOffer;
@@ -15,11 +16,13 @@ import pi.HRSmart.persistence.Stage;
 public class Rewards implements Serializable {
 
 	   
-	
+
 	private int id;
 	private int value;
 	private JobOffer jobOffer;
 	private static final long serialVersionUID = 1L;
+
+	private List<Postulation> postulations;
 
 	public Rewards() {
 		super();
@@ -47,6 +50,14 @@ public class Rewards implements Serializable {
 	}
 	public void setJobOffer(JobOffer jobOffer) {
 		this.jobOffer = jobOffer;
-	}   
-   
+	}
+
+	@OneToMany(mappedBy = "reward")
+	public List<Postulation> getPostulations() {
+		return postulations;
+	}
+
+	public void setPostulations(List<Postulation> postulations) {
+		this.postulations = postulations;
+	}
 }
