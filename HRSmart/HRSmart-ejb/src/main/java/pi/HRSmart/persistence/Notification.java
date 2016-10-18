@@ -9,7 +9,8 @@ import javax.persistence.*;
 public class Notification {
 
     private int id;
-    private User user;
+    private User user; /*shouldn't this be N:1 unidirectional? */
+    private String notificationText;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -29,4 +30,14 @@ public class Notification {
     public void setUser(User user) {
         this.user = user;
     }
+
+	public String getNotificationText() {
+		return notificationText;
+	}
+
+	public void setNotificationText(String notificationText) {
+		this.notificationText = notificationText;
+	}
+    
+    
 }
