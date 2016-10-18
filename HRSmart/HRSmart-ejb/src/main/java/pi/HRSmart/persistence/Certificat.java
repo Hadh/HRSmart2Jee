@@ -5,9 +5,8 @@ import java.lang.String;
 import java.util.List;
 
 import javax.persistence.*;
-
 /**
- * Entity implementation class for Entity: Certificat
+ * @author yesmine
  *
  */
 @Entity
