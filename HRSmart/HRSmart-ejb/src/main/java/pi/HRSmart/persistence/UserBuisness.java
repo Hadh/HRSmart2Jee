@@ -9,7 +9,7 @@ import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.User;
 
 /**
- * Entity implementation class for Entity: UserBuisness
+ * @author yesmine
  *
  */
 @Entity
