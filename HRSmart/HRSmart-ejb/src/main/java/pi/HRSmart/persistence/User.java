@@ -22,6 +22,11 @@ public class User implements Serializable {
 
 	private List <UserSkill> userSkills;
 	private List<Notification> userNotifications;
+	private String login; /*email*/
+	private String password;
+	private String adresse;
+	private String numTel;
+	private int age;
 	
 	public User() {
 		super();
@@ -74,5 +79,45 @@ public class User implements Serializable {
 
 	public void setUserNotifications(List<Notification> userNotifications) {
 		this.userNotifications = userNotifications;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getNumTel() {
+		return numTel;
+	}
+
+	public void setNumTel(String numTel) {
+		this.numTel = numTel;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 }
