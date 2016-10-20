@@ -9,13 +9,10 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import pi.HRSmart.persistence.Buisness;
-import pi.HRSmart.persistence.JobOffer;
-import pi.HRSmart.persistence.JobSkill;
-import pi.HRSmart.persistence.Skill;
-import pi.HRSmart.persistence.User;
-import pi.HRSmart.persistence.UserBuisness;
-import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Khaled Romdhane
@@ -106,6 +103,36 @@ public class DataBaseFiller {
 		ub.setRole("HR");
 		
 		em.persist(ub);
+
+		//Adding Questions
+		Question q = new Question();
+		q.setBody("Question one");
+		q.setSkill(s1);
+
+		em.persist(q);
+
+		//adding choices
+		Choice choice = new Choice();
+		choice.setBody("Choice one");
+		choice.setCorrect(true);
+		choice.setMark(5);
+		choice.setQuestion(q);
+
+		em.persist(choice);
+
+		//adding quiz
+
+		Quiz quiz = new Quiz();
+		quiz.setDescrption("blablabla");
+		quiz.setDuration(30);
+		quiz.setQuestions(new ArrayList<Question>(){{
+			add(q);
+		}});
+
+		em.persist(quiz);
+
+
+
 		em.flush();
 	}
 }
