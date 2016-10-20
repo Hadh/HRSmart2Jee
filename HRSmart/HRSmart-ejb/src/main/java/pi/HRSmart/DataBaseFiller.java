@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package pi.HRSmart;
 
@@ -10,6 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import pi.HRSmart.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Khaled Romdhane
@@ -54,7 +57,7 @@ public class DataBaseFiller {
 		job1.setBuisness(buisness1);
 		job1.setTitle("Web Dev");
 		job1.setDescription("We require a web dev for PHP and HTML i'm stupid");
-
+		
 		em.persist(job1);
 
 		// Job1 Skills
@@ -67,7 +70,7 @@ public class DataBaseFiller {
 		js2.setJobOffer(job1);
 		js2.setSkill(s3);
 		js2.setLevel(8);
-
+		
 		em.persist(js1);
 		em.persist(js2);
 
@@ -75,7 +78,7 @@ public class DataBaseFiller {
 		User user1 = new User();
 		user1.setFirstName("Bob");
 		user1.setLastName("El Hechmi");
-
+		
 		em.persist(user1);
 
 		// User 1 Skills
@@ -88,7 +91,7 @@ public class DataBaseFiller {
 		us2.setSkill(s3);
 		us2.setUser(user1);
 		us2.setLevel(8);
-
+		
 		em.persist(us1);
 		em.persist(us2);
 
@@ -98,20 +101,38 @@ public class DataBaseFiller {
 		ub.setSalary(1000);
 		ub.setUser(user1);
 		ub.setRole("HR");
-
+		
 		em.persist(ub);
 
-		Rewards re = new Rewards();
-		re.setJobOffer(job1);
-		re.setValue(0);
-		em.persist(re);
+		//Adding Questions
+		Question q = new Question();
+		q.setBody("Question one");
+		q.setSkill(s1);
 
-		// Postulation
+		em.persist(q);
 
-		Postulation p = new Postulation();
-		p.setPostulant(user1);
-		p.setReward(re);
-		em.persist(p);
+		//adding choices
+		Choice choice = new Choice();
+		choice.setBody("Choice one");
+		choice.setCorrect(true);
+		choice.setMark(5);
+		choice.setQuestion(q);
+
+		em.persist(choice);
+
+		//adding quiz
+
+		Quiz quiz = new Quiz();
+		quiz.setDescrption("blablabla");
+		quiz.setDuration(30);
+		quiz.setQuestions(new ArrayList<Question>(){{
+			add(q);
+		}});
+
+		em.persist(quiz);
+
+
+
 		em.flush();
 	}
 }
