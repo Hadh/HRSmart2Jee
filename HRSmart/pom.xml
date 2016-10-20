@@ -62,10 +62,9 @@
 
 			<dependency>
 				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${version.hibernate}</version>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>5.2.3.Final</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 

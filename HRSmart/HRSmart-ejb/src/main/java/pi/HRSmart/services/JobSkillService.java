@@ -2,15 +2,14 @@ package pi.HRSmart.services;
 
 import java.util.List;
 
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.JobSkillServiceLocal;
+import pi.HRSmart.persistence.JobOffer;
 import pi.HRSmart.persistence.JobSkill;
-import pi.HRSmart.persistence.Rewards;
 
 /**
  * Session Bean implementation class JobSkillService
@@ -59,6 +58,15 @@ public class JobSkillService implements JobSkillServiceLocal {
 	public List<JobSkill> getAll() {
 		Query query = em.createQuery("Select r from JobSkill r");
 		return (List<JobSkill>) query.getResultList();
+	}
+
+	@Override
+	public List<JobSkill> getByJob(JobOffer jobOffer) {
+
+		Query query = em.createQuery("Select j from JobSkill j where j.jobOffer = " + jobOffer.getId());
+
+		return (List<JobSkill>) query.getResultList();
+
 	}
 
 }
