@@ -9,13 +9,7 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import pi.HRSmart.persistence.Buisness;
-import pi.HRSmart.persistence.JobOffer;
-import pi.HRSmart.persistence.JobSkill;
-import pi.HRSmart.persistence.Skill;
-import pi.HRSmart.persistence.User;
-import pi.HRSmart.persistence.UserBuisness;
-import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.persistence.*;
 
 /**
  * @author Khaled Romdhane
@@ -106,6 +100,18 @@ public class DataBaseFiller {
 		ub.setRole("HR");
 		
 		em.persist(ub);
+
+		Rewards r = new Rewards();
+		r.setJobOffer(job1);
+		r.setValue(0);
+		em.persist(r);
+
+		// Postulation
+
+		Postulation ps = new Postulation();
+		ps.setPostulant(user1);
+		ps.setReward(r);
+		em.persist(ps);
 		em.flush();
 	}
 }
