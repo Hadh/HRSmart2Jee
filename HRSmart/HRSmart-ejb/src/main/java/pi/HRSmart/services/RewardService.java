@@ -14,7 +14,11 @@ import pi.HRSmart.persistence.Rewards;
 
 /**
  * Session Bean implementation class RewardService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class RewardService implements RewardServiceLocal {
 

@@ -14,7 +14,11 @@ import pi.HRSmart.persistence.Rewards;
 
 /**
  * Session Bean implementation class JobSkillService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class JobSkillService implements JobSkillServiceLocal {
 

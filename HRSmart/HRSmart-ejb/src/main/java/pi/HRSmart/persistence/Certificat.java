@@ -8,7 +8,9 @@ import javax.persistence.*;
 /**
  * @author yesmine
  *
+ *
  */
+
 @Entity
 
 public class Certificat implements Serializable {
