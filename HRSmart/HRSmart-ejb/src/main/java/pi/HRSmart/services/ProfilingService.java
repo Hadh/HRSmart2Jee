@@ -1,15 +1,15 @@
 package pi.HRSmart.services;
 
-import pi.HRSmart.interfaces.PostulationServiceLocal;
-import pi.HRSmart.interfaces.ProfilingServiceLocal;
-import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
+import pi.HRSmart.interfaces.*;
 import pi.HRSmart.persistence.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -21,6 +21,10 @@ public class ProfilingService implements ProfilingServiceLocal {
     @PersistenceContext(unitName="HRSmart-ejb")
     EntityManager em;
 
+    @EJB(beanName = "RewardService")
+    RewardServiceLocal rewardServiceLocal;
+    @EJB(beanName = "UserService")
+    UserServiceLocal userServiceLocal;
 
 
 
@@ -28,13 +32,12 @@ public class ProfilingService implements ProfilingServiceLocal {
     @Override
     public void Profile(JobOffer jobOffer) {
 
-
-//
-//        List<JobSkill> jobSkills = jobOffer.getJobSkills();
-//        List<Rewards> rewards = jobOffer.getRewards();
-//        List<Skill> skillSet = jobSkills.stream().map(e -> e.getSkill()).collect(Collectors.toList());
-////        List<User> ps = rewards.stream().forEach(e->e.getPostulations().forEach(j->j.getPostulant()));
-
+        List<JobSkill> jobSkills = jobOffer.getJobSkills();
+        List<Skill> skillSet = jobSkills.stream().map(e -> e.getSkill()).collect(Collectors.toList());
+        List<Postulation> ps = rewardServiceLocal.getCVStage(jobOffer.getId()).getPostulations();
+        List<User> postulants = ps.stream().map(e->{
+            userServiceLocal.getFull(e.getPostulant().getId())
+        }).collect(Collectors.toList());
 
 
     }
