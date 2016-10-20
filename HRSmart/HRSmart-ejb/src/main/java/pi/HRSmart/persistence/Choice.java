@@ -1,16 +1,18 @@
 package pi.HRSmart.persistence;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by alaa on 17/10/16.
  */
 @Entity
-public class Choice {
+public class Choice implements Serializable{
 
     private int id;
-    private int body;
+    private String body;
     private boolean isCorrect;
+    private int mark;
     private Question question;
 
     @Id
@@ -23,12 +25,20 @@ public class Choice {
         this.id = id;
     }
 
-    public int getBody() {
+    public String getBody() {
         return body;
     }
 
-    public void setBody(int body) {
+    public void setBody(String body) {
         this.body = body;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
     }
 
     public boolean isCorrect() {
@@ -39,7 +49,7 @@ public class Choice {
         isCorrect = correct;
     }
 
-    @OneToOne
+    @ManyToOne
     public Question getQuestion() {
         return question;
     }
@@ -47,4 +57,6 @@ public class Choice {
     public void setQuestion(Question question) {
         this.question = question;
     }
+
+
 }
