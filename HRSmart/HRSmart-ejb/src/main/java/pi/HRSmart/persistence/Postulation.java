@@ -1,13 +1,12 @@
 package pi.HRSmart.persistence;
 
+import org.hibernate.annotations.Cascade;
 import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-
 /**
  * Created by BoB on 10/18/2016.
  */
@@ -20,9 +19,11 @@ public class Postulation  implements Serializable{
     private Date datePostulation;
     private User Postulant;
     private Rewards Reward;
+    private List<Assessment> assessments;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+
     public Integer getIdPostulation() {
         return idPostulation;
     }
@@ -55,5 +56,18 @@ public class Postulation  implements Serializable{
 
     public void setReward(Rewards reward) {
         Reward = reward;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.postulation", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE
+    })
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+            org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
+    public List<Assessment> getAssessments() {
+        return assessments;
+    }
+
+    public void setAssessments(List<Assessment> assessments) {
+        this.assessments = assessments;
     }
 }

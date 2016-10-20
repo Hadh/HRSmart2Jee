@@ -10,8 +10,9 @@ import java.io.Serializable;
 public class Choice implements Serializable{
 
     private int id;
-    private int body;
+    private String body;
     private boolean isCorrect;
+    private int mark;
     private Question question;
 
     @Id
@@ -24,12 +25,20 @@ public class Choice implements Serializable{
         this.id = id;
     }
 
-    public int getBody() {
+    public String getBody() {
         return body;
     }
 
-    public void setBody(int body) {
+    public void setBody(String body) {
         this.body = body;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
     }
 
     public boolean isCorrect() {
@@ -48,4 +57,6 @@ public class Choice implements Serializable{
     public void setQuestion(Question question) {
         this.question = question;
     }
+
+
 }

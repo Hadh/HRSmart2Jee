@@ -2,6 +2,7 @@ package pi.HRSmart.persistence;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ public class Question implements Serializable{
     private int id;
     private String body;
     private Skill skill;
-    private List<Choice> choices;
+    private List<Choice> choices = new ArrayList<>();
+    private List<Quiz> quizs = new ArrayList<>();
 
 
     @Id
@@ -50,5 +52,15 @@ public class Question implements Serializable{
 
     public void setChoices(List<Choice> choices) {
         this.choices = choices;
+    }
+
+    @ManyToMany(mappedBy = "questions")
+    @Column(name = "quiz_id")
+    public List<Quiz> getQuizs() {
+        return quizs;
+    }
+
+    public void setQuizs(List<Quiz> quizs) {
+        this.quizs = quizs;
     }
 }
