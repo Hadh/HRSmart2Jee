@@ -3,6 +3,7 @@ package pi.HRSmart.services;
 import pi.HRSmart.interfaces.IQuizServiceLocal;
 import pi.HRSmart.persistence.Quiz;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by alaa on 19/10/16.
  */
+@Stateless
 public class QuizService implements IQuizServiceLocal{
 
     @PersistenceContext(unitName = "HRSmart-ejb")
