@@ -132,6 +132,17 @@ public class DataBaseFiller {
 		em.persist(quiz);
 
 
+		Rewards re = new Rewards();
+		re.setJobOffer(job1);
+		re.setValue(0);
+		em.persist(re);
+
+		// Postulation
+
+		Postulation p = new Postulation();
+		p.setPostulant(user1);
+		p.setReward(re);
+		em.persist(p);
 
 		em.flush();
 	}
