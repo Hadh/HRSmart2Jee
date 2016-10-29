@@ -9,11 +9,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.SkillServiceLocal;
+import pi.HRSmart.persistence.JobSkill;
 import pi.HRSmart.persistence.Skill;
 
 /**
  * Session Bean implementation class SkillService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class SkillService implements SkillServiceLocal {
 
@@ -49,5 +54,7 @@ public class SkillService implements SkillServiceLocal {
 		Query query = em.createQuery("SELECT s FROM Skill s");
 	    return (List<Skill>) query.getResultList();
 	}
+
+
 
 }

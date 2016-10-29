@@ -9,7 +9,10 @@ import javax.persistence.*;
 /**
  * Entity implementation class for Entity: Skill
  *
+ * @author Khaled Romdhane
+ *
  */
+
 @Entity
 
 public class Skill implements Serializable {
@@ -22,6 +25,7 @@ public class Skill implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Certificat> certificats;
 	private List<UserSkill> userSkills;
+	private List<Question> questions ;
 
 	public Skill() {
 		super();
@@ -67,4 +71,12 @@ public class Skill implements Serializable {
 	}
 
 
+	@OneToMany(mappedBy = "skill")
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
+	}
 }

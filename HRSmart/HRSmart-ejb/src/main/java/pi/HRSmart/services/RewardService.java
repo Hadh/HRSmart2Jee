@@ -14,7 +14,11 @@ import pi.HRSmart.persistence.Rewards;
 
 /**
  * Session Bean implementation class RewardService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class RewardService implements RewardServiceLocal {
 
@@ -59,5 +63,10 @@ public class RewardService implements RewardServiceLocal {
 		Query query = em.createQuery("Select r from Rewards r where r.jobOffer = " + jobId);
 		return (List<Rewards>) query.getResultList();
 	}
+
+	@Override
+	public Rewards getCVStage(int jobId) {
+		Query query = em.createQuery("Select r from Rewards r where r.value=0 AND r.jobOffer = " + jobId);
+		return (Rewards) query.getResultList();	}
 
 }

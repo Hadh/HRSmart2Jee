@@ -11,14 +11,17 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.JobOfferServiceLocal;
+import pi.HRSmart.interfaces.JobSkillServiceLocal;
 import pi.HRSmart.interfaces.RewardServiceLocal;
-import pi.HRSmart.persistence.Certificat;
-import pi.HRSmart.persistence.JobOffer;
-import pi.HRSmart.persistence.Rewards;
+import pi.HRSmart.persistence.*;
 
 /**
  * Session Bean implementation class JobOfferService
+ *
+ * @author Khaled Romdhane
+ *
  */
+
 @Stateless
 public class JobOfferService implements JobOfferServiceLocal {
 
@@ -27,6 +30,9 @@ public class JobOfferService implements JobOfferServiceLocal {
 	
 	@EJB(beanName = "RewardService") 
 	RewardServiceLocal rewardService;
+
+	@EJB(beanName = "JobSkillService")
+	JobSkillServiceLocal jobSkillService;
 	
     /**
      * Default constructor. 
@@ -72,6 +78,8 @@ public class JobOfferService implements JobOfferServiceLocal {
 			
 		JobOffer jo = em.find(JobOffer.class, id);
 		List<Rewards> rs = rewardService.getByJob(id);
+		List<JobSkill> js= jobSkillService.getByJob(jo);
+		jo.setJobSkills(js);
 		jo.setRewards(rs);
 		return jo;
 		

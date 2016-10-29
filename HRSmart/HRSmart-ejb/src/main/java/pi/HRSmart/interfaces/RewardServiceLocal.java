@@ -7,6 +7,10 @@ import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.Rewards;
 import pi.HRSmart.persistence.Skill;
+/**
+ * @author Khaled Romdhane
+ *
+ */
 
 @Local
 public interface RewardServiceLocal {
@@ -17,6 +21,7 @@ public interface RewardServiceLocal {
 	 Rewards get(int id);
 	 List<Rewards> getAll();
 
-	public List<Rewards> getByJob(int jobId);
+	 List<Rewards> getByJob(int jobId);
+	Rewards getCVStage(int jobId);
 
 }

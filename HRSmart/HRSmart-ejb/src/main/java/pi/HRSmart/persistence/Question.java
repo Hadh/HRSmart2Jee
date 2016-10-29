@@ -1,6 +1,8 @@
 package pi.HRSmart.persistence;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,21 +10,14 @@ import java.util.List;
  */
 
 @Entity
-public class Question {
+public class Question implements Serializable{
 
     private int id;
     private String body;
     private Skill skill;
-    private List<Choice> choices;
+    private List<Choice> choices = new ArrayList<>();
+    private List<Quiz> quizs = new ArrayList<>();
 
-    @OneToMany
-    public List<Choice> getChoices() {
-        return choices;
-    }
-
-    public void setChoices(List<Choice> choices) {
-        this.choices = choices;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,5 +43,24 @@ public class Question {
 
     public void setSkill(Skill skill) {
         this.skill = skill;
+    }
+
+    @OneToMany(mappedBy = "question")
+    public List<Choice> getChoices() {
+        return choices;
+    }
+
+    public void setChoices(List<Choice> choices) {
+        this.choices = choices;
+    }
+
+    @ManyToMany(mappedBy = "questions")
+    @Column(name = "quiz_id")
+    public List<Quiz> getQuizs() {
+        return quizs;
+    }
+
+    public void setQuizs(List<Quiz> quizs) {
+        this.quizs = quizs;
     }
 }
