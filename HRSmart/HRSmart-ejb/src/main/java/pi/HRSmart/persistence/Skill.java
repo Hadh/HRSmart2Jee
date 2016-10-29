@@ -62,7 +62,7 @@ public class Skill implements Serializable {
 	public void setCertificats(List<Certificat> certificats) {
 		this.certificats = certificats;
 	}
-	@OneToMany(mappedBy="skill")
+	@OneToMany(mappedBy="id.skill")
 	public List<UserSkill> getUserSkills() {
 		return userSkills;
 	}

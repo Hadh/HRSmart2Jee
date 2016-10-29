@@ -16,7 +16,7 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name ="user_id",
                 insertable = false, updatable = false
                 )),
-        @AssociationOverride(name ="pk.buisness",
+        @AssociationOverride(name ="id.buisness",
                 joinColumns = @JoinColumn(name ="buisness_id",
                         insertable = false, updatable = false
                 ))

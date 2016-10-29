@@ -1,28 +1,30 @@
+/**
+ * 
+ */
 package pi.HRSmart.persistence;
+
+import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
-import java.io.Serializable;
 
 /**
  * @author yesmine
- * 
+ *
  */
 @Embeddable
-public class UserBuisnessPK implements Serializable {
-
-	private Buisness buisness;
+public class UserSkillPk implements Serializable {
+	private Skill skill;
 	private User user;
 
 	@ManyToOne
-	public Buisness getBuisness() {
-		return buisness;
+	public Skill getSkill() {
+		return skill;
 	}
 
-	public void setBuisness(Buisness buisness) {
-		this.buisness = buisness;
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
-
 	@ManyToOne
 	public User getUser() {
 		return user;
@@ -36,7 +38,7 @@ public class UserBuisnessPK implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((buisness == null) ? 0 : buisness.hashCode());
+		result = prime * result + ((skill == null) ? 0 : skill.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -49,11 +51,11 @@ public class UserBuisnessPK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserBuisnessPK other = (UserBuisnessPK) obj;
-		if (buisness == null) {
-			if (other.buisness != null)
+		UserSkillPk other = (UserSkillPk) obj;
+		if (skill == null) {
+			if (other.skill != null)
 				return false;
-		} else if (!buisness.equals(other.buisness))
+		} else if (!skill.equals(other.skill))
 			return false;
 		if (user == null) {
 			if (other.user != null)
