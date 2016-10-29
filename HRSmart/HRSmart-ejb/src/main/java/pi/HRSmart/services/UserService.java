@@ -19,9 +19,6 @@ import pi.HRSmart.persistence.User;
 
 public class UserService implements UserServiceLocal {
 
-	/**
-	 * @author yesmine
-	 */
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
 	@EJB(beanName = "UserSkillsService")
@@ -49,6 +46,17 @@ public class UserService implements UserServiceLocal {
 	}
 
 	@Override
+	public boolean update(User user) {
+		return false;
+	}
+
+	@Override
+	public boolean delete(User user) {
+
+		return false;
+	}
+
+	@Override
 	public User authenticate(String Login, String password) {
 		try {
 			TypedQuery<User> query =
@@ -65,8 +73,8 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public boolean checkConnectedUser(User userToVerify) {
-		if (userToVerify == authenticate(userToVerify.getLogin(), userToVerify.getPassword()))
-			return true;
+
+
 		return false;
 	}
 
@@ -86,15 +94,17 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public String addUser(User user) {
-		try {
+		if(getUserByLogin(user.getLogin())!=null) {
 			em.persist(user);
 			return "Log: Add Done !";
 		}
-		catch(Exception e) {
-			return "Log : Add Failed";
-		}
+
+		else return "Log : Add Failed";
 	}
 
 
+
+
 }
+
 
