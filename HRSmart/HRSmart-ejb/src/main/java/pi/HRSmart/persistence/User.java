@@ -10,29 +10,24 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(
-		uniqueConstraints=
-		@UniqueConstraint(columnNames={"email"}))
+
 public class User implements Serializable {
 
-	
+
 	private int Id;
 	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	private List<UserBuisness> userBuisness;
-
-	private List <UserSkill> userSkills;
-	private List<Notification> userNotifications;
-
-	private String email; /*email*/
+	private String login; /*email*/
 	private String password;
 	private String adresse;
 	private String numTel;
 	private int age;
+	private List <UserSkill> userSkills;
+	private List<Notification> userNotifications;
 
-	private List<Postulation> postulations;
-	
+
 	public User() {
 		super();
 	}
@@ -41,7 +36,7 @@ public class User implements Serializable {
 	public int getId() {
 		return Id;
 	}
-	
+
 	public void setId(int id) {
 		Id = id;
 	}
@@ -61,15 +56,15 @@ public class User implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="id.user")
 	public List<UserSkill> getUserSkills() {
 		return userSkills;
 	}
-
+	
 	public void setUserSkills(List<UserSkill> userSkills) {
 		this.userSkills = userSkills;
 	}
-	@OneToMany(mappedBy = "id.user")
+	@OneToMany(mappedBy="id.user")
 	public List<UserBuisness> getUserBuisness() {
 		return userBuisness;
 	}
@@ -86,22 +81,13 @@ public class User implements Serializable {
 		this.userNotifications = userNotifications;
 	}
 
-	@OneToMany(mappedBy = "postulant")
-	public List<Postulation> getPostulations() {
-		return postulations;
+	
+	public String getLogin() {
+		return login;
 	}
 
-	public void setPostulations(List<Postulation> postulations) {
-		this.postulations = postulations;
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getPassword() {
