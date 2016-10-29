@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Notification {
 
     private int id;
-    private User user; /*shouldn't this be N:1 unidirectional? */
+    private User user;
     private String notificationText;
 
     @Id
