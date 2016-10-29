@@ -31,6 +31,7 @@ public class DataBaseFiller {
 
 	@PostConstruct
 	public void init() {
+		/*
 		// Businesses
 		Buisness buisness1 = new Buisness();
 		buisness1.setName("Bob Corp");
@@ -153,5 +154,6 @@ public class DataBaseFiller {
 		em.persist(ass);
 
 		em.flush();
+		*/
 	}
 }

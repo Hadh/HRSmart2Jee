@@ -20,7 +20,7 @@ import java.io.Serializable;
 })
 public class Assessment implements Serializable {
 
-    private AssessmentPK pk = new AssessmentPK();
+	private AssessmentPK pk = new AssessmentPK();
     private int result;
 
 

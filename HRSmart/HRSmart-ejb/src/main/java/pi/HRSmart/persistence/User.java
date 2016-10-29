@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
+
 /**
  * Entity implementation class for Entity: User
  *
@@ -61,7 +63,7 @@ public class User implements Serializable {
 	public void setUserSkills(List<UserSkill> userSkills) {
 		this.userSkills = userSkills;
 	}
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "id.user")
 	public List<UserBuisness> getUserBuisness() {
 		return userBuisness;
 	}
