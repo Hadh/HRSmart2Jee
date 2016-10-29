@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Cascade;
-
 /**
  * Entity implementation class for Entity: User
  *
@@ -15,7 +13,7 @@ import org.hibernate.annotations.Cascade;
 
 public class User implements Serializable {
 
-	
+
 	private int Id;
 	private static final long serialVersionUID = 1L;
 	private String firstName;
@@ -24,9 +22,12 @@ public class User implements Serializable {
 
 	private List <UserSkill> userSkills;
 	private List<Notification> userNotifications;
+	private String login; /*email*/
+	private String password;
+	private String adresse;
+	private String numTel;
+	private int age;
 
-	private List<Postulation> postulations;
-	
 	public User() {
 		super();
 	}
@@ -35,7 +36,7 @@ public class User implements Serializable {
 	public int getId() {
 		return Id;
 	}
-	
+
 	public void setId(int id) {
 		Id = id;
 	}
@@ -63,7 +64,7 @@ public class User implements Serializable {
 	public void setUserSkills(List<UserSkill> userSkills) {
 		this.userSkills = userSkills;
 	}
-	@OneToMany(mappedBy = "id.user")
+	@OneToMany(mappedBy="user")
 	public List<UserBuisness> getUserBuisness() {
 		return userBuisness;
 	}
@@ -80,12 +81,44 @@ public class User implements Serializable {
 		this.userNotifications = userNotifications;
 	}
 
-	@OneToMany(mappedBy = "postulant")
-	public List<Postulation> getPostulations() {
-		return postulations;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setPostulations(List<Postulation> postulations) {
-		this.postulations = postulations;
+	public void setLogin(String login) {
+		this.login = login;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getNumTel() {
+		return numTel;
+	}
+
+	public void setNumTel(String numTel) {
+		this.numTel = numTel;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 }
