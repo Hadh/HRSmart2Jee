@@ -3,6 +3,7 @@ package pi.HRSmart.interfaces;
 
 import javafx.geometry.Pos;
 import pi.HRSmart.persistence.Postulation;
+import pi.HRSmart.persistence.*;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface PostulationServiceLocal {
     void delete(Postulation postulation);
     Postulation getPostulation(int id);
     List<Postulation> getAllPostulations();
+    List<Postulation> filterPostulationsByQuizResult(int threshold, Skill sk);
+
 
 }

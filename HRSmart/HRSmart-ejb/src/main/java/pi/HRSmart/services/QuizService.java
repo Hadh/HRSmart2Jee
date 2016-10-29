@@ -45,4 +45,5 @@ public class QuizService implements IQuizServiceLocal{
 
         return (ArrayList<Quiz>)query.getResultList();
     }
+
 }

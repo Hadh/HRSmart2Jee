@@ -1,5 +1,6 @@
 package pi.HRSmart.persistence;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ public class AssessmentPK implements Serializable{
 
     private Quiz quiz;
     private Postulation postulation;
+
 
     @ManyToOne
     public Quiz getQuiz() {

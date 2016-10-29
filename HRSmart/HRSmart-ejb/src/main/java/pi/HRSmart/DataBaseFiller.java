@@ -4,11 +4,13 @@
 package pi.HRSmart;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import pi.HRSmart.interfaces.PostulationServiceLocal;
 import pi.HRSmart.persistence.*;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import java.util.List;
 @Startup
 public class DataBaseFiller {
 
+	@EJB(beanName = "PostulationService")
+	PostulationServiceLocal ps;
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
 
@@ -147,8 +151,8 @@ public class DataBaseFiller {
 
 		// :3 hhhh
 		Assessment ass = new Assessment();
-		ass.setQuiz(quiz);
-		ass.setPostulation(p);
+		ass.setQuiz(em.merge(quiz));
+		ass.setPostulation(em.merge(p));
 
 		em.persist(ass);
 

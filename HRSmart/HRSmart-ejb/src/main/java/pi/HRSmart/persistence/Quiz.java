@@ -1,8 +1,10 @@
 package pi.HRSmart.persistence;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,11 +48,11 @@ public class Quiz {
         this.result = result;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "pk.quiz", cascade = {
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "pk.quiz",orphanRemoval = true, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE
     })
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
-            org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+
     public List<Assessment> getAssessments() {
         return assessments;
     }
@@ -58,6 +60,7 @@ public class Quiz {
     public void setAssessments(List<Assessment> assessments) {
         this.assessments = assessments;
     }
+
 
     public String getDescrption() {
         return descrption;
@@ -68,7 +71,7 @@ public class Quiz {
     }
 
     @ManyToMany
-    @Column(name = "question_id")
+
     public List<Question> getQuestions() {
         return questions;
     }

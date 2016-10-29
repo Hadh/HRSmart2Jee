@@ -58,11 +58,21 @@ public class Postulation  implements Serializable{
         Reward = reward;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.postulation", cascade = {
+    @Override
+    public String toString() {
+        return "Postulation{" +
+                "idPostulation=" + idPostulation +
+                ", datePostulation=" + datePostulation +
+                ", Postulant=" + Postulant.getId()+
+                ", Reward=" + Reward.getId() +
+                '}';
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.postulation",orphanRemoval = true, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE
     })
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
-            org.hibernate.annotations.CascadeType.DELETE_ORPHAN})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
+
     public List<Assessment> getAssessments() {
         return assessments;
     }
