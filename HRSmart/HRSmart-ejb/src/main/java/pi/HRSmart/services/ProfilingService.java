@@ -40,7 +40,7 @@ public class ProfilingService implements ProfilingServiceLocal {
             userServiceLocal.getFull(e.getPostulant().getId())).collect(Collectors.toList());
 
         Map<User,Integer> scoredList = new HashMap<>();
-        postulants.stream().forEach(e->scoredList.put(e,0));
+        postulants.forEach(e->scoredList.put(e,0));
 
 
 
