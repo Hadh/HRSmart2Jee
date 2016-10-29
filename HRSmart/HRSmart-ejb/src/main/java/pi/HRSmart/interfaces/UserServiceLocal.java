@@ -15,7 +15,7 @@ public interface UserServiceLocal {
 	public boolean delete(User user);
 	public User authenticate(String Login,String password);
 	public boolean checkConnectedUser(User userToVerify);
-	public User getUserByLogin(String login);
+	public User getUserByEmail(String login);
 	public String addUser(User user);
 	
 }

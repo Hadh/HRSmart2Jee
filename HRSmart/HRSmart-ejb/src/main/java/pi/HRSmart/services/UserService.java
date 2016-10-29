@@ -1,5 +1,6 @@
 package pi.HRSmart.services;
 
+import javax.crypto.ExemptionMechanismException;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
@@ -11,6 +12,7 @@ import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.User;
+import pi.HRSmart.utilities.getMD5Hash;
 
 /**
  * Session Bean implementation class UserService
@@ -79,7 +81,7 @@ public class UserService implements UserServiceLocal {
 	}
 
 	@Override
-	public User getUserByLogin(String login) {
+	public User getUserByEmail(String login) {
 		try {
 			TypedQuery<User> Myquery =
 					em.createQuery("select e from User e where e.login=:login", User.class);
@@ -94,13 +96,19 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public String addUser(User user) {
-		if(getUserByLogin(user.getLogin())!=null) {
+		try {
+			String beforeHash =  user.getPassword();
+			user.setPassword(getMD5Hash.getMD5Hash(beforeHash));
 			em.persist(user);
-			return "Log: Add Done !";
-		}
 
-		else return "Log : Add Failed";
+			return "adddone";
+		}
+		catch(Exception e) {
+			return "userexists";
+		}
 	}
+
+	//public void inviteUser (User userEmailToAdd,)
 
 
 
