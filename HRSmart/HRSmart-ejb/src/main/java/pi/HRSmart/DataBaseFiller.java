@@ -64,6 +64,14 @@ public class DataBaseFiller {
 		job1.setDescription("We require a web dev for PHP and HTML i'm stupid");
 		
 		em.persist(job1);
+		
+		/////////Certificats
+	
+		Certificat c1 =new Certificat();
+		c1.setName("certificat java");
+		c1.setSkill(s2);
+		em.persist(c1);
+		
 /*
 		// Job1 Skills
 		JobSkill js1 = new JobSkill();
@@ -75,14 +83,15 @@ public class DataBaseFiller {
 		js2.setJobOffer(job1);
 		js2.setSkill(s3);
 		js2.setLevel(8);
-		
+	
 		em.persist(js1);
 		em.persist(js2);
-
+*/
 		// User
 		User user1 = new User();
 		user1.setFirstName("Bob");
 		user1.setLastName("El Hechmi");
+		
 		
 		em.persist(user1);
 
@@ -90,8 +99,9 @@ public class DataBaseFiller {
 		UserSkill us1 = new UserSkill();
 		us1.setSkill(s1);
 		us1.setUser(user1);
-		us1.setLevel(10);
-
+		us1.setSkill(s2);
+//		us1.setLevel(10);
+/*
 		UserSkill us2 = new UserSkill();
 		us2.setSkill(s3);
 		us2.setUser(user1);
