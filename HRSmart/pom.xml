@@ -5,7 +5,6 @@
 	<artifactId>HRSmart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
 	<properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,7 +24,7 @@
 		<version.war.plugin>2.5</version.war.plugin>
 		<version.ejb.plugin>2.4</version.ejb.plugin>
 		<version.surefire.plugin>2.16</version.surefire.plugin>
-
+		<version.archetype.plugin>2.2</version.archetype.plugin>
 
 	</properties>
 
@@ -60,11 +59,6 @@
 				<version>${primefaces.version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>5.2.3.Final</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -82,9 +76,17 @@
 			<url>http://git.esprit.tn:8081/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
-
-
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-archetype-plugin</artifactId>
+					<version>${version.archetype.plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
   <modules>
     <module>HRSmart-ejb</module>

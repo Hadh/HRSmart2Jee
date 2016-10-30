@@ -35,7 +35,7 @@ public class DataBaseFiller {
 
 	@PostConstruct
 	public void init() {
-		/*
+		
 		// Businesses
 		Buisness buisness1 = new Buisness();
 		buisness1.setName("Bob Corp");
@@ -64,7 +64,7 @@ public class DataBaseFiller {
 		job1.setDescription("We require a web dev for PHP and HTML i'm stupid");
 		
 		em.persist(job1);
-
+/*
 		// Job1 Skills
 		JobSkill js1 = new JobSkill();
 		js1.setJobOffer(job1);

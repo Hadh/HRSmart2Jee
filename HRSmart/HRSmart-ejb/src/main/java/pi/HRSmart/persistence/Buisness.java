@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Cascade;
-
 /**
  * Entity implementation class for Entity: Buisness
  *

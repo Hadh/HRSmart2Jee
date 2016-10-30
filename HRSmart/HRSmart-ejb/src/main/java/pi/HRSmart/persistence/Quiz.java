@@ -1,6 +1,5 @@
 package pi.HRSmart.persistence;
 
-import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -51,8 +50,6 @@ public class Quiz {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "pk.quiz",orphanRemoval = true, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE
     })
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-
     public List<Assessment> getAssessments() {
         return assessments;
     }

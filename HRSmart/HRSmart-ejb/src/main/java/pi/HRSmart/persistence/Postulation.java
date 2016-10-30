@@ -1,7 +1,5 @@
 package pi.HRSmart.persistence;
 
-import org.hibernate.annotations.Cascade;
-import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -71,8 +69,7 @@ public class Postulation  implements Serializable{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.postulation",orphanRemoval = true, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE
     })
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
-
+    
     public List<Assessment> getAssessments() {
         return assessments;
     }
