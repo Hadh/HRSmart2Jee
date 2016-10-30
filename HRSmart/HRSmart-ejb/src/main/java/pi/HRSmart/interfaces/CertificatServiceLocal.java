@@ -9,6 +9,8 @@ import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.Skill;
 import pi.HRSmart.persistence.UserSkill;
 
+
+
 @Local
 public interface CertificatServiceLocal {
 
