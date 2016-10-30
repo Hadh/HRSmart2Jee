@@ -7,6 +7,8 @@ import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.Certificat;
 
+
+
 @Local
 public interface CertificatServiceLocal {
 
