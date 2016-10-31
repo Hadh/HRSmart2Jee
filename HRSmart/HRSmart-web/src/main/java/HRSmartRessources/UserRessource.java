@@ -17,6 +17,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import pi.HRSmart.interfaces.CertificatServiceLocal;
 import pi.HRSmart.interfaces.SkillServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
@@ -45,21 +49,21 @@ public class UserRessource {
     
 	//Certificat
 	
-		//addCErtificat
+		//addCErtificatDone
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("certificat")
 	public void add(Certificat certificat){
 		 serviceCertificat.add(certificat);
 	}
-		//getCertificatBySkill
+		//getCertificatBySkillDone
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("certificat/{skill}")
 	public List<Certificat> getBySkill(@PathParam("skill") int skill) {
 		return serviceCertificat.getBySkill(skill);
 	}
-		//updateCertificat
+		//updateCertificatDone
 	@PUT
 	@Path("certificat")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -70,16 +74,31 @@ public class UserRessource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("certificats/{id}")
-	public List<Certificat> getCertificatByUser(@PathParam("id") int id) {
+	public String getCertificatByUser(@PathParam("id") int id) {
 		List<Certificat> list = new ArrayList<Certificat>();
-				
-				for(UserSkill s : userSkillService.getByUser(id))
+		
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode certificats = mapper.createArrayNode();
+				for(UserSkill us : userSkillService.getByUser(id))
 				{
-					list.addAll(s.getCertificats());
+					for(Certificat c : us.getCertificats())
+					{
+					ObjectNode cert = mapper.createObjectNode();
+					cert.put("id", c.getId());
+					cert.put("name", c.getName());
+					ObjectNode skill = mapper.createObjectNode();	
+					skill.put("id",c.getSkill().getId());
+					skill.put("name",c.getSkill().getName());
+					//list.addAll(s.getCertificats());
+					cert.put("skill", skill);
+					certificats.add(cert);
+					}
+				
 				}
 				
-				
-				return list;
+				main.put("certificats", certificats);
+				return main.toString();
 	}
 	
 	@GET
