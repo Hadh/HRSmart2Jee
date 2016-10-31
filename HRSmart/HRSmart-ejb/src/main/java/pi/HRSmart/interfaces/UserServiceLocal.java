@@ -2,6 +2,8 @@ package pi.HRSmart.interfaces;
 
 
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import pi.HRSmart.persistence.User;
@@ -17,5 +19,5 @@ public interface UserServiceLocal {
 	public boolean checkConnectedUser(User userToVerify);
 	public User getUserByEmail(String login);
 	public String addUser(User user);
-	
+	public List<User> getUserByBuisness(int idBuisness);
 }
