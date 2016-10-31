@@ -21,8 +21,8 @@ public interface UserBuisnessServiceLocal {
 
 	public List<UserBuisness> getAll();
 
-	public List<UserBuisness> getByUser(User user);
+	public List<UserBuisness> getByUser(int id);
 
-	public List<UserBuisness> getByBuisness(Buisness buisness);
+	public List<UserBuisness> getByBuisness(int id);
 
 }

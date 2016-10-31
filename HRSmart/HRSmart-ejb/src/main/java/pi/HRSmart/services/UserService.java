@@ -46,7 +46,7 @@ public class UserService implements UserServiceLocal {
 	public User getFull(int id) {
 		User user = em.find(User.class, id);
 		user.setUserSkills(userSkillServiceLocal.getByUser(id));
-		user.setUserBuisness(userBuisnessServiceLocal.getByUser(user));
+		user.setUserBuisness(userBuisnessServiceLocal.getByUser(id));
 		return user;
 	}
 

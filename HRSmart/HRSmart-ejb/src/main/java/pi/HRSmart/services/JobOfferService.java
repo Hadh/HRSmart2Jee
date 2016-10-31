@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import pi.HRSmart.interfaces.JobOfferServiceLocal;
 import pi.HRSmart.interfaces.JobSkillServiceLocal;
 import pi.HRSmart.interfaces.RewardServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.*;
 
 /**
@@ -30,6 +31,11 @@ public class JobOfferService implements JobOfferServiceLocal {
 	
 	@EJB(beanName = "RewardService") 
 	RewardServiceLocal rewardService;
+	
+
+	@EJB(beanName = "UserService") 
+	UserServiceLocal userService;
+
 
 	@EJB(beanName = "JobSkillService")
 	JobSkillServiceLocal jobSkillService;
@@ -42,9 +48,10 @@ public class JobOfferService implements JobOfferServiceLocal {
     }
 
 	@Override
-	public void add(JobOffer jobOffer) {
+	public int add(JobOffer jobOffer) {
 		em.persist(jobOffer);
-		
+		em.refresh(jobOffer);
+		return jobOffer.getId();
 	}
 
 	@Override
@@ -84,9 +91,42 @@ public class JobOfferService implements JobOfferServiceLocal {
 		return jo;
 		
 	}
+
+	@Override
+	public float compatibilityJobUser(int user, int job) {
+		JobOffer j = this.getFull(job);
+		User u = userService.getFull(user);
+		
+		int counter=0;
+		int acheived = 0;
+		
+		for(JobSkill js : j.getJobSkills())
+		{
+			counter++;
+			for(UserSkill us : u.getUserSkills())
+			{
+				if(js.getSkill().getId() == us.getSkill().getId()
+						&& js.getLevel() <= us.getLevel())
+						
+				{
+					acheived++;
+				}
+			}
+		}
+		
+		return acheived/counter;
+	}
+	
+
+	@Override
+	public List<JobOffer> getAllByBuisness(int idBuisness){
+		Query query = em.createQuery("Select j from JobOffer j where j.buisness = " + idBuisness);
+		return (List<JobOffer>) query.getResultList();
+	}
+
 	
 	
-	
+
 	
 
 }

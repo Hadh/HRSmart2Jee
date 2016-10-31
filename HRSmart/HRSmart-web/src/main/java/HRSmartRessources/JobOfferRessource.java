@@ -52,27 +52,29 @@ public class JobOfferRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
 	public String getFull(@PathParam("id") int id) {
-		return JsonConverter.ConvertFull(service.getFull(id));
+		return JsonConverter.ConvertJobFull(service.getFull(id));
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getAll() {
-		return JsonConverter.ConvertList(service.getAll());
+		return JsonConverter.ConvertJobList(service.getAll());
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addJob(JobOffer job) {
-		service.add(job);
+		job.setId(service.add(job));
 
 		if (job.getRewards() != null) {
 			for (Rewards r : job.getRewards()) {
+				r.setJobOffer(job);
 				rewardService.add(r);
 			}
 		}
 		if (job.getJobSkills() != null) {
 			for (JobSkill js : job.getJobSkills()) {
+				js.setJobOffer(job);
 				jobSkillService.add(js);
 			}
 		}

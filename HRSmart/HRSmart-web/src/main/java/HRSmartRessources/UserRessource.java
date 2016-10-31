@@ -1,6 +1,3 @@
-/**
- * 
- */
 package HRSmartRessources;
 
 import java.util.ArrayList;
@@ -20,12 +17,15 @@ import javax.ws.rs.core.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import pi.HRSmart.interfaces.CertificatServiceLocal;
+import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
+import pi.HRSmart.interfaces.UserSkillsServiceLocal;
+import pi.HRSmart.persistence.Buisness;
+import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
-import pi.HRSmart.interfaces.CertificatServiceLocal;
-import pi.HRSmart.interfaces.UserSkillsServiceLocal;
-import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.UserSkill;
 import pi.HRSmart.utilities.Secured;
 
@@ -35,6 +35,7 @@ import pi.HRSmart.utilities.Secured;
 @Path("user")
 @RequestScoped
 public class UserRessource {
+
 	@EJB(beanName="UserService")
 	UserServiceLocal userServiceLocal;
 
@@ -43,6 +44,13 @@ public class UserRessource {
 
 	@EJB(beanName = "CertificatService")
 	CertificatServiceLocal serviceCertificat;
+
+	@EJB(beanName = "UserBuisnessService")
+	UserBuisnessServiceLocal userBuisnessService;
+
+	// Certificat
+
+	// addCErtificatDone
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -64,46 +72,63 @@ public class UserRessource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("certificat")
-	public void add(Certificat certificat){
-		 serviceCertificat.add(certificat);
+	public void add(Certificat certificat) {
+		serviceCertificat.add(certificat);
 	}
-		//getCertificatBySkill
+
+	// getCertificatBySkillDone
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("certificat/{skill}")
-	public List<Certificat> getBySkill(@PathParam("skill") int skill) {
-		return serviceCertificat.getBySkill(skill);
+	public String getBySkill(@PathParam("skill") int skill) {
+		return JsonConverter.ConvertListCertificat(serviceCertificat.getBySkill(skill));
 	}
-		//updateCertificat
+
+	// updateCertificatDone
 	@PUT
 	@Path("certificat")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void update(Certificat certificat){
+	public void update(Certificat certificat) {
 		serviceCertificat.update(certificat);
 	}
-	
+
+	// getCertifByUser Done
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("certificats/{id}")
-	public List<Certificat> getCertificatByUser(@PathParam("id") int id) {
+	public String getCertificatByUser(@PathParam("id") int id) {
 		List<Certificat> list = new ArrayList<Certificat>();
-				
-				for(UserSkill s : userSkillService.getByUser(id))
-				{
-					list.addAll(s.getCertificats());
-				}
-				
-				
-				return list;
+
+		for (UserSkill us : userSkillService.getByUser(id)) {
+
+			list.addAll(us.getCertificats());
+		}
+		return JsonConverter.ConvertListCertificat(list);
+
 	}
 	@Secured
 	@GET
+
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
 	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
 		return userServiceLocal.authenticate(user,password);
 	}
 
+	// Buisness
+	// getBuisnessByUser
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("buisnesses/{id}")
+	public String getByUser(@PathParam("id")int id) {
+		List<Buisness> list = new ArrayList<Buisness>();
+		for (UserBuisness ub : userBuisnessService.getByUser(id)) {
+
+			list.add(ub.getBuisness());
+		}
+		return JsonConverter.ConvertListBuisness(list);
+
+	}
 
 }

@@ -115,5 +115,4 @@ public class Rewards implements Serializable {
 		return true;
 	}
 	
-	
 }
