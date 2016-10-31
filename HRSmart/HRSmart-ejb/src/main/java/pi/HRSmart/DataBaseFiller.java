@@ -91,6 +91,8 @@ public class DataBaseFiller {
 		User user1 = new User();
 		user1.setFirstName("Bob");
 		user1.setLastName("El Hechmi");
+		user1.setLogin("123");
+		user1.setPassword("123456789");
 		
 		
 		em.persist(user1);

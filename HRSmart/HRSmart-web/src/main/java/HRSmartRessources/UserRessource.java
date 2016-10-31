@@ -1,6 +1,3 @@
-/**
- * 
- */
 package HRSmartRessources;
 
 import java.util.ArrayList;
@@ -21,19 +18,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import pi.HRSmart.interfaces.UserServiceLocal;
-import pi.HRSmart.persistence.User;
-import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.interfaces.CertificatServiceLocal;
-import pi.HRSmart.interfaces.SkillServiceLocal;
 import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Certificat;
+import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.persistence.UserSkill;
 
@@ -43,9 +34,6 @@ import pi.HRSmart.persistence.UserSkill;
 @Path("user")
 @RequestScoped
 public class UserRessource {
-
-	@EJB(beanName = "UserService")
-	UserServiceLocal service;
 
 	@EJB(beanName="UserService")
 	UserServiceLocal userServiceLocal;
@@ -150,10 +138,7 @@ public class UserRessource {
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{id}")
-	public User getFull(@PathParam("id") int id) {
-		return service.getFull(id);
+
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
 	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
@@ -175,6 +160,5 @@ public class UserRessource {
 		return JsonConverter.ConvertListBuisness(list);
 
 	}
-
 
 }

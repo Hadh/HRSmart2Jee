@@ -26,6 +26,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:5.3" level="project" />
     <orderEntry type="module" module-name="HRSmart-ejb" scope="PROVIDED" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.auth0:java-jwt:2.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.7.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.7.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.7.4" level="project" />
