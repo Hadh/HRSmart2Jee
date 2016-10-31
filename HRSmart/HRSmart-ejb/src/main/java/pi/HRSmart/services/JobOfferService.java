@@ -85,11 +85,16 @@ public class JobOfferService implements JobOfferServiceLocal {
 		
 	}
 	
+
 	@Override
 	public List<JobOffer> getAllByBuisness(int idBuisness){
 		Query query = em.createQuery("Select j from JobOffer j where j.buisness = " + idBuisness);
 		return (List<JobOffer>) query.getResultList();
 	}
+
+	
+	
+
 	
 
 }

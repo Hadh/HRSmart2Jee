@@ -3,6 +3,7 @@ package pi.HRSmart.services;
 import java.security.AllPermission;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,8 +11,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.CertificatServiceLocal;
+import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.Skill;
+import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.persistence.UserSkillPk;
 
 
 /**
@@ -28,6 +32,8 @@ public class CertificatService implements CertificatServiceLocal {
 
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
+	@EJB(beanName = "UserSkillsService")
+	UserSkillsServiceLocal userSkillServiceLocal;
 
 	public CertificatService() {
 		// TODO Auto-generated constructor stub
@@ -62,5 +68,16 @@ public class CertificatService implements CertificatServiceLocal {
 		Query query = em.createQuery("SELECT c FROM Certificat c");
 	    return (List<Certificat>) query.getResultList();
 	}
+
+	
+	@Override
+	public List<Certificat> getBySkill(int skill) {
+		Query query = em.createQuery("SELECT c from Certificat c where c.skill.id.skill =" + skill);
+		 return (List<Certificat>) query.getResultList();
+	}
+
+	
+	
+	
 
 }

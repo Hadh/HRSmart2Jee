@@ -2,14 +2,18 @@ package pi.HRSmart.services;
 
 import java.util.List;
 
-
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import pi.HRSmart.interfaces.RewardServiceLocal;
+import pi.HRSmart.interfaces.SkillServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.persistence.UserSkillPk;
 
 /**
  * @author yesmine
@@ -25,6 +29,12 @@ public class UserSkillsService implements UserSkillsServiceLocal {
      */
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
+	
+	@EJB(beanName = "UserService") 
+	UserServiceLocal userService;
+	
+	@EJB(beanName = "SkillService") 
+	SkillServiceLocal skillService;
 	
     public UserSkillsService() {
         // TODO Auto-generated constructor stub
@@ -49,21 +59,24 @@ public class UserSkillsService implements UserSkillsServiceLocal {
 	}
 
 	@Override
-	public UserSkill get(int id) {
-		
-		return em.find(UserSkill.class, id);
+	public UserSkill get(int user,int skill) {
+		UserSkillPk pk = new UserSkillPk();
+		userService.get(user);
+		skillService.get(skill);
+		return em.find(UserSkill.class, pk);
 	}
 
 	@Override
 	public List<UserSkill> getAll() {
-		Query query = em.createQuery("select us from userSkill us");
+		Query query = em.createQuery("select us from UserSkill us");
 		return (List<UserSkill>) query.getResultList();
 	}
 
 	@Override
 	public List<UserSkill> getByUser(int id) {
-		Query query = em.createQuery("select us from userSkill us where us.user ="+id);
+		Query query = em.createQuery("SELECT us FROM UserSkill us where us.id.user=" + id);
 		return (List<UserSkill>) query.getResultList();
 	}
 
+	
 }
