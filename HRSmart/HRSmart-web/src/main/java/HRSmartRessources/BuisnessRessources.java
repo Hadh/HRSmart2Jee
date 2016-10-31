@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import pi.HRSmart.interfaces.BuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Address;
 import pi.HRSmart.persistence.JobOffer;
@@ -31,6 +33,12 @@ public class BuisnessRessources {
 	
 	@EJB(beanName = "BuisnessService")
 	BuisnessServiceLocal service;
+
+	@EJB(beanName="UserBuisnessService")
+	UserBuisnessServiceLocal userBuisnessServiceLocal;
+
+	@EJB(beanName="UserService")
+	UserServiceLocal  userServiceLocal;
 	
 	@GET
 	@Path("/{id}")
@@ -77,4 +85,25 @@ public class BuisnessRessources {
         service.remove(service.get(id));
      return Response.status(Response.Status.CREATED).build();
 	}
+
+	/* this service returns the role */
+	@GET
+	@Path("/{iduser}/{idbis}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getUserBuisness(@PathParam("iduser") int iduser,@PathParam("idbis") int idbis){
+		String role = userBuisnessServiceLocal.getRoleByUser(iduser,idbis);
+		return role;
+	}
+
+	/* this service returns the userbusiness based on his id and it has to be with role HR */
+	@GET
+	@Path("{iduser}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserBusinessByUser(@PathParam("iduser") int iduser){
+		UserBuisness ubs = userBuisnessServiceLocal.getUserBusinessByUser(userServiceLocal.get(iduser));
+		String result = JsonConverter.ConvertUserBusiness(ubs);
+		return Response.status(Response.Status.OK).entity(result).build();
+	}
+
+
 }

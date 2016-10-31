@@ -285,4 +285,16 @@ public class JsonConverter {
 		return main.toString();
 	}
 
+	public static String ConvertUserBusiness(UserBuisness usb){
+
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+
+		main.put("id", usb.getId().toString());
+		main.put("role", usb.getRole());
+		main.put("salary", usb.getSalary());
+		main.put("hiredate", usb.getHireDate().toString());
+		return main.toString();
+	}
+
 }
