@@ -14,10 +14,14 @@ import pi.HRSmart.persistence.JobOffer;
 
 @Remote
 public interface JobOfferServiceLocal {
-	  void add(JobOffer jobOffer);
+	  int add(JobOffer jobOffer);
 	  void update(JobOffer jobOffer);
 	  void remove(JobOffer jobOffer);
 	  JobOffer get(int id);
 	  JobOffer getFull(int id);
 	  List<JobOffer> getAll();
+	  
+	  float compatibilityJobUser(int user,int job);
+	  List<JobOffer> getAllByBuisness(int id);
+	  
 }

@@ -20,7 +20,7 @@ import pi.HRSmart.persistence.Rewards;
  */
 public class JsonConverter {
 
-	public static String ConvertFull(JobOffer job)
+	public static String ConvertJobFull(JobOffer job)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -65,7 +65,28 @@ public class JsonConverter {
 		return main.toString();
 	}
 	
-	public static String ConvertList(List<JobOffer>list)
+	public static String ConvertJobList(List<JobOffer>list)
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode jobs = mapper.createArrayNode();
+		for (JobOffer j : list) {
+			ObjectNode job = mapper.createObjectNode();
+			job.put("id", j.getId());
+			job.put("description", j.getDescription());
+			job.put("salary", j.getSalary());
+			job.put("title", j.getTitle());
+			ObjectNode buisness = mapper.createObjectNode();
+			buisness.put("id", j.getBuisness().getId());
+			buisness.put("name", j.getBuisness().getName());
+			job.put("buisness", buisness);
+			jobs.add(job);
+		}
+		main.put("jobs", jobs);
+		return main.toString();
+	}
+	
+	public static String ConvertCompatibilityJobUserList(List<JobOffer>list)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -86,4 +107,5 @@ public class JsonConverter {
 		return main.toString();
 	}
 
+	
 }

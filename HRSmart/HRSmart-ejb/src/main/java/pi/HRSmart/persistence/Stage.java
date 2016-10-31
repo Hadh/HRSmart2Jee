@@ -28,6 +28,11 @@ public class Stage implements Serializable {
 	public Stage() {
 		super();
 	}
+	public Stage(int id)
+	{
+		super();
+		this.id=id;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
