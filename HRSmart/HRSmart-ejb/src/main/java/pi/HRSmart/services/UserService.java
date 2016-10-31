@@ -1,5 +1,8 @@
 package pi.HRSmart.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.crypto.ExemptionMechanismException;
 import javax.ejb.EJB;
 
@@ -13,6 +16,7 @@ import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.User;
+import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.utilities.Jwt;
 import pi.HRSmart.utilities.SendEmail;
 import pi.HRSmart.utilities.getMD5Hash;
@@ -26,6 +30,7 @@ public class UserService implements UserServiceLocal {
 
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
+	
 	@EJB(beanName = "UserSkillsService")
 	UserSkillsServiceLocal userSkillServiceLocal;
 
@@ -104,6 +109,19 @@ User user=null;
 			SendEmail.SendEmail(user.getLogin(),"Welcome Email","This is a welcome mail!");
 
 			return "done";
+
+	}
+
+	@Override
+	public List<User> getUserByBuisness(int idBuisness) {
+		
+		List<UserBuisness> result = userBuisnessServiceLocal.getByBuisness(idBuisness);
+		List<User> usersByBuisness = new ArrayList<>();
+		for (UserBuisness userBuisness : result) {
+			usersByBuisness.add(userBuisness.getUser());
+		}
+		return usersByBuisness;
+
 
 	}
 
