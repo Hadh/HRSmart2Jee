@@ -55,7 +55,7 @@ public class JobOfferService implements JobOfferServiceLocal {
 
 	@Override
 	public void remove(JobOffer jobOffer) {
-		em.remove(jobOffer);
+		em.remove(em.merge(jobOffer));
 		
 	}
 
@@ -83,6 +83,12 @@ public class JobOfferService implements JobOfferServiceLocal {
 		jo.setRewards(rs);
 		return jo;
 		
+	}
+	
+	@Override
+	public List<JobOffer> getAllByBuisness(int idBuisness){
+		Query query = em.createQuery("Select j from JobOffer j where j.buisness = " + idBuisness);
+		return (List<JobOffer>) query.getResultList();
 	}
 	
 

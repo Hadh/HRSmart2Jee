@@ -20,4 +20,6 @@ public interface JobOfferServiceLocal {
 	  JobOffer get(int id);
 	  JobOffer getFull(int id);
 	  List<JobOffer> getAll();
+	  List<JobOffer> getAllByBuisness(int id);
+	  
 }
