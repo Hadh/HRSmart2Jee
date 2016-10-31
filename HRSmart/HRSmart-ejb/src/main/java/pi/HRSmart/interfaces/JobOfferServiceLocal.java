@@ -20,6 +20,7 @@ public interface JobOfferServiceLocal {
 	  JobOffer get(int id);
 	  JobOffer getFull(int id);
 	  List<JobOffer> getAll();
+
 	  
 	  float compatibilityJobUser(int user,int job);
 	  List<JobOffer> getAllByBuisness(int id);

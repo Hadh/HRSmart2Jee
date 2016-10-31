@@ -12,4 +12,5 @@ public interface StageServiceLocal {
 	void remove(Stage Stage);
 	Stage get(int id);
   	List<Stage> getAll();
+  	List<Stage> getAllByBuisness(int idBuisness);
 }

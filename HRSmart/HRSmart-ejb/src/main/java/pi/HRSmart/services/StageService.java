@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.StageServiceLocal;
+import pi.HRSmart.persistence.Rewards;
 import pi.HRSmart.persistence.Stage;
 
 @Stateless
@@ -41,6 +42,12 @@ public class StageService implements StageServiceLocal{
 	@Override
 	public List<Stage> getAll() {
 		Query query = em.createQuery("select s from Stage s");
+		return (List<Stage>) query.getResultList();
+	}
+	
+	@Override
+	public List<Stage> getAllByBuisness(int idBuisness){
+		Query query = em.createQuery("Select s from Stage s where s.buisness = " + idBuisness);
 		return (List<Stage>) query.getResultList();
 	}
 

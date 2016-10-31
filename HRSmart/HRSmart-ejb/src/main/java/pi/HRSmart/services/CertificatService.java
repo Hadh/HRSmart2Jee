@@ -72,7 +72,7 @@ public class CertificatService implements CertificatServiceLocal {
 	
 	@Override
 	public List<Certificat> getBySkill(int skill) {
-		Query query = em.createQuery("SELECT c from Certificat c where c.skill= skill");
+		Query query = em.createQuery("SELECT c from Certificat c where c.skill.id.skill =" + skill);
 		 return (List<Certificat>) query.getResultList();
 	}
 
