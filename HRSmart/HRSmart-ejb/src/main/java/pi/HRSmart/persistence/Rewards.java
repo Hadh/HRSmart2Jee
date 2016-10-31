@@ -15,14 +15,22 @@ import pi.HRSmart.persistence.Stage;
  */
 
 @Entity
+@Table(name ="rewards")
+@AssociationOverrides({
+        @AssociationOverride(name ="id.stage",
+                joinColumns = @JoinColumn(name ="stage_id",
+                insertable = false, updatable = false
+                )),
+        @AssociationOverride(name ="id.jobOffer",
+                joinColumns = @JoinColumn(name ="jobOffer_id",
+                        insertable = false, updatable = false
+                ))
+})
 
 public class Rewards implements Serializable {
 
-	   
-
-	private int id;
+	private RewardsPk id;
 	private int value;
-	private JobOffer jobOffer;
 	private static final long serialVersionUID = 1L;
 
 	private List<Postulation> postulations;
@@ -30,15 +38,16 @@ public class Rewards implements Serializable {
 	public Rewards() {
 		super();
 	}  
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public int getId() {
-		return this.id;
+ 
+	@EmbeddedId
+	public RewardsPk getId() {
+		return id;
 	}
-	
-	public void setId(int id) {
+
+	public void setId(RewardsPk id) {
 		this.id = id;
-	}   
+	}
+
 	public int getValue() {
 		return this.value;
 	}
@@ -47,14 +56,22 @@ public class Rewards implements Serializable {
 		this.value = value;
 	}
 	
-	@ManyToOne
+	@Transient
 	public JobOffer getJobOffer() {
-		return jobOffer;
+		return this.getId().getJobOffer();
 	}
 	public void setJobOffer(JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
+		this.getId().setJobOffer(jobOffer);
 	}
 
+	@Transient
+	public Stage getStage() {
+		return this.getId().getStage();
+	}
+	public void setJobOffer(Stage stage) {
+		this.getId().setStage(stage);
+	}
+	
 	@OneToMany(mappedBy = "reward")
 	public List<Postulation> getPostulations() {
 		return postulations;
@@ -63,4 +80,40 @@ public class Rewards implements Serializable {
 	public void setPostulations(List<Postulation> postulations) {
 		this.postulations = postulations;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((postulations == null) ? 0 : postulations.hashCode());
+		result = prime * result + value;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rewards other = (Rewards) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (postulations == null) {
+			if (other.postulations != null)
+				return false;
+		} else if (!postulations.equals(other.postulations))
+			return false;
+		if (value != other.value)
+			return false;
+		return true;
+	}
+	
+	
 }

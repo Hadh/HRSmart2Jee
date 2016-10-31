@@ -55,7 +55,7 @@ public class JobOfferService implements JobOfferServiceLocal {
 
 	@Override
 	public void remove(JobOffer jobOffer) {
-		em.remove(jobOffer);
+		em.remove(em.merge(jobOffer));
 		
 	}
 
@@ -84,6 +84,9 @@ public class JobOfferService implements JobOfferServiceLocal {
 		return jo;
 		
 	}
+	
+	
+	
 	
 
 }
