@@ -2,6 +2,8 @@ package pi.HRSmart.persistence;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -20,6 +22,7 @@ public class Stage implements Serializable {
 	private int id;
 	private String name;
 	private Buisness buisness;
+	public List<Rewards> rewards;
 	private static final long serialVersionUID = 1L;
 	
 	public Stage() {
@@ -49,4 +52,15 @@ public class Stage implements Serializable {
 	public void setBuisness(Buisness buisness) {
 		this.buisness = buisness;
 	}
+	
+	@OneToMany(mappedBy="id.stage")
+	public List<Rewards> getRewards() {
+		return rewards;
+	}
+	public void setRewards(List<Rewards> rewards) {
+		this.rewards = rewards;
+	}
+	
+	
+	
 }
