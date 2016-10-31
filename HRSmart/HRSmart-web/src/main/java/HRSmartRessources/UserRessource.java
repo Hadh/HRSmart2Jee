@@ -27,6 +27,7 @@ import pi.HRSmart.interfaces.CertificatServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.utilities.Secured;
 
 /**
  * Created by hadhemi on 10/30/2016.
@@ -48,45 +49,14 @@ public class UserRessource {
 	@Path("{id}")
 	public String getFull(@PathParam("id") int id) {
 		User user = userServiceLocal.getFull(id);
-
-
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode main = mapper.createObjectNode();
-
-		main.put("id", user.getId());
-		main.put("firstName", user.getFirstName());
-		main.put("lastName", user.getLastName());
-		main.put("adresse", user.getAdresse());
-		main.put("numTel", user.getNumTel());
-		main.put("login", user.getLogin());
-		main.put("password", user.getPassword());
-
-		ArrayNode UserBuisnesses = mapper.createArrayNode();
-
-		for (UserBuisness bs : user.getUserBuisness()) {
-
-			ObjectNode userBusiness = mapper.createObjectNode();
-			userBusiness.put("id", bs.getId().toString());
-			userBusiness.put("role", bs.getRole());
-			userBusiness.put("salary", bs.getSalary());
-			userBusiness.put("hiredate", bs.getHireDate().toString());
-
-			ObjectNode business = mapper.createObjectNode();
-			business.put("id", bs.getBuisness().getId());
-			business.put("name", bs.getBuisness().getName());
-			userBusiness.put("Business",business);
-			UserBuisnesses.add(userBusiness);
-		}
-
-		main.put("UserBuisnesses", UserBuisnesses);
-		return main.toString();
+		return JsonConverter.ConvertUser(user);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("users")
-	public void addUser(User user){
-		userServiceLocal.addUser(user);
+	public String addUser(User user){
+		return userServiceLocal.addUser(user);
 	}
 	//Certificat
 	
@@ -126,7 +96,7 @@ public class UserRessource {
 				
 				return list;
 	}
-
+	@Secured
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")

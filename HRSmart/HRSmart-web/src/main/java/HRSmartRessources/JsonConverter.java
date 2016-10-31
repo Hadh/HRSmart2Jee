@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import pi.HRSmart.persistence.JobOffer;
-import pi.HRSmart.persistence.JobSkill;
-import pi.HRSmart.persistence.Rewards;
+import pi.HRSmart.persistence.*;
 
 /**
  * @author Khaled Romdhane
@@ -83,6 +81,38 @@ public class JsonConverter {
 			jobs.add(job);
 		}
 		main.put("jobs", jobs);
+		return main.toString();
+	}
+	public static String ConvertUser(User user){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+
+		main.put("id", user.getId());
+		main.put("firstName", user.getFirstName());
+		main.put("lastName", user.getLastName());
+		main.put("adresse", user.getAdresse());
+		main.put("numTel", user.getNumTel());
+		main.put("login", user.getLogin());
+		main.put("password", user.getPassword());
+
+		ArrayNode UserBuisnesses = mapper.createArrayNode();
+
+		for (UserBuisness bs : user.getUserBuisness()) {
+
+			ObjectNode userBusiness = mapper.createObjectNode();
+			userBusiness.put("id", bs.getId().toString());
+			userBusiness.put("role", bs.getRole());
+			userBusiness.put("salary", bs.getSalary());
+			userBusiness.put("hiredate", bs.getHireDate().toString());
+
+			ObjectNode business = mapper.createObjectNode();
+			business.put("id", bs.getBuisness().getId());
+			business.put("name", bs.getBuisness().getName());
+			userBusiness.put("Business",business);
+			UserBuisnesses.add(userBusiness);
+		}
+
+		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
 
