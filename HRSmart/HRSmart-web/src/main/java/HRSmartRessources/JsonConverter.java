@@ -24,7 +24,7 @@ import pi.HRSmart.persistence.*;
  */
 public class JsonConverter {
 
-	public static String ConvertFull(JobOffer job)
+	public static String ConvertJobFull(JobOffer job)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -69,7 +69,7 @@ public class JsonConverter {
 		return main.toString();
 	}
 	
-	public static String ConvertList(List<JobOffer>list)
+	public static String ConvertJobList(List<JobOffer>list)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -121,6 +121,39 @@ public class JsonConverter {
 		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
+	
+	public static String ConvertListCertificat(List<Certificat> list) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode main = mapper.createObjectNode();
+        ArrayNode certificats = mapper.createArrayNode();
+        for (Certificat c : list) {
+            ObjectNode cert = mapper.createObjectNode();
+            cert.put("id", c.getId());
+            cert.put("name", c.getName());
+            ObjectNode skill = mapper.createObjectNode();
+            skill.put("id", c.getSkill().getId());
+            skill.put("name", c.getSkill().getName());
+            // list.addAll(s.getCertificats());
+            cert.put("skill", skill);
+            certificats.add(cert);
+        }
+        main.put("certificats", certificats);
+        return main.toString();
+    }
+    
+    public static String ConvertListBuisness(List<Buisness> list){
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode main = mapper.createObjectNode();
+        ArrayNode buisnesses = mapper.createArrayNode();
+        for (Buisness b : list){
+            ObjectNode buis = mapper.createObjectNode();
+            buis.put("id", b.getId());
+            buis.put("name", b.getName());
+            buisnesses.add(buis);
+        }
+        main.put("buisnesses", buisnesses);
+        return main.toString();
+    }
 	
 	public static String ConvertListBuisnessFull(List<Buisness> listBuisness){
 		
