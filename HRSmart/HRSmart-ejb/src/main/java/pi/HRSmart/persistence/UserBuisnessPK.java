@@ -11,6 +11,8 @@ import java.io.Serializable;
 @Embeddable
 public class UserBuisnessPK implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private Buisness buisness;
 	private User user;
 
