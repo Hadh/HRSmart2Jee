@@ -18,7 +18,7 @@ import pi.HRSmart.persistence.*;
  */
 public class JsonConverter {
 
-	public static String ConvertFull(JobOffer job)
+	public static String ConvertJobFull(JobOffer job)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -27,13 +27,13 @@ public class JsonConverter {
 		main.put("description", job.getDescription());
 		main.put("salary", job.getSalary());
 		main.put("title", job.getTitle());
-		
+
 		ObjectNode buisness = mapper.createObjectNode();
 		buisness.put("id", job.getBuisness().getId());
 		buisness.put("name", job.getBuisness().getName());
-		
+
 		main.put("buisness", buisness);
-		
+
 		ArrayNode rewards = mapper.createArrayNode();
 
 		for (Rewards r : job.getRewards()) {
@@ -44,9 +44,9 @@ public class JsonConverter {
 			rewards.add(reward);
 		}
 		main.put("rewards", rewards);
-		
+
 		ArrayNode jobSkills = mapper.createArrayNode();
-		
+
 		for (JobSkill js : job.getJobSkills()) {
 			ObjectNode jobSkill = mapper.createObjectNode();
 			jobSkill.put("id", js.getId());
@@ -54,16 +54,17 @@ public class JsonConverter {
 			ObjectNode skill = mapper.createObjectNode();
 			skill.put("id", js.getSkill().getId());
 			skill.put("name", js.getSkill().getName());
-			jobSkill.put("Skill",skill);
+			jobSkill.put("Skill", skill);
 			jobSkills.add(jobSkill);
 		}
-		
+
 		main.put("jobSkills", jobSkills);
-		
+
 		return main.toString();
 	}
-	
-	public static String ConvertList(List<JobOffer>list)
+
+
+	public static String ConvertJobList(List<JobOffer>list)
 	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -83,6 +84,46 @@ public class JsonConverter {
 		main.put("jobs", jobs);
 		return main.toString();
 	}
+
+	public static String ConvertCompatibilityJobUserList(List<JobOffer>list)
+	{
+		return null;
+	}
+
+
+	public static String ConvertListCertificat(List<Certificat> list) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode certificats = mapper.createArrayNode();
+		for (Certificat c : list) {
+			ObjectNode cert = mapper.createObjectNode();
+			cert.put("id", c.getId());
+			cert.put("name", c.getName());
+			ObjectNode skill = mapper.createObjectNode();
+			skill.put("id", c.getSkill().getId());
+			skill.put("name", c.getSkill().getName());
+			// list.addAll(s.getCertificats());
+			cert.put("skill", skill);
+			certificats.add(cert);
+		}
+		main.put("certificats", certificats);
+		return main.toString();
+	}
+
+	public static String ConvertListBuisness(List<Buisness> list){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode buisnesses = mapper.createArrayNode();
+		for (Buisness b : list){
+			ObjectNode buis = mapper.createObjectNode();
+			buis.put("id", b.getId());
+			buis.put("name", b.getName());
+			buisnesses.add(buis);
+		}
+		main.put("buisnesses", buisnesses);
+		return main.toString();
+	}
+
 	public static String ConvertUser(User user){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
@@ -115,5 +156,6 @@ public class JsonConverter {
 		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
+
 
 }
