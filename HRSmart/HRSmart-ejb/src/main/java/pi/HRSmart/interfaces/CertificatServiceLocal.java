@@ -6,6 +6,8 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.Certificat;
+import pi.HRSmart.persistence.Skill;
+import pi.HRSmart.persistence.UserSkill;
 
 
 
@@ -17,5 +19,7 @@ public interface CertificatServiceLocal {
 	void remove(Certificat certificat);
   	Certificat get(int id);
   	List<Certificat> getAll();
+  	List<Certificat> getBySkill(int skill);
+
 
 }

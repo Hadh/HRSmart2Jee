@@ -12,7 +12,7 @@ public interface UserSkillsServiceLocal {
 	public void add(UserSkill userSkill);
 	 public void update(UserSkill userSkill);
 	 public void remove(UserSkill userSkill);
-	 public UserSkill get(int id);
+	 public UserSkill get(int user,int skill);
 	 public List<UserSkill> getAll();
 	 public List<UserSkill> getByUser(int id);
 }

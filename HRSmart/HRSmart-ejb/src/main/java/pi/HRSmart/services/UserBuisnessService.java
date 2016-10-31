@@ -62,13 +62,13 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 
 	@Override
 	public List<UserBuisness> getByUser(User user) {
-		Query query = em.createQuery("select ub from Userbuisness ub where ub.user=" + user.getId());
+		Query query = em.createQuery("select ub from UserBuisness ub where ub.id.user=" + user.getId());
 		return (List<UserBuisness>) query.getResultList();
 	}
 
 	@Override
 	public List<UserBuisness> getByBuisness(Buisness buisness) {
-		Query query = em.createQuery("select ub from Userbuisness ub where ub.buisness=" + buisness.getId());
+		Query query = em.createQuery("select ub from UserBuisness ub where ub.buisness=" + buisness.getId());
 		return (List<UserBuisness>) query.getResultList();
 
 	}
