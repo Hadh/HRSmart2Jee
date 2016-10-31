@@ -28,6 +28,7 @@ public class JobOffer implements Serializable {
 	private List<JobSkill> jobSkills;
 	private List<Rewards> rewards;
 	private Buisness buisness;
+	private boolean active;
 	private static final long serialVersionUID = 1L;
 
 	public JobOffer() {
@@ -69,7 +70,7 @@ public class JobOffer implements Serializable {
 	public void setJobSkills(List<JobSkill> jobSkills) {
 		this.jobSkills = jobSkills;
 	}
-	@OneToMany(mappedBy="jobOffer")
+	@OneToMany(mappedBy="id.jobOffer")
 	public List<Rewards> getRewards() {
 		return rewards;
 	}
@@ -83,8 +84,11 @@ public class JobOffer implements Serializable {
 	public void setBuisness(Buisness buisness) {
 		this.buisness = buisness;
 	}
-	
-	
-	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
    
 }
