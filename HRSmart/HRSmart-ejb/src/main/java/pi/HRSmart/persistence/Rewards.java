@@ -68,7 +68,7 @@ public class Rewards implements Serializable {
 	public Stage getStage() {
 		return this.getId().getStage();
 	}
-	public void setJobOffer(Stage stage) {
+	public void setStage(Stage stage) {
 		this.getId().setStage(stage);
 	}
 	
@@ -114,6 +114,5 @@ public class Rewards implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 }

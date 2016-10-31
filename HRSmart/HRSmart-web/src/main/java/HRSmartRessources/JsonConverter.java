@@ -10,10 +10,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+
 import pi.HRSmart.persistence.Address;
 import pi.HRSmart.persistence.*;
 import pi.HRSmart.persistence.Stage;
 import pi.HRSmart.persistence.UserBuisness;
+
+import pi.HRSmart.persistence.*;
 
 /**
  * @author Khaled Romdhane
@@ -21,7 +24,8 @@ import pi.HRSmart.persistence.UserBuisness;
  */
 public class JsonConverter {
 
-	public static String ConvertFull(JobOffer job) {
+	public static String ConvertFull(JobOffer job)
+	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
 
@@ -29,13 +33,13 @@ public class JsonConverter {
 		main.put("description", job.getDescription());
 		main.put("salary", job.getSalary());
 		main.put("title", job.getTitle());
-
+		
 		ObjectNode buisness = mapper.createObjectNode();
 		buisness.put("id", job.getBuisness().getId());
 		buisness.put("name", job.getBuisness().getName());
-
+		
 		main.put("buisness", buisness);
-
+		
 		ArrayNode rewards = mapper.createArrayNode();
 
 		for (Rewards r : job.getRewards()) {
@@ -46,9 +50,9 @@ public class JsonConverter {
 			rewards.add(reward);
 		}
 		main.put("rewards", rewards);
-
+		
 		ArrayNode jobSkills = mapper.createArrayNode();
-
+		
 		for (JobSkill js : job.getJobSkills()) {
 			ObjectNode jobSkill = mapper.createObjectNode();
 			jobSkill.put("id", js.getId());
@@ -56,16 +60,17 @@ public class JsonConverter {
 			ObjectNode skill = mapper.createObjectNode();
 			skill.put("id", js.getSkill().getId());
 			skill.put("name", js.getSkill().getName());
-			jobSkill.put("Skill", skill);
+			jobSkill.put("Skill",skill);
 			jobSkills.add(jobSkill);
 		}
-
+		
 		main.put("jobSkills", jobSkills);
-
+		
 		return main.toString();
 	}
-
-	public static String ConvertList(List<JobOffer> list) {
+	
+	public static String ConvertList(List<JobOffer>list)
+	{
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
 		ArrayNode jobs = mapper.createArrayNode();

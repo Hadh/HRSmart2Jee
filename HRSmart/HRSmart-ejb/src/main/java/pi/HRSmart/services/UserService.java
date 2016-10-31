@@ -121,6 +121,8 @@ User user=null;
 			usersByBuisness.add(userBuisness.getUser());
 		}
 		return usersByBuisness;
+
+
 	}
 
 	//public void inviteUser (User userEmailToAdd,)
