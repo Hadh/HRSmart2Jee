@@ -19,6 +19,7 @@ import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.utilities.Jwt;
 import pi.HRSmart.utilities.SendEmail;
+import pi.HRSmart.utilities.SendWelcomeMail;
 import pi.HRSmart.utilities.getMD5Hash;
 
 /**
@@ -47,6 +48,15 @@ public class UserService implements UserServiceLocal {
 		return em.find(User.class, id);
 	}
 
+
+	@Override
+	public List<User> getAll() {
+
+		Query query = em.createQuery("SELECT u FROM User u");
+		return (List<User>) query.getResultList();
+
+	}
+
 	@Override
 	public User getFull(int id) {
 		User user = em.find(User.class, id);
@@ -56,14 +66,13 @@ public class UserService implements UserServiceLocal {
 	}
 
 	@Override
-	public boolean update(User user) {
-		return false;
+	public void update(User user) {
+		em.merge(user);
 	}
 
 	@Override
-	public boolean delete(User user) {
-
-		return false;
+	public void delete(User user) {
+		em.remove(em.merge(user));
 	}
 
 	@Override
@@ -106,7 +115,7 @@ User user=null;
 			String beforeHash =  user.getPassword();
 			user.setPassword(getMD5Hash.getMD5Hash(beforeHash));
 			em.persist(user);
-			SendEmail.SendEmail(user.getLogin(),"Welcome Email","This is a welcome mail!");
+			SendWelcomeMail.SendEmail(user.getLogin(),"Welcome Email","This is a welcome mail!");
 
 			return "done";
 

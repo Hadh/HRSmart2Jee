@@ -5,14 +5,9 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -32,7 +27,7 @@ import pi.HRSmart.utilities.Secured;
 /**
  * Created by hadhemi on 10/30/2016.
  */
-@Path("user")
+@Path("users")
 @RequestScoped
 public class UserRessource {
 
@@ -60,12 +55,27 @@ public class UserRessource {
 		return JsonConverter.ConvertUser(user);
 	}
 
+	@DELETE
+	@Path("{id}")
+	public void deleteUser(@PathParam("id") int id){
+		userServiceLocal.delete(userServiceLocal.get(id));
+	}
+
+
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateUser(@PathParam("id") int idUser){
+		userServiceLocal.update(userServiceLocal.get(idUser));
+	}
+
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("users")
 	public String addUser(User user){
 		return userServiceLocal.addUser(user);
 	}
+
 	//Certificat
 	
 		//addCErtificat
@@ -108,7 +118,6 @@ public class UserRessource {
 	}
 	@Secured
 	@GET
-
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
 	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
@@ -129,6 +138,11 @@ public class UserRessource {
 		}
 		return JsonConverter.ConvertListBuisness(list);
 
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllUsers(){
+		return JsonConverter.ConvertListUser(userServiceLocal.getAll());
 	}
 
 }

@@ -121,6 +121,26 @@ public class JsonConverter {
 		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
+
+	public static String ConvertListUser(List<User>userList) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode users = mapper.createArrayNode();
+
+		for (User u : userList) {
+			ObjectNode user = mapper.createObjectNode();
+			user.put("id", u.getId());
+			user.put("firstName", u.getFirstName());
+			user.put("lastName", u.getLastName());
+			user.put("adresse", u.getAdresse());
+			user.put("numTel", u.getNumTel());
+			user.put("login", u.getLogin());
+			user.put("password", u.getPassword());
+			users.add(user);
+		}
+		main.put("users", users);
+		return main.toString();
+	}
 	
 	public static String ConvertListCertificat(List<Certificat> list) {
         ObjectMapper mapper = new ObjectMapper();
