@@ -12,6 +12,8 @@ import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.User;
+import pi.HRSmart.utilities.Jwt;
+import pi.HRSmart.utilities.SendEmail;
 import pi.HRSmart.utilities.getMD5Hash;
 
 /**
@@ -59,15 +61,17 @@ public class UserService implements UserServiceLocal {
 	}
 
 	@Override
-	public User authenticate(String Login, String password) {
+	public String authenticate(String Login, String password) {
+
 		try {
 			TypedQuery<User> query =
 					em.createQuery("select e from User e where e.login=:login and e.password=:password", User.class);
 
 			query.setParameter("login", "login");
 			query.setParameter("password", "password");
-			return query.getSingleResult();
+			query.getSingleResult();
 
+			return Jwt.SignJWT("user",query.getSingleResult());
 		} catch (Exception e) {
 			return null;
 		}
@@ -100,8 +104,9 @@ public class UserService implements UserServiceLocal {
 			String beforeHash =  user.getPassword();
 			user.setPassword(getMD5Hash.getMD5Hash(beforeHash));
 			em.persist(user);
+			SendEmail.SendEmail(user.getLogin(),"hadhemilaouini@gmail.com");
 
-			return "adddone";
+			return "done";
 		}
 		catch(Exception e) {
 			return "userexists";

@@ -13,7 +13,7 @@ public interface UserServiceLocal {
 	public User getFull(int id);
 	public boolean update(User user);
 	public boolean delete(User user);
-	public User authenticate(String Login,String password);
+	public String authenticate(String Login,String password);
 	public boolean checkConnectedUser(User userToVerify);
 	public User getUserByEmail(String login);
 	public String addUser(User user);
