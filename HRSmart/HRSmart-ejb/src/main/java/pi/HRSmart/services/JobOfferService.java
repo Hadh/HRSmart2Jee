@@ -48,10 +48,8 @@ public class JobOfferService implements JobOfferServiceLocal {
     }
 
 	@Override
-	public int add(JobOffer jobOffer) {
+	public void add(JobOffer jobOffer) {
 		em.persist(jobOffer);
-		em.refresh(jobOffer);
-		return jobOffer.getId();
 	}
 
 	@Override
@@ -107,13 +105,11 @@ public class JobOfferService implements JobOfferServiceLocal {
 			{
 				if(js.getSkill().getId() == us.getSkill().getId()
 						&& js.getLevel() <= us.getLevel())
-						
 				{
 					acheived++;
 				}
 			}
 		}
-		
 		return acheived/counter;
 	}
 	
