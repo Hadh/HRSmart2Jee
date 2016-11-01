@@ -15,15 +15,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import pi.HRSmart.interfaces.BuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
+import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.Buisness;
-import pi.HRSmart.persistence.Address;
-import pi.HRSmart.persistence.JobOffer;
-import pi.HRSmart.persistence.Stage;
-import pi.HRSmart.persistence.UserBuisness;
+import pi.HRSmart.persistence.User;
+
 
 @Path("buisness")
 @RequestScoped
@@ -31,6 +29,15 @@ public class BuisnessRessources {
 	
 	@EJB(beanName = "BuisnessService")
 	BuisnessServiceLocal service;
+
+	@EJB(beanName="UserBuisnessService")
+	UserBuisnessServiceLocal userBuisnessServiceLocal;
+
+	@EJB(beanName="UserService")
+	UserServiceLocal  userServiceLocal;
+	
+	@EJB(beanName = "UserService")
+	UserServiceLocal serviceUser;
 	
 	@GET
 	@Path("/{id}")
@@ -63,18 +70,40 @@ public class BuisnessRessources {
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
-	/*@DELETE
+	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteBuisness(Buisness buisness){
 		service.remove(buisness);
 		return Response.status(Response.Status.CREATED).build();
-	}*/
+	}
 	
-	@Path("/{id}")
-    @DELETE
-    public Response removeAnswer(@PathParam("id") int id) {
+	
+	//statistic
+	@GET
+	@Path("/users/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsersByBuisness(@PathParam("id") int idBuisness){
+		List<User> users = serviceUser.getUserByBuisness(idBuisness);
+		String result = JsonConverter.convertListUsersByBuisness(users);
+		return Response.status(Response.Status.OK).entity(result).build();
+	}
+	
+	/* this service returns the role */
+	@GET
+	@Path("/{iduser}/{idbis}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getUserBuisness(@PathParam("iduser") int iduser,@PathParam("idbis") int idbis){
+		String role = userBuisnessServiceLocal.getRoleByUser(iduser,idbis);
+		return role;
+	}
 
-        service.remove(service.get(id));
-     return Response.status(Response.Status.CREATED).build();
+	/* this service returns the userbusiness based on his id and it has to be with role HR */
+	@GET
+	@Path("{iduser}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserBusinessByUser(@PathParam("iduser") int iduser){
+		UserBuisness ubs = userBuisnessServiceLocal.getUserBusinessByUser(userServiceLocal.get(iduser));
+		String result = JsonConverter.ConvertUserBusiness(ubs);
+		return Response.status(Response.Status.OK).entity(result).build();
 	}
 }

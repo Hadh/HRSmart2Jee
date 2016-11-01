@@ -20,7 +20,6 @@ public class Buisness implements Serializable {
 
 	private int id;
 	private String name;
-	//private List<String> numeroTelephone;
 	private List<Address> address;
 	private List<JobOffer> jobOffers;
 	private List<UserBuisness> userBuisness;
@@ -86,13 +85,6 @@ public class Buisness implements Serializable {
 		this.address = address;
 	}
 	
-	/*public List<String> getNumeroTelephone() {
-		return numeroTelephone;
-	}
-
-	public void setNumeroTelephone(List<String> numeroTelephone) {
-		this.numeroTelephone = numeroTelephone;
-	}*/
 	
 	
 	

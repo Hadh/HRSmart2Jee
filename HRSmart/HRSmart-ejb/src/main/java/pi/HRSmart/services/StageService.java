@@ -8,11 +8,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.StageServiceLocal;
+import pi.HRSmart.interfaces.StageServiceRemote;
+import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Rewards;
 import pi.HRSmart.persistence.Stage;
 
 @Stateless
-public class StageService implements StageServiceLocal{
+public class StageService implements StageServiceLocal, StageServiceRemote{
 
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
@@ -49,6 +51,15 @@ public class StageService implements StageServiceLocal{
 	public List<Stage> getAllByBuisness(int idBuisness){
 		Query query = em.createQuery("Select s from Stage s where s.buisness = " + idBuisness);
 		return (List<Stage>) query.getResultList();
+	}
+
+	@Override
+	public void setBuisnessToStage(Stage stage, Buisness buisness) {
+		if( get(stage.getId())== null){
+			add(stage);
+		}
+		em.createQuery("UPDATE Stage s SET s.buisness="
+		+buisness.getId()+" where s.id="+stage.getId()).executeUpdate();
 	}
 
 }
