@@ -22,6 +22,7 @@ public class Certificat implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Skill skill;
 	private List<UserSkill> userSkills;
+	private List<JobSkill> jobSkills;
 	public Certificat() {
 		super();
 	} 
@@ -64,6 +65,16 @@ public class Certificat implements Serializable {
 	}
 	public void setUserSkills(List<UserSkill> userSkills) {
 		this.userSkills = userSkills;
+	}
+
+
+	@ManyToMany(mappedBy = "certificats")
+	public List<JobSkill> getJobSkills() {
+		return jobSkills;
+	}
+
+	public void setJobSkills(List<JobSkill> jobSkills) {
+		this.jobSkills = jobSkills;
 	}
 	
    
