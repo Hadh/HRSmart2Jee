@@ -78,26 +78,29 @@ public class UserRessource {
 		return Response.status(Response.Status.CREATED).build();
 	}
 
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("{user}/{password}")
+	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
+		return userServiceLocal.authenticate(user,password);
 
+	}
+	
+	//certificat
+	//getbyUser
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificats/{id}")
-	public String getCertificatByUser(@PathParam("id") int id) {
+	@Path("{id}/certificats")
+	public Response getCertificatByUser(@PathParam("id") int id) {
 		List<Certificat> list = new ArrayList<Certificat>();
 
 		for (UserSkill us : userSkillsService.getByUser(id)) {
 
 			list.addAll(us.getCertificats());
 		}
-		return JsonConverter.ConvertListCertificat(list);
+		
+		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListCertificat(list)).build();
 
-	}
-
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("{user}/{password}")
-	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
-		return userServiceLocal.authenticate(user,password);
 	}
 
 	// Buisness

@@ -334,24 +334,11 @@ public class JsonConverter {
 		return main.toString();
 	}
 
-		
-		
-	public static String convertListAddress(List<Address> listAddress){
-		 ObjectMapper mapper = new ObjectMapper();
-	        ObjectNode main = mapper.createObjectNode();
-	        ArrayNode addressAll = mapper.createArrayNode();
-	        for (Address a : listAddress){
-	            ObjectNode address = mapper.createObjectNode();
-	            address.put("id", a.getId());
-	            address.put("localisation", a.getLocalisation());
-	            address.put("x", a.getX());
-	            address.put("y", a.getY());
-	            addressAll.add(address);
-	        }
-	        main.put("address", addressAll);
-	        return main.toString();
-	    }
 	
+
+
+		
+		
 	public static String convertListUsersByBuisness(List<User> listUser){
 		 ObjectMapper mapper = new ObjectMapper();
 	        ObjectNode main = mapper.createObjectNode();
@@ -382,22 +369,45 @@ public class JsonConverter {
 	    }
 	
 
-
-	public static String ConvertQuiz(Quiz quiz){
+	//return list of userbuisnesses (userBuisnesses/buisnesses)
+	public static String ConvertUserBusinessList(List<UserBuisness> list){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
-		ArrayNode questions = mapper.createArrayNode();
-		ObjectNode quizz = mapper.createObjectNode();
-
-		quizz.put("id", quiz.getId());
-		quizz.put("description",quiz.getDescription());
-		quizz.put("duration",quiz.getDuration());
-
-		quizz.put("questions",convertQuestion(quiz.getQuestions()));
-		main.put("quiz",quizz);
-
+		ArrayNode userbuisnesseses = mapper.createArrayNode();
+		for(UserBuisness ub:list){
+			ObjectNode userBuisness = mapper.createObjectNode();
+			ObjectNode buisness = mapper.createObjectNode();
+				buisness.put("id", ub.getBuisness().getId());
+				buisness.put("name",ub.getBuisness().getName());
+				ObjectNode id = mapper.createObjectNode();
+				id.put("buisnesses", buisness);
+				id.put("user", ub.getUser().getId());
+				userBuisness.put("id", id);
+				userBuisness.put("role", ub.getRole());
+				userBuisness.put("hireDate",ub.getHireDate().toString());
+				userBuisness.put("salary",ub.getSalary());
+				userbuisnesseses.add(userBuisness);
+		}
+		main.put("userBuisnesses", userbuisnesseses);	
 		return main.toString();
 	}
+
+	
+	public static String convertListAddress(List<Address> listAddress){
+		 ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode main = mapper.createObjectNode();
+	        ArrayNode addressAll = mapper.createArrayNode();
+	        for (Address a : listAddress){
+	            ObjectNode address = mapper.createObjectNode();
+	            address.put("id", a.getId());
+	            address.put("localisation", a.getLocalisation());
+	            address.put("x", a.getX());
+	            address.put("y", a.getY());
+	            addressAll.add(address);
+	        }
+	        main.put("address", addressAll);
+	        return main.toString();
+	    }
 	public static ArrayNode convertQuestion(List <Question> questions){
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode qs = mapper.createArrayNode();
@@ -415,6 +425,23 @@ public class JsonConverter {
 		qs.put("body",question.getBody());
 
 		return qs;
+	}
+
+
+	public static String ConvertQuiz(Quiz quiz){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode questions = mapper.createArrayNode();
+		ObjectNode quizz = mapper.createObjectNode();
+
+		quizz.put("id", quiz.getId());
+		quizz.put("description",quiz.getDescription());
+		quizz.put("duration",quiz.getDuration());
+
+		quizz.put("questions",convertQuestion(quiz.getQuestions()));
+		main.put("quiz",quizz);
+
+		return main.toString();
 	}
 
 

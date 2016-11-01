@@ -32,6 +32,10 @@ public class UserBuisness implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	
+	public UserBuisness() {
+		super();
+	}
+
 	public String getRole() {
 		return role;
 	}
