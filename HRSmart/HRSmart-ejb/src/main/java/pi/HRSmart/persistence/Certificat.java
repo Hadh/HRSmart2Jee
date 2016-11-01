@@ -26,6 +26,15 @@ public class Certificat implements Serializable {
 		super();
 	} 
 	
+	
+
+	public Certificat(int id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
@@ -49,7 +58,7 @@ public class Certificat implements Serializable {
 	public void setSkill(Skill skill) {
 		this.skill = skill;
 	}
-	@ManyToMany
+	@ManyToMany(mappedBy = "certificats")
 	public List<UserSkill> getUserSkills() {
 		return userSkills;
 	}

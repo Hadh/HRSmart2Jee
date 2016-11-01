@@ -15,4 +15,5 @@ public interface UserSkillsServiceLocal {
 	 public UserSkill get(int user,int skill);
 	 public List<UserSkill> getAll();
 	 public List<UserSkill> getByUser(int id);
+	 
 }

@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Buisness
  *
  *
- * @author Khaled Romdhane
+ * @author Firas Barrek
  *
  */
 
@@ -20,9 +20,12 @@ public class Buisness implements Serializable {
 
 	private int id;
 	private String name;
+	//private List<String> numeroTelephone;
+	private List<Address> address;
 	private List<JobOffer> jobOffers;
 	private List<UserBuisness> userBuisness;
 	private List<Stage> stages;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Buisness() {
@@ -46,6 +49,15 @@ public class Buisness implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@OneToMany(mappedBy = "buisness")
+	public List<Stage> getStages() {
+		return stages;
+	}
+
+	public void setStages(List<Stage> stages) {
+		this.stages = stages;
+	}
 
 	@OneToMany(mappedBy = "id.buisness")
 	public List<UserBuisness> getUserBuisness() {
@@ -64,13 +76,24 @@ public class Buisness implements Serializable {
 	public void setJobOffers(List<JobOffer> jobOffers) {
 		this.jobOffers = jobOffers;
 	}
-
-	@OneToMany(mappedBy = "buisness")
-	public List<Stage> getStages() {
-		return stages;
+	
+	@OneToMany(mappedBy="buisness")
+	public List<Address> getAddress() {
+		return address;
 	}
 
-	public void setStages(List<Stage> stages) {
-		this.stages = stages;
+	public void setAddress(List<Address> address) {
+		this.address = address;
 	}
+	
+	/*public List<String> getNumeroTelephone() {
+		return numeroTelephone;
+	}
+
+	public void setNumeroTelephone(List<String> numeroTelephone) {
+		this.numeroTelephone = numeroTelephone;
+	}*/
+	
+	
+	
 }

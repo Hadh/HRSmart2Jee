@@ -12,5 +12,6 @@ public interface BuisnessServiceLocal {
 	void remove(Buisness Buisness);
 	Buisness get(int id);
   	List<Buisness> getAll();
+  	List<Buisness> getAllBuisness();
 
 }

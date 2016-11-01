@@ -17,12 +17,16 @@ public interface UserBuisnessServiceLocal {
 
 	public void remove(UserBuisness userBuisness);
 
-	public UserBuisness get(int id);
+	public UserBuisness get(int idUser, int idBusiness);
 
 	public List<UserBuisness> getAll();
 
-	public List<UserBuisness> getByUser(User user);
+	public List<UserBuisness> getByUser(int id);
 
-	public List<UserBuisness> getByBuisness(Buisness buisness);
+	public List<UserBuisness> getByBuisness(int id);
+
+	public String getRoleByUser(int idUser, int idBusiness);
+
+	public UserBuisness getUserBusinessByUser(User user);
 
 }

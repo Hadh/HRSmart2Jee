@@ -30,6 +30,10 @@ public class Skill implements Serializable {
 	public Skill() {
 		super();
 	} 
+	public Skill(int id){
+		super();
+		this.id = id;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
