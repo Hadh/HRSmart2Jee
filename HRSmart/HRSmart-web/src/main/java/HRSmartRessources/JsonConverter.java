@@ -54,7 +54,10 @@ public class JsonConverter {
 		
 		for (JobSkill js : job.getJobSkills()) {
 			ObjectNode jobSkill = mapper.createObjectNode();
-			jobSkill.put("id", js.getId());
+			ObjectNode jobSkillId = mapper.createObjectNode();
+			jobSkillId.put("jobOffer", js.getJobOffer().getId());
+			jobSkillId.put("skill", js.getSkill().getId());
+			jobSkill.put("id", jobSkillId);
 			jobSkill.put("value", js.getLevel());
 			ObjectNode skill = mapper.createObjectNode();
 			skill.put("id", js.getSkill().getId());

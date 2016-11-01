@@ -92,14 +92,14 @@ public class DataBaseFiller {
 		
 		
 		em.persist(user1);
-
+		/*
 		// User 1 Skills
 		UserSkill us1 = new UserSkill();
 		us1.setSkill(s1);
 		us1.setUser(user1);
 		us1.setSkill(s2);
 //		us1.setLevel(10);
-/*
+
 		UserSkill us2 = new UserSkill();
 		us2.setSkill(s3);
 		us2.setUser(user1);
