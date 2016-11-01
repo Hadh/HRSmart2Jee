@@ -21,6 +21,7 @@ import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.User;
+import pi.HRSmart.persistence.UserBuisness;
 
 
 @Path("buisness")
@@ -35,6 +36,7 @@ public class BuisnessRessources {
 
 	@EJB(beanName="UserService")
 	UserServiceLocal  userServiceLocal;
+
 	
 	@EJB(beanName = "UserService")
 	UserServiceLocal serviceUser;
@@ -97,6 +99,7 @@ public class BuisnessRessources {
 		return role;
 	}
 
+
 	/* this service returns the userbusiness based on his id and it has to be with role HR */
 	@GET
 	@Path("{iduser}")
@@ -106,4 +109,6 @@ public class BuisnessRessources {
 		String result = JsonConverter.ConvertUserBusiness(ubs);
 		return Response.status(Response.Status.OK).entity(result).build();
 	}
+
+
 }
