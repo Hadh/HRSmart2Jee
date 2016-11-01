@@ -4,17 +4,14 @@
 package pi.HRSmart;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import pi.HRSmart.interfaces.PostulationServiceLocal;
 import pi.HRSmart.persistence.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Khaled Romdhane
@@ -25,8 +22,7 @@ import java.util.List;
 @Startup
 public class DataBaseFiller {
 
-	@EJB(beanName = "PostulationService")
-	PostulationServiceLocal ps;
+
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
 
@@ -96,14 +92,14 @@ public class DataBaseFiller {
 		
 		
 		em.persist(user1);
-
+		/*
 		// User 1 Skills
 		UserSkill us1 = new UserSkill();
 		us1.setSkill(s1);
 		us1.setUser(user1);
 		us1.setSkill(s2);
 //		us1.setLevel(10);
-/*
+
 		UserSkill us2 = new UserSkill();
 		us2.setSkill(s3);
 		us2.setUser(user1);
@@ -120,7 +116,7 @@ public class DataBaseFiller {
 		ub.setRole("HR");
 		
 		em.persist(ub);
-
+*/
 		//Adding Questions
 		Question q = new Question();
 		q.setBody("Question one");
@@ -133,33 +129,41 @@ public class DataBaseFiller {
 		choice.setBody("Choice one");
 		choice.setCorrect(true);
 		choice.setMark(5);
-		choice.setQuestion(q);
+		choice.setQuestion(em.merge(q));
 
 		em.persist(choice);
 
 		//adding quiz
 
 		Quiz quiz = new Quiz();
-		quiz.setDescrption("blablabla");
+		quiz.setDescription("blablabla");
 		quiz.setDuration(30);
 		quiz.setQuestions(new ArrayList<Question>(){{
-			add(q);
+			add(em.merge(q));
 		}});
 
 		em.persist(quiz);
 
 		//Reward
-
+		Stage st = new Stage();
+		st.setBuisness(em.merge(buisness1));
+		st.setName("stage 1");
+		em.persist(st);
+		em.merge(st);
+		em.refresh(job1);
 		Rewards re = new Rewards();
-		re.setJobOffer(job1);
+		RewardsPk pk = new RewardsPk();
+		pk.setJobOffer(job1);
+		pk.setStage(st);
 		re.setValue(0);
+		re.setId(pk);
 		em.persist(re);
 
 		// Postulation
 
 		Postulation p = new Postulation();
 		p.setPostulant(user1);
-		p.setReward(re);
+		p.setReward(em.merge(re));
 		em.persist(p);
 
 		// :3 hhhh
@@ -170,6 +174,6 @@ public class DataBaseFiller {
 		em.persist(ass);
 
 		em.flush();
-		*/
+
 	}
 }

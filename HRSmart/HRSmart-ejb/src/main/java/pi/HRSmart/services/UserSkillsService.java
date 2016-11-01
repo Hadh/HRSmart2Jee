@@ -12,6 +12,7 @@ import pi.HRSmart.interfaces.RewardServiceLocal;
 import pi.HRSmart.interfaces.SkillServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
+import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserSkill;
 import pi.HRSmart.persistence.UserSkillPk;
 
@@ -69,13 +70,21 @@ public class UserSkillsService implements UserSkillsServiceLocal {
 	@Override
 	public List<UserSkill> getAll() {
 		Query query = em.createQuery("select us from UserSkill us");
-		return (List<UserSkill>) query.getResultList();
+		List<UserSkill>list = (List<UserSkill>) query.getResultList();
+		for(UserSkill us : list){
+			us.setSkill(skillService.get(us.getSkill().getId()));
+		}
+		return list;
 	}
 
 	@Override
 	public List<UserSkill> getByUser(int id) {
 		Query query = em.createQuery("SELECT us FROM UserSkill us where us.id.user=" + id);
-		return (List<UserSkill>) query.getResultList();
+		List<UserSkill>list = (List<UserSkill>) query.getResultList();
+		for(UserSkill us : list){
+			us.setSkill(skillService.get(us.getSkill().getId()));
+		}
+		return list;
 	}
 
 	

@@ -15,5 +15,6 @@ public interface IQuizServiceLocal {
     void remove(Quiz quiz);
     Quiz get(int id);
     List<Quiz> all();
+    Quiz getWithRelations(int id);
 
 }

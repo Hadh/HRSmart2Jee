@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name ="assessment")
-@IdClass(AssessmentPK.class)
+
 @AssociationOverrides({
         @AssociationOverride(name ="pk.quiz",
                 joinColumns = @JoinColumn(name ="quiz_id",
@@ -34,8 +34,9 @@ public class Assessment implements Serializable {
         this.pk = pk;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_quiz", referencedColumnName = "id" ,insertable = false ,updatable = false)
+    /*@ManyToOne
+    @JoinColumn(name = "id_quiz", referencedColumnName = "id" ,insertable = false ,updatable = false)*/
+    @Transient
     public Quiz getQuiz(){
         return pk.getQuiz();
     }
@@ -45,10 +46,11 @@ public class Assessment implements Serializable {
     }
 
 
-    @ManyToOne
-    @JoinColumn(name = "id_postulation", referencedColumnName = "id" ,insertable = false ,updatable = false)
+    /*@ManyToOne
+    @JoinColumn(name = "id_postulation", referencedColumnName = "id" ,insertable = false ,updatable = false)*/
+    @Transient
     public Postulation getPostulation(){
-        return getPk().getPostulation();
+        return pk.getPostulation();
     }
 
     public void setPostulation(Postulation p){

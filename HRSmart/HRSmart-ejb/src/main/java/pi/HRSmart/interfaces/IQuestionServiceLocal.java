@@ -1,8 +1,10 @@
 package pi.HRSmart.interfaces;
 
 import pi.HRSmart.persistence.Question;
+import pi.HRSmart.persistence.Quiz;
 
 import javax.ejb.Local;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,4 +17,5 @@ public interface IQuestionServiceLocal {
     void remove(Question question);
     Question get(int id);
     List<Question> all();
+
 }

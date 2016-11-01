@@ -4,6 +4,7 @@ package pi.HRSmart.persistence;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +12,15 @@ import java.util.List;
  * Created by alaa on 18/10/16.
  */
 @Entity
-public class Quiz {
+public class Quiz implements Serializable{
 
     private int id;
     private int duration;
     private float result;
-    private String descrption;
-
-    private List<Assessment> assessments = new ArrayList<>();
+    private String description;
     private List<Question> questions = new ArrayList<>();
+    private List<Assessment> assessments = new ArrayList<>();
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +48,7 @@ public class Quiz {
         this.result = result;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "pk.quiz",orphanRemoval = true, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE
-    })
+    @OneToMany(mappedBy = "pk.quiz")
     public List<Assessment> getAssessments() {
         return assessments;
     }
@@ -59,16 +58,15 @@ public class Quiz {
     }
 
 
-    public String getDescrption() {
-        return descrption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrption(String descrption) {
-        this.descrption = descrption;
+    public void setDescription(String descrption) {
+        this.description = descrption;
     }
 
     @ManyToMany
-
     public List<Question> getQuestions() {
         return questions;
     }

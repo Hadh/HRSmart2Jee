@@ -35,7 +35,7 @@ public class UserRessource {
 	UserServiceLocal userServiceLocal;
 
 	@EJB(beanName = "UserSkillsService")
-	UserSkillsServiceLocal userSkillService;
+	UserSkillsServiceLocal userSkillsService;
 
 	@EJB(beanName = "CertificatService")
 	CertificatServiceLocal serviceCertificat;
@@ -67,43 +67,18 @@ public class UserRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateUser(@PathParam("id") int idUser){
 		userServiceLocal.update(userServiceLocal.get(idUser));
-
 	}
 
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String addUser(User user){
-		return userServiceLocal.addUser(user);
+	@Path("users")
+	public Response addUser(User user){
+		userServiceLocal.addUser(user);
+		return Response.status(Response.Status.CREATED).build();
 	}
 
-	//Certificat
-	
-		//addCErtificat
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("certificat")
-	public void add(Certificat certificat) {
-		serviceCertificat.add(certificat);
-	}
 
-	// getCertificatBySkillDone
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificat/{skill}")
-	public String getBySkill(@PathParam("skill") int skill) {
-		return JsonConverter.ConvertListCertificat(serviceCertificat.getBySkill(skill));
-	}
-
-	// updateCertificatDone
-	@PUT
-	@Path("certificat")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void update(Certificat certificat) {
-		serviceCertificat.update(certificat);
-	}
-
-	// getCertifByUser Done
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("certificats/{id}")
@@ -117,6 +92,7 @@ public class UserRessource {
 		return JsonConverter.ConvertListCertificat(list);
 
 	}
+
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
@@ -130,14 +106,14 @@ public class UserRessource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("buisnesses/{id}")
-	public String getByUser(@PathParam("id")int id) {
+	public Response getByUser(@PathParam("id")int id) {
 		List<Buisness> list = new ArrayList<Buisness>();
 		for (UserBuisness ub : userBuisnessService.getByUser(id)) {
 
 			list.add(ub.getBuisness());
 		}
-		return JsonConverter.ConvertListBuisness(list);
 
+		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListBuisness(list)).build();
 	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

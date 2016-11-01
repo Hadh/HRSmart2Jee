@@ -19,25 +19,23 @@ public class JobSkill implements Serializable {
 
 	   
 	
-	private int id;
+	private JobSkillPk id;
 	private boolean hasQuiz;
 	private int level;
-	private JobOffer jobOffer;
-	private Skill skill;
 	private static final long serialVersionUID = 1L;
 
 	public JobSkill() {
 		super();
 	}  
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public int getId() {
-		return this.id;
+	@EmbeddedId
+	public JobSkillPk getId() {
+		return id;
 	}
-	
-	public void setId(int id) {
+
+	public void setId(JobSkillPk id) {
 		this.id = id;
-	}   
+	}
+
 	public boolean getHasQuiz() {
 		return this.hasQuiz;
 	}
@@ -52,19 +50,19 @@ public class JobSkill implements Serializable {
 		this.level = level;
 	}
 	
-	@ManyToOne
+	@Transient
 	public JobOffer getJobOffer() {
-		return jobOffer;
+		return this.getId().getJobOffer();
 	}
 	public void setJobOffer(JobOffer jobOffer) {
-		this.jobOffer = jobOffer;
+		this.getId().setJobOffer(jobOffer);
 	}
-	@ManyToOne
+	@Transient
 	public Skill getSkill() {
-		return skill;
+		return this.getId().getSkill();
 	}
 	public void setSkill(Skill skill) {
-		this.skill = skill;
+		this.getId().setSkill(skill);
 	}
 	
 	
