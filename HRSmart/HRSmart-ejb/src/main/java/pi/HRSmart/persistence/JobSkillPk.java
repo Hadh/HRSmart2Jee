@@ -4,6 +4,8 @@
  */
 package pi.HRSmart.persistence;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
@@ -12,7 +14,7 @@ import javax.persistence.ManyToOne;
  *
  */
 @Embeddable
-public class JobSkillPk {
+public class JobSkillPk implements Serializable{
 
 	private JobOffer jobOffer;
 	private Skill skill;

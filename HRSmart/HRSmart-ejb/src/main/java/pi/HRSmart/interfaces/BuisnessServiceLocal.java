@@ -10,7 +10,6 @@ public interface BuisnessServiceLocal {
 	void add(Buisness Buisness);
   	void update(Buisness Buisness);
 	void remove(Buisness Buisness);
-	Buisness getById(int id);
 	Buisness get(int id);
   	List<Buisness> getAll();
   	List<Buisness> getAllBuisness();

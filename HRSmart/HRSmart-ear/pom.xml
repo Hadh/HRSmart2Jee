@@ -51,6 +51,17 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- This What i Added -->
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<defaultLibBundleDir>lib/</defaultLibBundleDir>
+					<skinnyWars>true</skinnyWars>
+				</configuration>
+			</plugin>
+			<!--END This What i Added -->
+
 		</plugins>
 	</build>
 </project>

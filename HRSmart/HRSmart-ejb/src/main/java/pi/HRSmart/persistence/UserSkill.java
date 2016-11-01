@@ -66,7 +66,7 @@ public class UserSkill implements Serializable {
 		this.user = user;
 	}
 
-	@ManyToMany(mappedBy = "userSkills",fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)
 	public List<Certificat> getCertificats() {
 		return certificats;
 	}

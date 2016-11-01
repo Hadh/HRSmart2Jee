@@ -18,8 +18,9 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import pi.HRSmart.interfaces.BuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Address;
 import pi.HRSmart.persistence.JobOffer;
@@ -32,71 +33,28 @@ public class BuisnessRessources {
 	
 	@EJB(beanName = "BuisnessService")
 	BuisnessServiceLocal service;
+
+	@EJB(beanName="UserBuisnessService")
+	UserBuisnessServiceLocal userBuisnessServiceLocal;
+
+	@EJB(beanName="UserService")
+	UserServiceLocal  userServiceLocal;
 	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBuisnessById(@PathParam("id") int id){
-		Buisness buisness = service.getById(id);
-		return Response.status(Response.Status.OK).entity(buisness).build();
+		Buisness buisness = service.get(id);
+		String result = JsonConverter.ConvertBuisness(buisness);
+		return Response.status(Response.Status.OK).entity(result).build();
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllBuisness(){
-		
 		List<Buisness> bu = service.getAllBuisness();
-		
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode main = mapper.createObjectNode();
-		ArrayNode Buisnessz = mapper.createArrayNode();
-		
-		for (Buisness buisness : bu) {
-			ObjectNode Buisness = mapper.createObjectNode();
-			Buisness.put("id", buisness.getId());
-			Buisness.put("name", buisness.getName());
-			
-			ArrayNode Stages = mapper.createArrayNode();
-			for (Stage stage : buisness.getStages()) {
-				ObjectNode Stage = mapper.createObjectNode();
-				Stage.put("id", stage.getId());
-				Stage.put("name", stage.getName());
-				Stages.add(Stage);
-			}
-			Buisness.put("Stages", Stages);
-			
-			ArrayNode Address = mapper.createArrayNode();
-			for (Address address : buisness.getAddress()) {
-				ObjectNode Adresse = mapper.createObjectNode();
-				Adresse.put("id", address.getId());
-				Adresse.put("name", address.getLocalisation());
-				Address.add(Adresse);
-			}
-			Buisness.put("Address", Address);
-			
-			ArrayNode Jobs = mapper.createArrayNode();
-			for (JobOffer job : buisness.getJobOffers()) {
-				ObjectNode Job = mapper.createObjectNode();
-				Job.put("id", job.getId());
-				Job.put("name", job.getTitle());
-				Jobs.add(Job);
-			}
-			Buisness.put("Jobs", Jobs);
-			
-			/*ArrayNode Users = mapper.createArrayNode();
-			for (UserBuisness u : buisness.getUserBuisness()) {
-				ObjectNode User = mapper.createObjectNode();
-				User.put("id", u.getId().getUser().getId());
-				User.put("name", u.getRole());
-				Users.add(User);
-			}
-			Buisness.put("Users", Users);*/
-			
-			Buisnessz.add(Buisness);
-		}
-		main.put("buisness", Buisnessz);
-		
-		return Response.status(Response.Status.OK).entity(main.toString()).build();
+		String result = JsonConverter.ConvertListBuisnessFull(bu);		
+		return Response.status(Response.Status.OK).entity(result).build();
 	}
 	
 	@POST
@@ -127,4 +85,25 @@ public class BuisnessRessources {
         service.remove(service.get(id));
      return Response.status(Response.Status.CREATED).build();
 	}
+
+	/* this service returns the role */
+	@GET
+	@Path("/{iduser}/{idbis}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getUserBuisness(@PathParam("iduser") int iduser,@PathParam("idbis") int idbis){
+		String role = userBuisnessServiceLocal.getRoleByUser(iduser,idbis);
+		return role;
+	}
+
+	/* this service returns the userbusiness based on his id and it has to be with role HR */
+	@GET
+	@Path("{iduser}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserBusinessByUser(@PathParam("iduser") int iduser){
+		UserBuisness ubs = userBuisnessServiceLocal.getUserBusinessByUser(userServiceLocal.get(iduser));
+		String result = JsonConverter.ConvertUserBusiness(ubs);
+		return Response.status(Response.Status.OK).entity(result).build();
+	}
+
+
 }

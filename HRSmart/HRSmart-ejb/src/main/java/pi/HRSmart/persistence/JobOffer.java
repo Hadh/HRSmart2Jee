@@ -72,7 +72,7 @@ public class JobOffer implements Serializable {
 		this.salary = salary;
 	}
 
-	@OneToMany(mappedBy = "jobOffer")
+	@OneToMany(mappedBy = "id.jobOffer")
 	public List<JobSkill> getJobSkills() {
 		return jobSkills;
 	}

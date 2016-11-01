@@ -8,12 +8,12 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;
 
-public class SendEmail {
+public class SendWelcomeMail {
 
 
     private static final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
-    public static boolean SendEmail(String to, String subject, String idBs)
+    public static boolean SendEmail(String to, String subject, String msg)
 
     {
 
@@ -22,7 +22,7 @@ public class SendEmail {
         final String password = "laouinihassene";
 
         boolean flag = false;
-        String msg;
+        String content;
 
         Properties props = new Properties();
 
@@ -58,11 +58,11 @@ public class SendEmail {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 
             message.setSubject(subject);
-            msg = " <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
+            content = " <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" +
                     " \n" +
                     "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                     "<head>\n" +
-                    "    <title>NETTUTS > Sign up</title>\n" +
+                    "    <title>HRSmart</title>\n" +
                     "    <style media=\"screen\" type=\"text/css\">\n" +
                     "\n" +
                     " /* Global Styles */\n" +
@@ -146,15 +146,14 @@ public class SendEmail {
                     "        <!-- stop php code -->\n" +
                     "     \n" +
                     "        <!-- title and description -->   \n" +
-                    "        <h3>Invitation Email</h3>\n" +
-                    "        <p>Please Click the link below to create your account</p>\n" +
+                    "        <h3>Welcome Email : </h3>\n" +
+                    "        <p>"+msg+"</p>\n" +
                     "         \n" +
-                    "     <a href='#'>Sign Up"+idBs+" </a>    \n" +
                     "    </div>\n" +
                     "    <!-- end wrap div -->\n" +
                     "</body>\n" +
                     "</html>";
-            message.setContent(msg, "text/html; charset=utf-8");
+            message.setContent(content, "text/html; charset=utf-8");
 
             Transport.send(message);
             flag = true;
