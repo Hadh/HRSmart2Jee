@@ -120,9 +120,11 @@ public class JsonConverter {
 			UserBuisnesses.add(userBusiness);
 		}
 
+
 		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
+	
 
 	public static String ConvertListUser(List<User>userList) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -160,7 +162,7 @@ public class JsonConverter {
             certificats.add(cert);
         }
         main.put("certificats", certificats);
-        return main.toString();
+	return main.toString();
     }
     
     public static String ConvertListBuisness(List<Buisness> list){
@@ -235,9 +237,7 @@ public class JsonConverter {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
-		//ArrayNode Buisnessz = mapper.createArrayNode();
-		
-		//for (Buisness buisness : listBuisness) {
+
 			ObjectNode Buisness = mapper.createObjectNode();
 			Buisness.put("id", buisness.getId());
 			Buisness.put("name", buisness.getName());
@@ -277,9 +277,6 @@ public class JsonConverter {
 				Users.add(User);
 			}
 			Buisness.put("Users", Users);
-			
-			//Buisnessz.add(Buisness);
-		//}
 		
 		main.put("buisness", Buisness);
 		
@@ -336,10 +333,44 @@ public class JsonConverter {
 		main.put("userSkills", userSkills);
 		return main.toString();
 	}
+
 	
+
+
+		
+		
+	public static String convertListUsersByBuisness(List<User> listUser){
+		 ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode main = mapper.createObjectNode();
+	        ArrayNode users = mapper.createArrayNode();
+	        for (User u : listUser){
+	            ObjectNode user = mapper.createObjectNode();
+	            user.put("id", u.getId());
+	            user.put("first name", u.getFirstName());
+	            user.put("last name", u.getLastName());
+	            users.add(user);
+	        }
+	        main.put("users", users);
+	        return main.toString();
+	    }
+	
+	public static String convertListStagesByBuisness(List<Stage> listStage){
+		 ObjectMapper mapper = new ObjectMapper();
+	        ObjectNode main = mapper.createObjectNode();
+	        ArrayNode stages = mapper.createArrayNode();
+	        for (Stage s : listStage){
+	            ObjectNode stage = mapper.createObjectNode();
+	            stage.put("id", s.getId());
+	            stage.put("name", s.getName());
+	            stages.add(stage);
+	        }
+	        main.put("stages", stages);
+	        return main.toString();
+	    }
+	
+
 	//return list of userbuisnesses (userBuisnesses/buisnesses)
 	public static String ConvertUserBusinessList(List<UserBuisness> list){
-
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
 		ArrayNode userbuisnesseses = mapper.createArrayNode();
@@ -377,53 +408,6 @@ public class JsonConverter {
 	        main.put("address", addressAll);
 	        return main.toString();
 	    }
-	
-	public static String convertListUsersByBuisness(List<User> listUser){
-		 ObjectMapper mapper = new ObjectMapper();
-	        ObjectNode main = mapper.createObjectNode();
-	        ArrayNode users = mapper.createArrayNode();
-	        for (User u : listUser){
-	            ObjectNode user = mapper.createObjectNode();
-	            user.put("id", u.getId());
-	            user.put("first name", u.getFirstName());
-	            user.put("last name", u.getLastName());
-	            users.add(user);
-	        }
-	        main.put("users", users);
-	        return main.toString();
-	    }
-	
-	public static String convertListStagesByBuisness(List<Stage> listStage){
-		 ObjectMapper mapper = new ObjectMapper();
-	        ObjectNode main = mapper.createObjectNode();
-	        ArrayNode stages = mapper.createArrayNode();
-	        for (Stage s : listStage){
-	            ObjectNode stage = mapper.createObjectNode();
-	            stage.put("id", s.getId());
-	            stage.put("name", s.getName());
-	            stages.add(stage);
-	        }
-	        main.put("stages", stages);
-	        return main.toString();
-	    }
-	
-
-
-	public static String ConvertQuiz(Quiz quiz){
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode main = mapper.createObjectNode();
-		ArrayNode questions = mapper.createArrayNode();
-		ObjectNode quizz = mapper.createObjectNode();
-
-		quizz.put("id", quiz.getId());
-		quizz.put("description",quiz.getDescrption());
-		quizz.put("duration",quiz.getDuration());
-
-		quizz.put("questions",convertQuestion(quiz.getQuestions()));
-		main.put("quiz",quizz);
-
-		return main.toString();
-	}
 	public static ArrayNode convertQuestion(List <Question> questions){
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode qs = mapper.createArrayNode();
@@ -442,4 +426,23 @@ public class JsonConverter {
 
 		return qs;
 	}
+
+
+	public static String ConvertQuiz(Quiz quiz){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode questions = mapper.createArrayNode();
+		ObjectNode quizz = mapper.createObjectNode();
+
+		quizz.put("id", quiz.getId());
+		quizz.put("description",quiz.getDescription());
+		quizz.put("duration",quiz.getDuration());
+
+		quizz.put("questions",convertQuestion(quiz.getQuestions()));
+		main.put("quiz",quizz);
+
+		return main.toString();
+	}
+
+
 }

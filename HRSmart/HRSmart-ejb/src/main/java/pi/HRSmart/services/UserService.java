@@ -67,7 +67,7 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public void update(User user) {
-		em.merge(user);
+		em.merge(em.find(User.class,user.getId()));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public String authenticate(String Login, String password) {
-User user=null;
+		User user=null;
 
 			Query query =
 					em.createQuery("select new User(e.id,e.firstName,e.lastName,e.login,e.password,e.adresse,e.numTel,e.age) " +
@@ -123,7 +123,6 @@ User user=null;
 
 	@Override
 	public List<User> getUserByBuisness(int idBuisness) {
-		
 		List<UserBuisness> result = userBuisnessServiceLocal.getByBuisness(idBuisness);
 		List<User> usersByBuisness = new ArrayList<>();
 		for (UserBuisness userBuisness : result) {
@@ -133,6 +132,7 @@ User user=null;
 
 
 	}
+
 
 	//public void inviteUser (User userEmailToAdd,)
 	

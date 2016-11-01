@@ -66,9 +66,7 @@ public class Postulation  implements Serializable{
                 '}';
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.postulation",orphanRemoval = true, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE
-    })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.postulation")
     
     public List<Assessment> getAssessments() {
         return assessments;

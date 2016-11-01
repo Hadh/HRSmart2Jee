@@ -48,10 +48,8 @@ public class JobOfferService implements JobOfferServiceLocal {
     }
 
 	@Override
-	public int add(JobOffer jobOffer) {
+	public void add(JobOffer jobOffer) {
 		em.persist(jobOffer);
-		em.refresh(jobOffer);
-		return jobOffer.getId();
 	}
 
 	@Override
@@ -107,13 +105,11 @@ public class JobOfferService implements JobOfferServiceLocal {
 			{
 				if(js.getSkill().getId() == us.getSkill().getId()
 						&& js.getLevel() <= us.getLevel())
-						
 				{
 					acheived++;
 				}
 			}
 		}
-		
 		return acheived/counter;
 	}
 	
@@ -122,6 +118,12 @@ public class JobOfferService implements JobOfferServiceLocal {
 	public List<JobOffer> getAllByBuisness(int idBuisness){
 		Query query = em.createQuery("Select j from JobOffer j where j.buisness = " + idBuisness);
 		return (List<JobOffer>) query.getResultList();
+	}
+
+	private String jobOfferUrl="localhost:18080/rest/job/";
+	public String generateEmployeeJobLink(User user, JobOffer job){
+		String generatedLink =this.jobOfferUrl+job.getId()+"?userId="+user.getId();
+		return generatedLink;
 	}
 
 	

@@ -8,10 +8,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.AddressServiceLocal;
+import pi.HRSmart.interfaces.AddressServiceRemote;
 import pi.HRSmart.persistence.Address;
 
 @Stateless
-public class AddressService implements AddressServiceLocal{
+public class AddressService implements AddressServiceLocal, AddressServiceRemote{
 	
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;

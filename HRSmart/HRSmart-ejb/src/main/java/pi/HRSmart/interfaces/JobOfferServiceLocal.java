@@ -14,7 +14,7 @@ import pi.HRSmart.persistence.JobOffer;
 
 @Remote
 public interface JobOfferServiceLocal {
-	  int add(JobOffer jobOffer);
+	  void add(JobOffer jobOffer);
 	  void update(JobOffer jobOffer);
 	  void remove(JobOffer jobOffer);
 	  JobOffer get(int id);
