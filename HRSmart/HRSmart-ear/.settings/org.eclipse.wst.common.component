@@ -8,7 +8,7 @@
         <dependent-module archiveName="HRSmart-ejb.jar" deploy-path="/" handle="module:/resource/HRSmart-ejb/HRSmart-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="java-jwt.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/com/auth0/java-jwt/2.2.1/java-jwt-2.2.1.jar">
+        <dependent-module archiveName="java-jwt.jar" deploy-path="/lib/" handle="module:/classpath/var/M2_REPO/com/auth0/java-jwt/2.2.1/java-jwt-2.2.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

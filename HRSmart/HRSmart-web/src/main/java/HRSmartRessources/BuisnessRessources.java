@@ -18,8 +18,9 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import pi.HRSmart.interfaces.BuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Address;
 import pi.HRSmart.persistence.JobOffer;
@@ -84,8 +85,6 @@ public class BuisnessRessources {
         service.remove(service.get(id));
      return Response.status(Response.Status.CREATED).build();
 	}
-	
-	
 
 	/* this service returns the role */
 	@GET

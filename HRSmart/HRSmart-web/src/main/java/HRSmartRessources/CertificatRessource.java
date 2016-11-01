@@ -77,7 +77,7 @@ public class CertificatRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllCertificats() {
 		return Response.status(Response.Status.FOUND)
-				.entity(JsonConverter.ConvertListCertif2(serviceCertificat.getAll())).build();
+				.entity(JsonConverter.ConvertListCertificat(serviceCertificat.getAll())).build();
 
 	}
 

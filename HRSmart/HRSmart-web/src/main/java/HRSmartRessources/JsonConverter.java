@@ -10,9 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import pi.HRSmart.persistence.Skill;
-import pi.HRSmart.persistence.UserSkill;
-
 import pi.HRSmart.persistence.Address;
 import pi.HRSmart.persistence.*;
 import pi.HRSmart.persistence.Stage;
@@ -226,11 +223,10 @@ public class JsonConverter {
 			
 			Buisnessz.add(Buisness);
 		}
-		main.put("certificats", certificats);
+		main.put("buisness", Buisnessz);
 		return main.toString();
 	}
 
-	public static String ConvertListBuisness(List<Buisness> list) {
 	
 		public static String ConvertBuisness(Buisness buisness){
 		
@@ -292,12 +288,11 @@ public class JsonConverter {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
 		ArrayNode buisnesses = mapper.createArrayNode();
-		for (Buisness b : list) {
 			ObjectNode buis = mapper.createObjectNode();
-			buis.put("id", b.getId());
-			buis.put("name", b.getName());
+			buis.put("id", usb.getBuisness().getId());
+			buis.put("name", usb.getBuisness().getName());
 			buisnesses.add(buis);
-		}
+		
 		main.put("buisnesses", buisnesses);
 
 		main.put("id", usb.getId().toString());
@@ -307,35 +302,8 @@ public class JsonConverter {
 		return main.toString();
 	}
 
-	public static String ConvertListCertif2(List<Certificat> list) {
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode main = mapper.createObjectNode();
-		ArrayNode certificats = mapper.createArrayNode();
-		for (Certificat c : list) {
-			ObjectNode cert = mapper.createObjectNode();
-			cert.put("id", c.getId());
-			cert.put("name", c.getName());
 
-			certificats.add(cert);
-		}
-		main.put("certificats", certificats);
-		return main.toString();
-	}
-
-	public static String ConvertListSkill(List<Skill> list) {
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode main = mapper.createObjectNode();
-		ArrayNode skills = mapper.createArrayNode();
-		for (Skill s : list) {
-			ObjectNode skill = mapper.createObjectNode();
-			skill.put("id", s.getId());
-			skill.put("name", s.getName());
-			skills.add(skill);
-		}
-		main.put("skills", skills);
-		return main.toString();
-	}
-
+	
 	public static String ConvertListUserSkill(List<UserSkill> list) {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();

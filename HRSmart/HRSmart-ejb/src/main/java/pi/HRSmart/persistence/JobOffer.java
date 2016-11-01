@@ -1,4 +1,4 @@
- package pi.HRSmart.persistence;
+package pi.HRSmart.persistence;
 
 import java.io.Serializable;
 import java.lang.String;
@@ -19,8 +19,6 @@ import pi.HRSmart.persistence.Buisness;
 
 public class JobOffer implements Serializable {
 
-	   
-	
 	private int id;
 	private String title;
 	private String description;
@@ -33,62 +31,80 @@ public class JobOffer implements Serializable {
 
 	public JobOffer() {
 		super();
-	}  
+	}
+
+	public JobOffer(int id) {
+		super();
+		this.id = id;
+	}
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return this.id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
-	}   
+	}
+
 	public String getTitle() {
 		return this.title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
-	}   
+	}
+
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}   
+	}
+
 	public int getSalary() {
 		return salary;
 	}
+
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	@OneToMany(mappedBy="jobOffer")
+
+	@OneToMany(mappedBy = "jobOffer")
 	public List<JobSkill> getJobSkills() {
 		return jobSkills;
 	}
+
 	public void setJobSkills(List<JobSkill> jobSkills) {
 		this.jobSkills = jobSkills;
 	}
-	@OneToMany(mappedBy="id.jobOffer")
+
+	@OneToMany(mappedBy = "id.jobOffer")
 	public List<Rewards> getRewards() {
 		return rewards;
 	}
+
 	public void setRewards(List<Rewards> rewards) {
 		this.rewards = rewards;
 	}
+
 	@ManyToOne
 	public Buisness getBuisness() {
 		return buisness;
 	}
+
 	public void setBuisness(Buisness buisness) {
 		this.buisness = buisness;
 	}
+
 	public boolean isActive() {
 		return active;
 	}
+
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-   
+
 }
