@@ -46,18 +46,12 @@ public class QuizService implements IQuizServiceLocal{
 
     @Override
     public Quiz get(int id) {
-
-        Quiz q;
-        q = em.find(Quiz.class, id);
-
-        return q;
-
+        return em.find(Quiz.class, id);
     }
 
     @Override
     public List<Quiz> all() {
         Query query = em.createQuery("select q from Quiz q");
-
         return (ArrayList<Quiz>)query.getResultList();
     }
     @Override

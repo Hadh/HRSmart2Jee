@@ -48,19 +48,10 @@ public class ChoiceService implements IChoiceServiceLocal{
 
     @Override
     public List<Choice> getMultiple(int[] ids) {
-        Query query = em.createQuery(
-                "select c from Choice c " +
-                "where c.id = :id1 " +
-                "or c.id = :id2 " +
-                "or c.id = :id3 " +
-                "or c.id = :id4 "
-
-        );
-
-        for(int i=0 ; i < ids.length ; i++){
-            query.setParameter("id"+i , ids[i]);
+        List <Choice> choices = new ArrayList<>();
+        for(int i: ids){
+            choices.add(this.get(i));
         }
-
-        return (ArrayList<Choice>) query.getResultList();
+        return choices;
     }
 }

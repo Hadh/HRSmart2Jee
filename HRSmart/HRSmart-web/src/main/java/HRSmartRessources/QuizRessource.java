@@ -26,13 +26,13 @@ public class QuizRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Quiz getQuizz(@PathParam(value = "id")int id){
+    public String getQuizz(@PathParam(value = "id")int id){
         Quiz quiz = new Quiz();
         try{
             quiz =  quizService.getWithRelations(id);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-        return quiz;
+        return JsonConverter.ConvertQuiz(quiz);
     }
 }

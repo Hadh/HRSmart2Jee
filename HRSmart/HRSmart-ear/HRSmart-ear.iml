@@ -17,6 +17,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.auth0:java-jwt:2.2.1" level="project" />
     <orderEntry type="module" module-name="HRSmart-web" />
     <orderEntry type="module" module-name="HRSmart-ejb" />
     <orderEntry type="library" name="Maven: com.auth0:java-jwt:2.2.1" level="project" />

@@ -11,6 +11,10 @@ import java.util.List;
 @Local
 public interface IAssessmentServiceLocal {
 
+    void add(Assessment assessment);
+    void remove(Assessment assessment);
+    Assessment getUnique(int quiz_id, int postulation_id);
     List <Assessment> getByQuiz(int quiz_id) ;
     List <Assessment> getByPostulation(int post_id);
+    void calculateResult(Assessment assessment,int[] ids);
 }
