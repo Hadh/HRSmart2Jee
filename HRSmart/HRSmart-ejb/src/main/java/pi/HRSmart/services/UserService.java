@@ -114,7 +114,8 @@ public class UserService implements UserServiceLocal {
 	}
 
 	//public void inviteUser (User userEmailToAdd,)
-
+	
+	
 
 
 

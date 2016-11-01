@@ -15,6 +15,8 @@ import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.JobOffer;
 import pi.HRSmart.persistence.JobSkill;
 import pi.HRSmart.persistence.Rewards;
+import pi.HRSmart.persistence.Skill;
+import pi.HRSmart.persistence.UserSkill;
 
 /**
  * @author Khaled Romdhane
@@ -104,18 +106,77 @@ public class JsonConverter {
 		main.put("certificats", certificats);
 		return main.toString();
 	}
-	
-	public static String ConvertListBuisness(List<Buisness> list){
+
+	public static String ConvertListBuisness(List<Buisness> list) {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
 		ArrayNode buisnesses = mapper.createArrayNode();
-		for (Buisness b : list){
+		for (Buisness b : list) {
 			ObjectNode buis = mapper.createObjectNode();
 			buis.put("id", b.getId());
 			buis.put("name", b.getName());
 			buisnesses.add(buis);
 		}
 		main.put("buisnesses", buisnesses);
+		return main.toString();
+	}
+
+	public static String ConvertListCertif2(List<Certificat> list) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode certificats = mapper.createArrayNode();
+		for (Certificat c : list) {
+			ObjectNode cert = mapper.createObjectNode();
+			cert.put("id", c.getId());
+			cert.put("name", c.getName());
+
+			certificats.add(cert);
+		}
+		main.put("certificats", certificats);
+		return main.toString();
+	}
+
+	public static String ConvertListSkill(List<Skill> list) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode skills = mapper.createArrayNode();
+		for (Skill s : list) {
+			ObjectNode skill = mapper.createObjectNode();
+			skill.put("id", s.getId());
+			skill.put("name", s.getName());
+			skills.add(skill);
+		}
+		main.put("skills", skills);
+		return main.toString();
+	}
+
+	public static String ConvertListUserSkill(List<UserSkill> list) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode userSkills = mapper.createArrayNode();
+		for (UserSkill us : list) {
+			ObjectNode userSkill = mapper.createObjectNode();
+			
+			ObjectNode skillnode = mapper.createObjectNode();
+			skillnode.put("id", us.getSkill().getId());
+			skillnode.put("name", us.getSkill().getName());
+			ObjectNode id = mapper.createObjectNode();
+			id.put("skill", skillnode);
+			id.put("user", us.getUser().getId());
+			userSkill.put("id", id);
+			userSkill.put("level", us.getLevel());
+			ArrayNode certifs = mapper.createArrayNode();
+			for (Certificat c : us.getCertificats()) {
+				ObjectNode cert = mapper.createObjectNode();
+				cert.put("id", c.getId());
+				cert.put("name", c.getName());
+				certifs.add(cert);
+
+			}
+			userSkill.put("certificats", certifs);
+			userSkills.add(userSkill);
+		}
+		main.put("userSkills", userSkills);
 		return main.toString();
 	}
 

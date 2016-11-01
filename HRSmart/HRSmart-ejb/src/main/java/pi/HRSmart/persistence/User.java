@@ -31,6 +31,10 @@ public class User implements Serializable {
 	public User() {
 		super();
 	}
+	public User(int id) {
+		super();
+		this.Id=id;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
