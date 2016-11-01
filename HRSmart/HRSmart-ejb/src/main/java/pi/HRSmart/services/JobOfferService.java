@@ -124,6 +124,12 @@ public class JobOfferService implements JobOfferServiceLocal {
 		return (List<JobOffer>) query.getResultList();
 	}
 
+	private String jobOfferUrl="localhost:18080/rest/job/";
+	public String generateEmployeeJobLink(User user, JobOffer job){
+		String generatedLink =this.jobOfferUrl+job.getId()+"?userId="+user.getId();
+		return generatedLink;
+	}
+
 	
 	
 

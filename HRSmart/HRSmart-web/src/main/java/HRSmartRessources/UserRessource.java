@@ -46,7 +46,7 @@ public class UserRessource {
 	// Certificat
 
 	// addCErtificatDone
-
+	@Secured
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
@@ -67,6 +67,7 @@ public class UserRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateUser(@PathParam("id") int idUser){
 		userServiceLocal.update(userServiceLocal.get(idUser));
+
 	}
 
 
@@ -116,7 +117,6 @@ public class UserRessource {
 		return JsonConverter.ConvertListCertificat(list);
 
 	}
-	@Secured
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
