@@ -16,4 +16,5 @@ public interface IChoiceServiceLocal {
     void remove(Choice choice);
     Choice get(int id);
     List<Choice> all();
+    List<Choice> getMultiple(int[] ids);
 }

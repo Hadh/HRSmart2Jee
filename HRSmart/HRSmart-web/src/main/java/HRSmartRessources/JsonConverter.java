@@ -333,6 +333,7 @@ public class JsonConverter {
 		main.put("userSkills", userSkills);
 		return main.toString();
 	}
+
 		
 		
 	public static String convertListAddress(List<Address> listAddress){
@@ -379,4 +380,42 @@ public class JsonConverter {
 	        main.put("stages", stages);
 	        return main.toString();
 	    }
+	
+
+
+	public static String ConvertQuiz(Quiz quiz){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode questions = mapper.createArrayNode();
+		ObjectNode quizz = mapper.createObjectNode();
+
+		quizz.put("id", quiz.getId());
+		quizz.put("description",quiz.getDescription());
+		quizz.put("duration",quiz.getDuration());
+
+		quizz.put("questions",convertQuestion(quiz.getQuestions()));
+		main.put("quiz",quizz);
+
+		return main.toString();
 	}
+	public static ArrayNode convertQuestion(List <Question> questions){
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode qs = mapper.createArrayNode();
+
+		for(Question q : questions){
+			ObjectNode question = mapper.createObjectNode();
+			qs.add(convertQuestion(q));
+		}
+		return qs;
+	}
+	public static ObjectNode convertQuestion(Question question) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode qs = mapper.createObjectNode();
+		qs.put("id",question.getId());
+		qs.put("body",question.getBody());
+
+		return qs;
+	}
+
+
+}

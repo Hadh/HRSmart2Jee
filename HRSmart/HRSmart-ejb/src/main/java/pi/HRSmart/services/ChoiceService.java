@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,5 +44,14 @@ public class ChoiceService implements IChoiceServiceLocal{
     public List<Choice> all() {
         Query query = em.createQuery("select c from Choice c");
         return (List<Choice>) query.getResultList();
+    }
+
+    @Override
+    public List<Choice> getMultiple(int[] ids) {
+        List <Choice> choices = new ArrayList<>();
+        for(int i: ids){
+            choices.add(this.get(i));
+        }
+        return choices;
     }
 }

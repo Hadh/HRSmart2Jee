@@ -2,15 +2,20 @@ package pi.HRSmart.services;
 
 import pi.HRSmart.interfaces.IQuestionServiceLocal;
 import pi.HRSmart.persistence.Question;
+import pi.HRSmart.persistence.Quiz;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by alaa on 20/10/16.
  */
+@Stateless
 public class QuestionService implements IQuestionServiceLocal{
 
     @PersistenceContext(unitName = "HRSmart-ejb")
@@ -37,9 +42,10 @@ public class QuestionService implements IQuestionServiceLocal{
     }
 
     @Override
-    public List<Question> all() {
+    public ArrayList<Question> all() {
         Query query = em.createQuery("select q from Question q");
 
-        return (List<Question>)query.getResultList();
+        return (ArrayList<Question>)query.getResultList();
     }
+
 }

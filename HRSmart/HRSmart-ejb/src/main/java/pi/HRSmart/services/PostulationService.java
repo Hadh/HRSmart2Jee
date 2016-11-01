@@ -1,6 +1,7 @@
 package pi.HRSmart.services;
 
 import pi.HRSmart.interfaces.PostulationServiceLocal;
+import pi.HRSmart.persistence.Assessment;
 import pi.HRSmart.persistence.Postulation;
 import pi.HRSmart.persistence.Skill;
 
@@ -8,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,14 +55,24 @@ public class PostulationService implements PostulationServiceLocal {
 
     @Override
     public List<Postulation> filterPostulationsByQuizResult(int threshold, Skill sk) {
-        Query query = em.createQuery("SELECT a " +
-                "FROM Assessment a " +
-                "inner join a.pk.quiz qui  " +
+        Query query = em.createQuery("SELECT p " +
+                "FROM Postulation p " +
+                "join p.assessments a " +
+                "join a.pk.quiz qui  " +
                 "join qui.questions qq " +
                 "WHERE a.result > :threshold and qq.skill = :skill")
                 .setParameter("threshold", threshold)
                 .setParameter("skill", sk).setMaxResults(5);
         return (List<Postulation>) query.getResultList();
+    }
+
+    @Override
+    public List<Assessment> getPostulationResults(Postulation ps) {
+        Query query = em.createQuery(
+                "select a from Assessment a left join a.postulation where a.postulation = :ps"
+        ).setParameter("ps", ps.getIdPostulation());
+
+        return (ArrayList<Assessment>) query.getResultList();
     }
 
 
