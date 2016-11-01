@@ -8,17 +8,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import pi.HRSmart.interfaces.BuisnessServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.Buisness;
-import pi.HRSmart.persistence.Address;
-import pi.HRSmart.persistence.JobOffer;
-import pi.HRSmart.persistence.Stage;
+import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
+
 
 @Path("buisness")
 @RequestScoped
@@ -32,6 +29,10 @@ public class BuisnessRessources {
 
 	@EJB(beanName="UserService")
 	UserServiceLocal  userServiceLocal;
+
+	
+	@EJB(beanName = "UserService")
+	UserServiceLocal serviceUser;
 	
 	@GET
 	@Path("/{id}")
@@ -64,21 +65,24 @@ public class BuisnessRessources {
 		return Response.status(Response.Status.CREATED).build();
 	}
 	
-	/*@DELETE
+	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteBuisness(Buisness buisness){
 		service.remove(buisness);
 		return Response.status(Response.Status.CREATED).build();
-	}*/
-	
-	@Path("/{id}")
-    @DELETE
-    public Response removeAnswer(@PathParam("id") int id) {
-
-        service.remove(service.get(id));
-     return Response.status(Response.Status.CREATED).build();
 	}
-
+	
+	
+	//statistic
+	@GET
+	@Path("/users/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsersByBuisness(@PathParam("id") int idBuisness){
+		List<User> users = serviceUser.getUserByBuisness(idBuisness);
+		String result = JsonConverter.convertListUsersByBuisness(users);
+		return Response.status(Response.Status.OK).entity(result).build();
+	}
+	
 	/* this service returns the role */
 	@GET
 	@Path("/{iduser}/{idbis}")
@@ -87,6 +91,7 @@ public class BuisnessRessources {
 		String role = userBuisnessServiceLocal.getRoleByUser(iduser,idbis);
 		return role;
 	}
+
 
 	/* this service returns the userbusiness based on his id and it has to be with role HR */
 	@GET

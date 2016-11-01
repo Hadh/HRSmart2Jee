@@ -123,7 +123,6 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public List<User> getUserByBuisness(int idBuisness) {
-		
 		List<UserBuisness> result = userBuisnessServiceLocal.getByBuisness(idBuisness);
 		List<User> usersByBuisness = new ArrayList<>();
 		for (UserBuisness userBuisness : result) {

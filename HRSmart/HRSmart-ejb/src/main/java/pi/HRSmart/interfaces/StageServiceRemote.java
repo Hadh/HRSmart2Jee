@@ -1,13 +1,13 @@
 package pi.HRSmart.interfaces;
 
 import java.util.List;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Stage;
 
-@Local
-public interface StageServiceLocal {
+@Remote
+public interface StageServiceRemote {
 	
 	void add(Stage Stage);
   	void update(Stage Stage);
