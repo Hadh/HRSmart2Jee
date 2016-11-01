@@ -85,7 +85,7 @@ public class UserRessource {
 	public String getCertificatByUser(@PathParam("id") int id) {
 		List<Certificat> list = new ArrayList<Certificat>();
 
-		for (UserSkill us : userSkillService.getByUser(id)) {
+		for (UserSkill us : userSkillsService.getByUser(id)) {
 
 			list.addAll(us.getCertificats());
 		}
