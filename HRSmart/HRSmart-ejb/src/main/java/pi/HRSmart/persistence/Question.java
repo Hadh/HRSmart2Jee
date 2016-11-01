@@ -36,7 +36,7 @@ public class Question implements Serializable{
     public void setBody(String body) {
         this.body = body;
     }
-    @ManyToOne
+    @ManyToOne//(fetch = FetchType.LAZY)
     public Skill getSkill() {
         return skill;
     }

@@ -46,7 +46,7 @@ public class Skill implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@OneToMany(mappedBy="skill")
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="skill")
 	public List<JobSkill> getJobSkills() {
 		return jobSkills;
 	}
