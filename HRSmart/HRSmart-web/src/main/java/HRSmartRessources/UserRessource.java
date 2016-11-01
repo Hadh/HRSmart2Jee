@@ -77,22 +77,7 @@ public class UserRessource {
 		return Response.status(Response.Status.CREATED).build();
 	}
 
-	//Certificat
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificat/{skill}")
-	public String getBySkill(@PathParam("skill") int skill) {
-		return JsonConverter.ConvertListCertificat(serviceCertificat.getBySkill(skill));
-	}
-
-	// updateCertificatDone
-	@PUT
-	@Path("certificat")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void update(Certificat certificat) {
-		serviceCertificat.update(certificat);
-	}
 
 	@Secured
 	@GET
@@ -106,7 +91,7 @@ public class UserRessource {
 	//getbyUser
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificats/{id}")
+	@Path("{id}/certificats")
 	public Response getCertificatByUser(@PathParam("id") int id) {
 		List<Certificat> list = new ArrayList<Certificat>();
 

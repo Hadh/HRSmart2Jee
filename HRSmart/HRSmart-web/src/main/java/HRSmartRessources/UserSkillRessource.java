@@ -31,7 +31,7 @@ import pi.HRSmart.persistence.UserSkill;
  * @author yesmine
  *
  */
-@Path("userskill")
+@Path("userskills")
 @RequestScoped
 
 public class UserSkillRessource {
@@ -52,10 +52,10 @@ public class UserSkillRessource {
 		return Response.status(Response.Status.CREATED).build();
 	}
 
-	// getCertificatBySkill Done
+	// getCertificatByuserSkill Done
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificat/{skill}")
+	@Path("certificats/{skill}")
 	public Response getBySkill(@PathParam("skill") int skill) {
 
 		return Response.status(Response.Status.FOUND)
@@ -63,7 +63,7 @@ public class UserSkillRessource {
 
 	}
 
-	// updateUserSkill//// update usercertificat done
+	// updateUserSkill and their certificats done
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateuserSkill(UserSkill userSkill) {
