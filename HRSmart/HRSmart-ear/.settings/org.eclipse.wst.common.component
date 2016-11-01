@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="HRSmart-ear">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
+        <dependent-module archiveName="HRSmart-web.war" deploy-path="/" handle="module:/resource/HRSmart-web/HRSmart-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="HRSmart-ejb.jar" deploy-path="/" handle="module:/resource/HRSmart-ejb/HRSmart-ejb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="java-jwt.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/com/auth0/java-jwt/2.2.1/java-jwt-2.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

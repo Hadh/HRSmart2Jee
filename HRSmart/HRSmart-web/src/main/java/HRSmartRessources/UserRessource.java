@@ -5,13 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,11 +23,12 @@ import pi.HRSmart.persistence.Skill;
 import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.utilities.Secured;
 
 /**
  * Created by hadhemi on 10/30/2016.
  */
-@Path("user")
+@Path("users")
 @RequestScoped
 public class UserRessource {
 
@@ -56,39 +51,23 @@ public class UserRessource {
 	@Path("{id}")
 	public String getFull(@PathParam("id") int id) {
 		User user = userServiceLocal.getFull(id);
-
-
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode main = mapper.createObjectNode();
-
-		main.put("id", user.getId());
-		main.put("firstName", user.getFirstName());
-		main.put("lastName", user.getLastName());
-		main.put("adresse", user.getAdresse());
-		main.put("numTel", user.getNumTel());
-		main.put("login", user.getLogin());
-		main.put("password", user.getPassword());
-
-		ArrayNode UserBuisnesses = mapper.createArrayNode();
-
-		for (UserBuisness bs : user.getUserBuisness()) {
-
-			ObjectNode userBusiness = mapper.createObjectNode();
-			userBusiness.put("id", bs.getId().toString());
-			userBusiness.put("role", bs.getRole());
-			userBusiness.put("salary", bs.getSalary());
-			userBusiness.put("hiredate", bs.getHireDate().toString());
-
-			ObjectNode business = mapper.createObjectNode();
-			business.put("id", bs.getBuisness().getId());
-			business.put("name", bs.getBuisness().getName());
-			userBusiness.put("Business",business);
-			UserBuisnesses.add(userBusiness);
-		}
-
-		main.put("UserBuisnesses", UserBuisnesses);
-		return main.toString();
+		return JsonConverter.ConvertUser(user);
 	}
+
+	@DELETE
+	@Path("{id}")
+	public void deleteUser(@PathParam("id") int id){
+		userServiceLocal.delete(userServiceLocal.get(id));
+	}
+
+
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateUser(@PathParam("id") int idUser){
+		userServiceLocal.update(userServiceLocal.get(idUser));
+	}
+
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -97,6 +76,7 @@ public class UserRessource {
 		userServiceLocal.addUser(user);
 		return Response.status(Response.Status.CREATED).build();
 	}
+
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -121,6 +101,13 @@ public class UserRessource {
 		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListCertificat(list)).build();
 	}
 
+	@Secured
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("{user}/{password}")
+	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
+		return userServiceLocal.authenticate(user,password);
+	}
 	// Buisness
 	// getBuisnessByUser
 
@@ -135,6 +122,11 @@ public class UserRessource {
 		}
 		
 		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListBuisness(list)).build();
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllUsers(){
+		return JsonConverter.ConvertListUser(userServiceLocal.getAll());
 	}
 
 	
