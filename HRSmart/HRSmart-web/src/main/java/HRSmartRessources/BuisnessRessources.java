@@ -102,6 +102,4 @@ public class BuisnessRessources {
 		String result = JsonConverter.ConvertUserBusiness(ubs);
 		return result;
 	}
-
-
 }
