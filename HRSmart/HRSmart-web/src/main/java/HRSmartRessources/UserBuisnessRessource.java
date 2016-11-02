@@ -67,9 +67,16 @@ public class UserBuisnessRessource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-
 		return Response.status(Response.Status.FOUND)
 				.entity(JsonConverter.ConvertUserBusinessList(userBuisnessService.getAll())).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("{id}/bestEmployee")
+	public Response getBestEmployee(@PathParam("id") int id) {
+		return Response.status(Response.Status.FOUND)
+				.entity(JsonConverter.ConvertUser(userBuisnessService.getBestEmployee(id))).build();
 	}
 
 }

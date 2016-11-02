@@ -12,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import pi.HRSmart.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Khaled Romdhane
@@ -112,6 +114,8 @@ public class DataBaseFiller {
 	
 		em.persist(js21);
 		em.persist(js22);
+		
+		
 		// User
 		User user1 = new User();
 		user1.setFirstName("Bob");
@@ -121,6 +125,52 @@ public class DataBaseFiller {
 		
 		
 		em.persist(user1);
+		//user2
+		User user2 = new User();
+		user2.setFirstName("yesmine");
+		user2.setLastName("sayah");
+		user2.setLogin("2345");
+		user2.setPassword("yesmine");
+		
+		
+		em.persist(user2);
+		
+		//user 3
+		User user3 = new User();
+		user3.setFirstName("khaled");
+		user3.setLastName("romdhane");
+		user3.setLogin("456");
+		user3.setPassword("khaled");
+		
+		
+		em.persist(user3);
+		// User Buisness
+		
+		UserBuisness ub1 = new UserBuisness();
+		UserBuisnessPK ubpk1 = new UserBuisnessPK();
+		ubpk1.setBuisness(em.merge(buisness1));
+		ubpk1.setUser(em.merge(user1));
+		ub1.setId(ubpk1);
+		ub1.setHireDate(new Date());
+		em.persist(ub1);
+		
+		UserBuisness ub2 = new UserBuisness();
+		UserBuisnessPK ubpk2 = new UserBuisnessPK();
+		ubpk2.setBuisness(em.merge(buisness1));
+		ubpk2.setUser(em.merge(user2));
+		ub2.setHireDate(new Date());
+		ub2.setId(ubpk2);
+		
+		em.persist(ub2);
+		
+		UserBuisness ub3 = new UserBuisness();
+		UserBuisnessPK ubpk3 = new UserBuisnessPK();
+		ubpk3.setBuisness(em.merge(buisness1));
+		ubpk3.setUser(em.merge(user3));
+		ub3.setHireDate(new Date());
+		ub3.setId(ubpk3);
+		
+		em.persist(ub3);
 		
 		// User 1 Skills
 		UserSkill us1 = new UserSkill();
@@ -129,7 +179,35 @@ public class DataBaseFiller {
 		uspk1.setUser(em.merge(user1));
 		us1.setId(uspk1);
 		us1.setLevel(10);
+		List<Certificat> listCert = new ArrayList<Certificat>();
+		listCert.add(c1);
+		us1.setCertificats(listCert);
 		em.persist(us1);
+		
+		UserSkill us2 = new UserSkill();
+		UserSkillPk uspk2 = new UserSkillPk();
+		uspk2.setSkill(em.merge(s1));
+		uspk2.setUser(em.merge(user2));
+		us2.setId(uspk2);
+		us2.setLevel(9);
+		em.persist(us2);
+		
+		UserSkill us3 = new UserSkill();
+		UserSkillPk uspk3 = new UserSkillPk();
+		uspk3.setSkill(em.merge(s1));
+		uspk3.setUser(em.merge(user3));
+		us3.setId(uspk3);
+		us3.setLevel(9);
+		em.persist(us3);
+		
+		UserSkill us4 = new UserSkill();
+		UserSkillPk uspk4 = new UserSkillPk();
+		uspk4.setSkill(em.merge(s2));
+		uspk4.setUser(em.merge(user3));
+		us4.setId(uspk4);
+		us4.setLevel(7);
+		em.persist(us4);
+		
 		/*
 		UserSkill us2 = new UserSkill();
 		us2.setSkill(s3);
