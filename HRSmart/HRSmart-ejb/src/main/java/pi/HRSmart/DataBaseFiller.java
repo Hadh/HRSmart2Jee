@@ -57,9 +57,18 @@ public class DataBaseFiller {
 		JobOffer job1 = new JobOffer();
 		job1.setBuisness(buisness1);
 		job1.setTitle("Web Dev");
-		job1.setDescription("We require a web dev for PHP and HTML i'm stupid");
-		
+		job1.setDescription("We require a web dev for PHP and JAVA");
+		job1.setSalary(1000);
+		job1.setActive(true);
 		em.persist(job1);
+		
+		JobOffer job2 = new JobOffer();
+		job2.setBuisness(buisness1);
+		job2.setTitle("Angular Dev");
+		job2.setDescription("We require a web dev for JAVA and Javascript");
+		job2.setSalary(1200);
+		job2.setActive(true);
+		em.persist(job2);
 		
 		/////////Certificats
 	
@@ -68,21 +77,41 @@ public class DataBaseFiller {
 		c1.setSkill(s2);
 		em.persist(c1);
 		
-/*
+
 		// Job1 Skills
 		JobSkill js1 = new JobSkill();
-		js1.setJobOffer(job1);
-		js1.setSkill(s1);
+		JobSkillPk jspk1 = new JobSkillPk();
+		jspk1.setJobOffer(em.merge(job1));
+		jspk1.setSkill(em.merge(s1));
+		js1.setId(jspk1);
 		js1.setLevel(10);
 
 		JobSkill js2 = new JobSkill();
-		js2.setJobOffer(job1);
-		js2.setSkill(s3);
+		JobSkillPk jspk2 = new JobSkillPk();
+		jspk2.setJobOffer(em.merge(job1));
+		jspk2.setSkill(em.merge(s2));
+		js2.setId(jspk2);
 		js2.setLevel(8);
 	
 		em.persist(js1);
 		em.persist(js2);
-*/
+
+		JobSkill js21 = new JobSkill();
+		JobSkillPk jspk21 = new JobSkillPk();
+		jspk21.setJobOffer(em.merge(job2));
+		jspk21.setSkill(em.merge(s4));
+		js21.setId(jspk21);
+		js21.setLevel(10);
+
+		JobSkill js22 = new JobSkill();
+		JobSkillPk jspk22 = new JobSkillPk();
+		jspk22.setJobOffer(em.merge(job2));
+		jspk22.setSkill(em.merge(s2));
+		js22.setId(jspk22);
+		js22.setLevel(8);
+	
+		em.persist(js21);
+		em.persist(js22);
 		// User
 		User user1 = new User();
 		user1.setFirstName("Bob");
@@ -92,20 +121,22 @@ public class DataBaseFiller {
 		
 		
 		em.persist(user1);
-		/*
+		
 		// User 1 Skills
 		UserSkill us1 = new UserSkill();
-		us1.setSkill(s1);
-		us1.setUser(user1);
-		us1.setSkill(s2);
-//		us1.setLevel(10);
-
+		UserSkillPk uspk1 = new UserSkillPk();
+		uspk1.setSkill(em.merge(s1));
+		uspk1.setUser(em.merge(user1));
+		us1.setId(uspk1);
+		us1.setLevel(10);
+		em.persist(us1);
+		/*
 		UserSkill us2 = new UserSkill();
 		us2.setSkill(s3);
 		us2.setUser(user1);
 		us2.setLevel(8);
 		
-		em.persist(us1);
+		
 		em.persist(us2);
 
 		// User 1 Buisness

@@ -6,6 +6,7 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.JobOffer;
+import pi.HRSmart.persistence.User;
 
 /**
  * @author Khaled Romdhane
@@ -14,15 +15,24 @@ import pi.HRSmart.persistence.JobOffer;
 
 @Remote
 public interface JobOfferServiceLocal {
-	  void add(JobOffer jobOffer);
-	  void update(JobOffer jobOffer);
-	  void remove(JobOffer jobOffer);
-	  JobOffer get(int id);
-	  JobOffer getFull(int id);
-	  List<JobOffer> getAll();
+	void add(JobOffer jobOffer);
 
-	  
-	  float compatibilityJobUser(int user,int job);
-	  List<JobOffer> getAllByBuisness(int id);
-	  
+	void update(JobOffer jobOffer);
+
+	void remove(JobOffer jobOffer);
+
+	JobOffer get(int id);
+
+	JobOffer getFull(int id);
+
+	List<JobOffer> getAll();
+
+	List<JobOffer> getAllFull();
+
+	float compatibilityJobUser(User user, JobOffer job);
+
+	List<JobOffer> getAllByBuisness(int id);
+
+	float getJobSalary(JobOffer job);
+
 }

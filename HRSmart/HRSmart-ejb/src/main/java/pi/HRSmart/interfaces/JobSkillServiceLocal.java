@@ -15,13 +15,21 @@ import pi.HRSmart.persistence.Skill;
 
 @Local
 public interface JobSkillServiceLocal {
-	
-	 void add(JobSkill jobSkill);
-	 void update(JobSkill jobSkill);
-	 void remove(JobSkill jobSkill);
-	 JobSkill get(int id);
-	 List<JobSkill> getAll();
+
+	void add(JobSkill jobSkill);
+
+	void update(JobSkill jobSkill);
+
+	void remove(JobSkill jobSkill);
+
+	JobSkill get(int idJob, int idSkill);
+
+	List<JobSkill> getAll();
+
 	List<JobSkill> getByJob(JobOffer jobOffer);
 
+	List<JobSkill> getBySkill(Skill skill);
+
+	float getSkillAverageSalary(Skill skill);
 
 }
