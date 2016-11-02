@@ -3,6 +3,7 @@ package pi.HRSmart.persistence;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 /**
@@ -17,7 +18,8 @@ public class Postulation  implements Serializable{
     private Date datePostulation;
     private User Postulant;
     private Rewards Reward;
-    private List<Assessment> assessments;
+    private List<Assessment> assessments = new ArrayList<>();
+    private List <Report> reports = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -54,6 +56,15 @@ public class Postulation  implements Serializable{
 
     public void setReward(Rewards reward) {
         Reward = reward;
+    }
+
+    @OneToMany(mappedBy = "postulation")
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
     }
 
     @Override
