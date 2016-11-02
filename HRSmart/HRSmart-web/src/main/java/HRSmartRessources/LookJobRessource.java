@@ -24,6 +24,7 @@ import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.JobOffer;
 import pi.HRSmart.persistence.JobSkill;
 import pi.HRSmart.persistence.Rewards;
+import pi.HRSmart.persistence.User;
 
 /**
  * @author Khaled Romdhane
@@ -38,23 +39,29 @@ public class LookJobRessource {
 
 	@EJB(beanName = "UserService")
 	UserServiceLocal userService;
-/*
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAll() {
-		List<JobOffer> list = jobService.getAll();
+	@Path("{userId}")
+	public String getAll(@PathParam("userId") int userId) {
+		User user = userService.getFull(userId);
+		List<JobOffer> list = jobService.getAllFull();
 		List<Float> compJobUser = new ArrayList<Float>();
 		for(JobOffer j : list)
 		{
-			compJobUser.add(jobService.compatibilityJobUser(user, job));
+			compJobUser.add(jobService.compatibilityJobUser(user, j)*100);
 		}
-		return JsonConverter.ConvertJobList(list);
+		return JsonConverter.ConvertJobUserList(list,compJobUser);
 	}
-*/
+
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{id}")
-	public String getFull(@PathParam("id") int id) {
-		return JsonConverter.ConvertJobFull(jobService.getFull(id));
+	@Path("{userId}/{id}")
+	public String getFull(@PathParam("userId") int userId,@PathParam("id") int id) {
+		JobOffer job = jobService.getFull(id);
+		User user = userService.getFull(userId);
+		float comp = jobService.compatibilityJobUser(user, job)*100;
+		return JsonConverter.ConvertJobUser(job,comp);
 	}
 }

@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import pi.HRSmart.interfaces.AddressServiceLocal;
 import pi.HRSmart.interfaces.BuisnessServiceLocal;
+import pi.HRSmart.interfaces.BuisnessServiceRemote;
 import pi.HRSmart.interfaces.JobOfferServiceLocal;
 import pi.HRSmart.interfaces.StageServiceLocal;
 import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
@@ -17,7 +18,7 @@ import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Stage;
 
 @Stateless
-public class BuisnessService implements BuisnessServiceLocal {
+public class BuisnessService implements BuisnessServiceLocal, BuisnessServiceRemote {
 	
 	@EJB(beanName="StageService")
 	StageServiceLocal serviceStage;

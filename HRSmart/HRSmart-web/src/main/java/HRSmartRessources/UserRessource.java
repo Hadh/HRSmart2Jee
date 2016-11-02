@@ -19,7 +19,6 @@ import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.Buisness;
 import pi.HRSmart.persistence.Certificat;
-import pi.HRSmart.persistence.Skill;
 import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.persistence.UserSkill;
@@ -44,8 +43,10 @@ public class UserRessource {
 	@EJB(beanName = "UserBuisnessService")
 	UserBuisnessServiceLocal userBuisnessService;
 
-	
+	// Certificat
 
+	// addCErtificatDone
+	@Secured
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
@@ -77,36 +78,19 @@ public class UserRessource {
 		return Response.status(Response.Status.CREATED).build();
 	}
 
-	//Certificat
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificat/{skill}")
-	public String getBySkill(@PathParam("skill") int skill) {
-		return JsonConverter.ConvertListCertificat(serviceCertificat.getBySkill(skill));
-	}
-
-	// updateCertificatDone
-	@PUT
-	@Path("certificat")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void update(Certificat certificat) {
-		serviceCertificat.update(certificat);
-	}
-
-	@Secured
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
 	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
 		return userServiceLocal.authenticate(user,password);
+
 	}
 	
 	//certificat
 	//getbyUser
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("certificats/{id}")
+	@Path("{id}/certificats")
 	public Response getCertificatByUser(@PathParam("id") int id) {
 		List<Certificat> list = new ArrayList<Certificat>();
 
@@ -116,6 +100,7 @@ public class UserRessource {
 		}
 		
 		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListCertificat(list)).build();
+
 	}
 
 	// Buisness
@@ -130,7 +115,7 @@ public class UserRessource {
 
 			list.add(ub.getBuisness());
 		}
-		
+
 		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListBuisness(list)).build();
 	}
 	@GET
@@ -139,5 +124,4 @@ public class UserRessource {
 		return JsonConverter.ConvertListUser(userServiceLocal.getAll());
 	}
 
-	
 }

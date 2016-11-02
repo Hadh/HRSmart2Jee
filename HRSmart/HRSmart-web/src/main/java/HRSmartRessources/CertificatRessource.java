@@ -29,7 +29,7 @@ import pi.HRSmart.persistence.UserSkill;
  * @author yesmine
  *
  */
-@Path("certificat")
+@Path("certificats")
 @RequestScoped
 public class CertificatRessource {
 	@EJB(beanName = "CertificatService")
@@ -69,7 +69,7 @@ public class CertificatRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCertificatByid(@PathParam("id") int id) {
 		Certificat certificat = serviceCertificat.get(id);
-		return Response.status(Response.Status.FOUND).entity(certificat).build();
+		return Response.status(Response.Status.FOUND).entity(serviceCertificat.get(id)).build();
 	}
 
 	// getAllCertificats Done
