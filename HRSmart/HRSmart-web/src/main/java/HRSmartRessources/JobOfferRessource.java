@@ -21,7 +21,9 @@ import pi.HRSmart.interfaces.JobSkillServiceLocal;
 import pi.HRSmart.interfaces.RewardServiceLocal;
 import pi.HRSmart.persistence.JobOffer;
 import pi.HRSmart.persistence.JobSkill;
+import pi.HRSmart.persistence.JobSkillPk;
 import pi.HRSmart.persistence.Rewards;
+import pi.HRSmart.persistence.RewardsPk;
 
 /**
  * @author Khaled Romdhane
@@ -55,21 +57,8 @@ public class JobOfferRessource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addJob(JobOffer job) {
-		service.add(job);
-
-		if (job.getRewards() != null) {
-			for (Rewards r : job.getRewards()) {
-				r.setJobOffer(job);
-				rewardService.add(r);
-			}
-		}
-		if (job.getJobSkills() != null) {
-			for (JobSkill js : job.getJobSkills()) {
-				js.setJobOffer(job);
-				jobSkillService.add(js);
-			}
-		}
+	public void addFullJob(JobOffer job) {
+		service.addFull(job);
 	}
 
 	@PUT
@@ -88,7 +77,6 @@ public class JobOfferRessource {
 			}
 		}
 	}
-
 
 	
 	@POST

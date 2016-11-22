@@ -1,6 +1,7 @@
 package pi.HRSmart.persistence;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -23,6 +24,14 @@ public class User implements Serializable {
 	private String password;
 	private String adresse;
 	private String numTel;
+	private Date dateInscription;
+	private boolean active;
+	private String facebook;
+	private String linkedin;
+	private String picture;
+	private String twitter;
+	private String skype;
+	private String sexe;
 	private int age;
 	private List <UserSkill> userSkills;
 	private List<Notification> userNotifications;
@@ -141,4 +150,54 @@ public class User implements Serializable {
 		this.numTel = numTel;
 		this.age = age;
 	}
+	public Date getDateInscription() {
+		return dateInscription;
+	}
+	public void setDateInscription(Date dateInscription) {
+		this.dateInscription = dateInscription;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	public String getFacebook() {
+		return facebook;
+	}
+	public void setFacebook(String facebook) {
+		this.facebook = facebook;
+	}
+	public String getLinkedin() {
+		return linkedin;
+	}
+	public void setLinkedin(String linkedin) {
+		this.linkedin = linkedin;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public String getSkype() {
+		return skype;
+	}
+	public void setSkype(String skype) {
+		this.skype = skype;
+	}
+	public String getSexe() {
+		return sexe;
+	}
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+	public String getTwitter() {
+		return twitter;
+	}
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
+	}
+	
+	
 }

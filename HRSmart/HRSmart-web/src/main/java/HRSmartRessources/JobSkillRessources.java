@@ -42,7 +42,7 @@ public class JobSkillRessources {
 		List<Float> avrages = new ArrayList<Float>();
 		for(JobSkill js : list)
 		{
-			if(skills.indexOf(js.getSkill())!=-1)
+			if(skills.indexOf(js.getSkill())==-1)
 			{
 			skills.add(js.getSkill());
 			avrages.add(jobSkillService.getSkillAverageSalary(js.getSkill()));

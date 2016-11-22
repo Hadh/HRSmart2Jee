@@ -20,6 +20,7 @@ public class Buisness implements Serializable {
 
 	private int id;
 	private String name;
+	private boolean valid;
 	private List<Address> address;
 	private List<JobOffer> jobOffers;
 	private List<UserBuisness> userBuisness;
@@ -83,6 +84,14 @@ public class Buisness implements Serializable {
 
 	public void setAddress(List<Address> address) {
 		this.address = address;
+	}
+
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
 	}
 	
 	
