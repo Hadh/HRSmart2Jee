@@ -79,7 +79,7 @@ public class UserSkillsService implements UserSkillsServiceLocal {
 
 	@Override
 	public List<UserSkill> getByUser(int id) {
-		Query query = em.createQuery("SELECT us FROM UserSkill us where us.id.user=" + id);
+		Query query = em.createQuery("SELECT us FROM UserSkill us join us.id.user u where u=" + id);
 		List<UserSkill>list = (List<UserSkill>) query.getResultList();
 		for(UserSkill us : list){
 			us.setSkill(skillService.get(us.getSkill().getId()));
