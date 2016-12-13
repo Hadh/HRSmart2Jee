@@ -9,6 +9,7 @@ import pi.HRSmart.persistence.Skill;
 import pi.HRSmart.services.SkillService;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Response;
  * Created by alaa on 01/11/16.
  */
 @Path("question")
+@RequestScoped
 public class QuestionRessource {
 
     @EJB(beanName = "QuestionService")
@@ -40,24 +42,43 @@ public class QuestionRessource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response get(@PathParam("id") int id){
-        return Response.status(Response.Status.FOUND)
-                .entity(
-                        JsonConverter.mainNode()
-                        .put("question",JsonConverter.convertQuestion(questionService.get(id))).toString()
-                ).build();
+    public Response get(@PathParam(value = "id") int id){
+        try{
+            System.out.println("Gettng the entity");
+            System.out.println(questionService.get(id));
+
+            return Response.status(Response.Status.FOUND)
+                    .entity(
+                            JsonConverter.mainNode()
+                                    .put("question",JsonConverter.convertQuestion(questionService.get(id))).toString()
+                    ).build();
+        }catch(Exception e){
+            System.out.println("=================================================");
+            System.out.println(e.getMessage());
+            System.out.println("=================================================");
+            System.out.println(e.getCause());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Question question){
         questionService.add(question);
-        if(question.getChoices() != null){
-            for (Choice choice: question.getChoices()){
-                ChoiceService.add(choice);
+        questionService.update(question);
+        try{
+            if(question.getChoices() != null){
+                for (Choice choice: question.getChoices()){
+                    ChoiceService.add(choice);
+                }
             }
+            return Response.status(Response.Status.OK).build();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        return Response.status(Response.Status.OK).build();
+
     }
 
     @PUT
@@ -78,5 +99,6 @@ public class QuestionRessource {
         questionService.remove(questionService.get(id));
         return Response.status(Response.Status.OK).build();
     }
+
 
 }

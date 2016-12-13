@@ -11,7 +11,6 @@ public class Choice implements Serializable{
 
     private int id;
     private String body;
-    private boolean isCorrect;
     private int mark;
     private Question question;
 
@@ -39,14 +38,6 @@ public class Choice implements Serializable{
 
     public void setMark(int mark) {
         this.mark = mark;
-    }
-
-    public boolean isCorrect() {
-        return isCorrect;
-    }
-
-    public void setCorrect(boolean correct) {
-        isCorrect = correct;
     }
 
     @ManyToOne

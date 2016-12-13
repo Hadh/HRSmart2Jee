@@ -38,7 +38,16 @@ public class QuestionService implements IQuestionServiceLocal{
 
     @Override
     public Question get(int id) {
-        return em.find(Question.class, id);
+        try{
+            //System.out.println("id: " + id);
+            Question q = em.find(Question.class, 1);
+            System.out.println(q);
+            return q;
+            //return em.find(Question.class, id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

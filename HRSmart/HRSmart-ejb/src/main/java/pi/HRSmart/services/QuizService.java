@@ -25,7 +25,7 @@ public class QuizService implements IQuizServiceLocal{
     @EJB(beanName = "AssessmentService")
     IAssessmentServiceLocal AssessmentService;
 
-    @PersistenceContext(unitName = "HRSmart-ejb")
+    @PersistenceContext
     EntityManager em;
 
 

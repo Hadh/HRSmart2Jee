@@ -236,7 +236,7 @@ public class DataBaseFiller {
 		//adding choices
 		Choice choice = new Choice();
 		choice.setBody("Choice one");
-		choice.setCorrect(true);
+
 		choice.setMark(5);
 		choice.setQuestion(em.merge(q));
 

@@ -433,15 +433,6 @@ public class JsonConverter {
 		return main;
 	}
 
-		quizz.put("id", quiz.getId());
-		quizz.put("description", quiz.getDescription());
-		quizz.put("duration", quiz.getDuration());
-
-		quizz.put("questions", convertQuestion(quiz.getQuestions()));
-		main.put("quiz", quizz);
-
-		return main.toString();
-	}
 
 	public static ObjectNode jobNode(JobOffer job) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -556,4 +547,21 @@ public class JsonConverter {
 		grand.put("skills", SkillArray);
 		return grand.toString();
 	}
+    public static ArrayNode ConvertQuiz(ArrayList <Quiz> quizs){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode qzs = mapper.createArrayNode();
+        quizs.stream().forEach(quiz -> {
+            qzs.add(ConvertQuiz(quiz));
+        });
+        return qzs;
+    }
+    public static ObjectNode ConvertQuiz(Quiz quiz) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode quizz = mapper.createObjectNode();
+        quizz.put("id", quiz.getId());
+        quizz.put("duration", quiz.getDuration());
+        quizz.put("description", quiz.getDescription());
+        quizz.put("questions", convertQuestion(quiz.getQuestions()));
+        return quizz;
+    }
 }
