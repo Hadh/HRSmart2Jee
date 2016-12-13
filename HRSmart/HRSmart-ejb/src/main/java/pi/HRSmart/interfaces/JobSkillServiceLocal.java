@@ -3,6 +3,7 @@ package pi.HRSmart.interfaces;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.JobOffer;
 import pi.HRSmart.persistence.JobSkill;

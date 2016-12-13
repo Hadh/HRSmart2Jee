@@ -46,14 +46,44 @@ public class JobOfferService implements JobOfferServiceLocal {
 	}
 
 	@Override
-	public void add(JobOffer jobOffer) {
+	public void add(JobOffer jobOffer) { 
 		em.persist(jobOffer);
+		em.refresh(jobOffer);
 	}
 
 	@Override
-	public void update(JobOffer jobOffer) {
-		em.merge(jobOffer);
+	public void addFull(JobOffer jobOffer) {
+		em.persist(jobOffer);
+		em.flush();
+		if (jobOffer.getRewards() != null) {
+			for (Rewards r : jobOffer.getRewards()) {
+				RewardsPk pk = new RewardsPk();
+				pk.setStage(r.getStage());
+				pk.setJobOffer(em.merge(jobOffer));
+				r.setId(pk);
+				rewardService.add(r);
+			}
+		}
+		if (jobOffer.getJobSkills() != null) {
+			for (JobSkill js : jobOffer.getJobSkills()) {
+				JobSkillPk pk = new JobSkillPk();
+				pk.setSkill(js.getSkill());
+				pk.setJobOffer(em.merge(jobOffer));
+				js.setId(pk);
+				jobSkillService.add(js);
+			}
+		}
+	}
 
+	@Override
+	public JobOffer update(JobOffer jobOffer) {
+		return em.merge(jobOffer);
+
+	}
+
+	@Override
+	public void flush() {
+		em.flush();
 	}
 
 	@Override
@@ -148,23 +178,24 @@ public class JobOfferService implements JobOfferServiceLocal {
 		return generatedLink;
 	}
 
-	
-	
 	@Override
-	public float getJobSalary(JobOffer job)
-	{
+	public float getJobSalary(JobOffer job) {
 		float count = 0;
 		float sum = 0;
-		for (JobSkill js : job.getJobSkills())
-		{
+		for (JobSkill js : job.getJobSkills()) {
 			count++;
 			sum += jobSkillService.getSkillAverageSalary(js.getSkill());
 		}
-		
-		if(count!=0)
-		{
-			return sum/count;
+
+		if (count != 0) {
+			return sum / count;
 		}
 		return 0;
+	}
+
+	@Override
+	public JobOffer refresh(JobOffer job) {
+		em.merge(job);
+		return job;
 	}
 }

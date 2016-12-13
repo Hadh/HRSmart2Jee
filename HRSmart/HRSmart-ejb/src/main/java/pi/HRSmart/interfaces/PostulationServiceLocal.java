@@ -1,7 +1,6 @@
 package pi.HRSmart.interfaces;
 
 
-import javafx.geometry.Pos;
 import pi.HRSmart.persistence.Postulation;
 import pi.HRSmart.persistence.*;
 

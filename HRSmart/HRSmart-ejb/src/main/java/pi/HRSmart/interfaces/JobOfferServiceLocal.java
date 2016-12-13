@@ -13,11 +13,11 @@ import pi.HRSmart.persistence.User;
  *
  */
 
-@Remote
+@Local
 public interface JobOfferServiceLocal {
 	void add(JobOffer jobOffer);
 
-	void update(JobOffer jobOffer);
+	JobOffer update(JobOffer jobOffer);
 
 	void remove(JobOffer jobOffer);
 
@@ -34,5 +34,11 @@ public interface JobOfferServiceLocal {
 	List<JobOffer> getAllByBuisness(int id);
 
 	float getJobSalary(JobOffer job);
+
+	JobOffer refresh(JobOffer job);
+
+	void flush();
+
+	void addFull(JobOffer jobOffer);
 
 }
