@@ -4,6 +4,7 @@
  */
 package HRSmartRessources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.print.attribute.standard.JobName;
@@ -380,7 +381,6 @@ public class JsonConverter {
 		}
 		return qs;
 	}
-
 	public static ObjectNode convertQuestion(Question question) {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode qs = mapper.createObjectNode();
@@ -390,21 +390,50 @@ public class JsonConverter {
 		return qs;
 	}
 
-	public static String ConvertQuiz(Quiz quiz) {
+	public static ObjectNode convertChoice(Choice choice){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode ch = mapper.createObjectNode();
+		ch.put("id",choice.getId());
+		ch.put("body",choice.getBody());
+		ch.put("mark",choice.getMark());
+
+		return ch;
+	}
+
+	public static ArrayNode convertChoices(List <Choice> choices){
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode chs = mapper.createArrayNode();
+
+		for(Choice choice: choices){
+			chs.add(convertChoice(choice));
+		}
+		return chs;
+	}
+	public static ObjectNode ConvertAssessment(Assessment assessment){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode ass = mapper.createObjectNode();
+		ass.put("result",assessment.getResult());
+		ass.put("id_postulation",assessment.getPostulation().getIdPostulation());
+		ass.put("id_quiz",assessment.getQuiz().getId());
+
+		return ass;
+	}
+
+	public static ArrayNode ConvertAssessment(List <Assessment> assessments) {
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode ass = mapper.createArrayNode();
+		assessments.stream().forEach(assessment -> {
+			ass.add(ConvertAssessment(assessment));
+		});
+		return ass;
+	}
+	public static ObjectNode mainNode(){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode main = mapper.createObjectNode();
-		ArrayNode questions = mapper.createArrayNode();
-		ObjectNode quizz = mapper.createObjectNode();
 
-		quizz.put("id", quiz.getId());
-		quizz.put("description", quiz.getDescription());
-		quizz.put("duration", quiz.getDuration());
-
-		quizz.put("questions", convertQuestion(quiz.getQuestions()));
-		main.put("quiz", quizz);
-
-		return main.toString();
+		return main;
 	}
+
 
 	public static ObjectNode jobNode(JobOffer job) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -519,4 +548,21 @@ public class JsonConverter {
 		grand.put("skills", SkillArray);
 		return grand.toString();
 	}
+    public static ArrayNode ConvertQuiz(ArrayList <Quiz> quizs){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode qzs = mapper.createArrayNode();
+        quizs.stream().forEach(quiz -> {
+            qzs.add(ConvertQuiz(quiz));
+        });
+        return qzs;
+    }
+    public static ObjectNode ConvertQuiz(Quiz quiz) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode quizz = mapper.createObjectNode();
+        quizz.put("id", quiz.getId());
+        quizz.put("duration", quiz.getDuration());
+        quizz.put("description", quiz.getDescription());
+        quizz.put("questions", convertQuestion(quiz.getQuestions()));
+        return quizz;
+    }
 }

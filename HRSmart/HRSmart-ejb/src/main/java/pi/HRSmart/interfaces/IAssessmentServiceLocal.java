@@ -12,7 +12,9 @@ import java.util.List;
 public interface IAssessmentServiceLocal {
 
     void add(Assessment assessment);
+    void update(Assessment assessment);
     void remove(Assessment assessment);
+    List <Assessment> all();
     Assessment getUnique(int quiz_id, int postulation_id);
     List <Assessment> getByQuiz(int quiz_id) ;
     List <Assessment> getByPostulation(int post_id);

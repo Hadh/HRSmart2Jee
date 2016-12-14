@@ -50,7 +50,7 @@ public class Skill implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@OneToMany(mappedBy="id.skill")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="id.skill")
 	public List<JobSkill> getJobSkills() {
 		return jobSkills;
 	}

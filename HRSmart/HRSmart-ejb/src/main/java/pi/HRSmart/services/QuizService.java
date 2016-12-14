@@ -25,7 +25,7 @@ public class QuizService implements IQuizServiceLocal{
     @EJB(beanName = "AssessmentService")
     IAssessmentServiceLocal AssessmentService;
 
-    @PersistenceContext(unitName = "HRSmart-ejb")
+    @PersistenceContext
     EntityManager em;
 
 
@@ -59,7 +59,7 @@ public class QuizService implements IQuizServiceLocal{
         Quiz quiz;
         Query query = em.createQuery("select q from Quiz q left join fetch q.questions where q.id = :id").setParameter("id",id);
         quiz = (Quiz) query.getSingleResult();
-        //quiz.setAssessments(AssessmentService.getByQuiz(quiz.getId()));
+
         return quiz;
     }
 }

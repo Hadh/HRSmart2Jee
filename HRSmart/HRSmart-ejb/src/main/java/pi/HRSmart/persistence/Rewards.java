@@ -1,6 +1,7 @@
 package pi.HRSmart.persistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -34,10 +35,11 @@ public class Rewards implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Postulation> postulations;
-
+	private List <Report> reports = new ArrayList<>();
 	public Rewards() {
 		super();
-	}  
+	}
+
  
 	@EmbeddedId
 	public RewardsPk getId() {
@@ -79,6 +81,15 @@ public class Rewards implements Serializable {
 
 	public void setPostulations(List<Postulation> postulations) {
 		this.postulations = postulations;
+	}
+
+	@OneToMany(mappedBy = "rewards")
+	public List<Report> getReports() {
+		return reports;
+	}
+
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
 	}
 
 	@Override
