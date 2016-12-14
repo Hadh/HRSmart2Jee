@@ -21,7 +21,6 @@ public class Quiz implements Serializable{
     private List<Question> questions = new ArrayList<>();
     private List<Assessment> assessments = new ArrayList<>();
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {

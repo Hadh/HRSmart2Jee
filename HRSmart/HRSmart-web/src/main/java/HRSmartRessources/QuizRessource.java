@@ -2,9 +2,6 @@ package HRSmartRessources;
 
 import pi.HRSmart.interfaces.IQuizServiceLocal;
 import pi.HRSmart.persistence.Quiz;
-import pi.HRSmart.services.QuizService;
-import sun.security.tools.keytool.Resources_sv;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
