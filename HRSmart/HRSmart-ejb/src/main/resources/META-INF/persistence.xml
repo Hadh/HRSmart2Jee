@@ -3,7 +3,7 @@
 	<persistence-unit name="HRSmart-ejb">
 		<jta-data-source>java:/MySQLPI</jta-data-source>
 		<properties>
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.hbm2ddl.auto" value="validate"/>
 		</properties>
 	</persistence-unit>
 </persistence>

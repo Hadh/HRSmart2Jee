@@ -186,7 +186,7 @@ public class JsonConverter {
 				Jobs.add(Job);
 			}
 			Buisness.put("Jobs", Jobs);
-
+/*
 			ArrayNode Users = mapper.createArrayNode();
 			for (UserBuisness u : buisness.getUserBuisness()) {
 				ObjectNode User = mapper.createObjectNode();
@@ -194,8 +194,9 @@ public class JsonConverter {
 				User.put("name", u.getRole());
 				Users.add(User);
 			}
+			
 			Buisness.put("Users", Users);
-
+*/
 			Buisnessz.add(Buisness);
 		}
 		main.put("buisness", Buisnessz);
