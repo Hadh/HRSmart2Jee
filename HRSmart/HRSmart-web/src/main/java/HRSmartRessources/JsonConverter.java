@@ -75,13 +75,19 @@ public class JsonConverter {
 		main.put("numTel", user.getNumTel());
 		main.put("login", user.getLogin());
 		main.put("password", user.getPassword());
+		main.put("age", user.getAge());
+		main.put("facebook", user.getFacebook());
+		main.put("linkedin", user.getLinkedin());
+		main.put("skype", user.getSkype());
+		main.put("tweeter", user.getTwitter());
+		main.put("picture", user.getPicture());
 
 		ArrayNode UserBuisnesses = mapper.createArrayNode();
 
 		for (UserBuisness bs : user.getUserBuisness()) {
 
 			ObjectNode userBusiness = mapper.createObjectNode();
-			userBusiness.put("id", bs.getId().toString());
+			
 			userBusiness.put("role", bs.getRole());
 			userBusiness.put("salary", bs.getSalary());
 			userBusiness.put("hiredate", bs.getHireDate().toString());

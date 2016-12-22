@@ -3,13 +3,19 @@ package pi.HRSmart.utilities;
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
+import com.auth0.jwt.internal.org.apache.commons.codec.binary.StringUtils;
+import com.auth0.jwt.internal.org.bouncycastle.util.encoders.Base64;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  * Created by hadhe on 10/31/2016.
@@ -48,6 +54,13 @@ public class Jwt {
             return null;
         }
 
+    }
+    public static String decodeJWT (String token ){
+    	String[] parts = token.split("\\.");
+    	
+    	String jwt = StringUtils.newStringUtf8(Base64.decode(parts[1]));
+    	
+    	return jwt;
     }
 }
 

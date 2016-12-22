@@ -22,10 +22,12 @@ import pi.HRSmart.persistence.Certificat;
 import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.persistence.UserSkill;
+import pi.HRSmart.utilities.Jwt;
 import pi.HRSmart.utilities.Secured;
 
 /**
- * Created by hadhemi on 10/30/2016.
+ * @author yesmine
+ * 
  */
 @Path("users")
 @RequestScoped
@@ -46,7 +48,7 @@ public class UserRessource {
 	// Certificat
 
 	// addCErtificatDone
-	@Secured
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
@@ -77,13 +79,21 @@ public class UserRessource {
 		userServiceLocal.addUser(user);
 		return Response.status(Response.Status.CREATED).build();
 	}
-
+//By HDMI
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("{user}/{password}")
 	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
 		return userServiceLocal.authenticate(user,password);
 
+	}
+	
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("decode/{token}")
+	public String decode(@PathParam("token")String token){
+		
+		return Jwt.decodeJWT(token);
 	}
 	
 	//certificat
@@ -99,7 +109,7 @@ public class UserRessource {
 			list.addAll(us.getCertificats());
 		}
 		
-		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListCertificat(list)).build();
+		return Response.status(Response.Status.OK).entity(JsonConverter.ConvertListCertificat(list)).build();
 
 	}
 
@@ -116,7 +126,7 @@ public class UserRessource {
 			list.add(ub.getBuisness());
 		}
 
-		return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListBuisness(list)).build();
+		return Response.status(Response.Status.OK).entity(JsonConverter.ConvertListBuisness(list)).build();
 	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
