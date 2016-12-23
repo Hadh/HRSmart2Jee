@@ -93,7 +93,9 @@ public class UserRessource {
 	@Path("decode/{token}")
 	public String decode(@PathParam("token")String token){
 		
-		return Jwt.decodeJWT(token);
+		String s = Jwt.decodeJWT(token);
+		return Jwt.stringToJson(s).get("user").toString();
+	
 	}
 	
 	//certificat
