@@ -50,6 +50,15 @@ public class Skill implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@OneToMany(mappedBy="skill")
+	public List<Certificat> getCertificats() {
+		return certificats;
+	}
+	public void setCertificats(List<Certificat> certificats) {
+		this.certificats = certificats;
+	}
+	
 	@OneToMany(mappedBy="id.skill")
 	public List<JobSkill> getJobSkills() {
 		return jobSkills;
@@ -58,14 +67,6 @@ public class Skill implements Serializable {
 		this.jobSkills = jobSkills;
 	}
 	
-	
-	@OneToMany(mappedBy="skill")
-	public List<Certificat> getCertificats() {
-		return certificats;
-	}
-	public void setCertificats(List<Certificat> certificats) {
-		this.certificats = certificats;
-	}
 	@OneToMany(mappedBy="id.skill")
 	public List<UserSkill> getUserSkills() {
 		return userSkills;

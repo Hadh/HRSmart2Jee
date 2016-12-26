@@ -1,6 +1,8 @@
 package pi.HRSmart.persistence;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 import pi.HRSmart.persistence.JobOffer;
@@ -22,6 +24,7 @@ public class JobSkill implements Serializable {
 	private JobSkillPk id;
 	private boolean hasQuiz;
 	private int level;
+	private List<Certificat>certificats;
 	private static final long serialVersionUID = 1L;
 
 	public JobSkill() {
@@ -65,6 +68,15 @@ public class JobSkill implements Serializable {
 		this.getId().setSkill(skill);
 	}
 	
+
+	@ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)
+	public List<Certificat> getCertificats() {
+		return certificats;
+	}
 	
+	public void setCertificats(List<Certificat> certificats)
+	{
+		this.certificats = certificats;
+	}
    
 }

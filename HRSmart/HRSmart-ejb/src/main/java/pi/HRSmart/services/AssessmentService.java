@@ -29,8 +29,19 @@ public class AssessmentService implements IAssessmentServiceLocal {
     }
 
     @Override
+    public void update(Assessment assessment) {
+        em.merge(assessment);
+    }
+
+    @Override
     public void remove(Assessment assessment) {
         em.remove(assessment);
+    }
+
+    @Override
+    public List<Assessment> all() {
+        Query query = em.createQuery("select a from Assessment a");
+        return (List<Assessment>) query.getResultList();
     }
 
     @Override

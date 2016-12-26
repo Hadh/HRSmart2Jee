@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by alaa on 20/10/16.
  */
-@Local
+
 public interface IQuestionServiceLocal {
     void add(Question question);
     void update(Question question);

@@ -105,4 +105,12 @@ public class BuisnessRessources {
 //	}
 
 
+	@GET
+	@QueryParam("{iduser}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getUserBusinessByUser(@QueryParam("iduser") int iduser){
+		UserBuisness ubs = userBuisnessServiceLocal.getUserBusinessByUser(userServiceLocal.get(iduser));
+		String result = JsonConverter.ConvertUserBusiness(ubs);
+		return result;
+	}
 }

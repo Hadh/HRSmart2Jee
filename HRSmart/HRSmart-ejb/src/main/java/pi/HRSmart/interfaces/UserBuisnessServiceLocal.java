@@ -29,4 +29,6 @@ public interface UserBuisnessServiceLocal {
 
 	public UserBuisness getUserBusinessByUser(User user);
 
+	public User getBestEmployee(int idBuisness);
+
 }

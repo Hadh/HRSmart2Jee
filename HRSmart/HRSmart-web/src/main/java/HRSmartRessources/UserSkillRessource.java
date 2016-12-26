@@ -58,7 +58,7 @@ public class UserSkillRessource {
 	@Path("certificats/{skill}")
 	public Response getBySkill(@PathParam("skill") int skill) {
 
-		return Response.status(Response.Status.FOUND)
+		return Response.status(Response.Status.OK)
 				.entity(JsonConverter.ConvertListCertificat(serviceCertificat.getBySkill(skill))).build();
 
 	}
@@ -94,6 +94,6 @@ public class UserSkillRessource {
 		@Path("{id}")
 		public Response getSkillByUser(@PathParam("id")int id){
 			
-			return Response.status(Response.Status.FOUND).entity(JsonConverter.ConvertListUserSkill(userSkillsService.getByUser(id))).build();
+			return Response.status(Response.Status.OK).entity(JsonConverter.ConvertListUserSkill(userSkillsService.getByUser(id))).build();
 		}
 }

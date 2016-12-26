@@ -2,6 +2,7 @@ package pi.HRSmart.persistence;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class JobOffer implements Serializable {
 	private Buisness buisness;
 	private boolean active;
 	private static final long serialVersionUID = 1L;
+	private Date creationDate;
 
 	public JobOffer() {
 		super();
@@ -106,5 +108,12 @@ public class JobOffer implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
 }
