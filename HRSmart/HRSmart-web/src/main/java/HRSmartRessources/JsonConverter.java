@@ -571,4 +571,18 @@ public class JsonConverter {
         quizz.put("questions", convertQuestion(quiz.getQuestions()));
         return quizz;
     }
+    
+    public static ArrayNode convertSkillList(List<Skill> list){
+    	
+    	 ObjectMapper mapper = new ObjectMapper();
+    	 ArrayNode skills = mapper.createArrayNode();
+    	 for (Skill s : list) {
+         ObjectNode skill = mapper.createObjectNode();
+         skill.put("id", s.getId());
+         skill.put("duration", s.getName());
+         skills.add(skill);
+    	 }
+    	 return skills;
+    }
+    
 }
