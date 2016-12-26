@@ -60,14 +60,14 @@ public class UserBuisnessRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
 	public Response getUserBuisnessByUser(@PathParam("id") int id) {
-		return Response.status(Response.Status.FOUND)
+		return Response.status(Response.Status.OK)
 				.entity(JsonConverter.ConvertUserBusinessList(userBuisnessService.getByUser(id))).build();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		return Response.status(Response.Status.FOUND)
+		return Response.status(Response.Status.OK)
 				.entity(JsonConverter.ConvertUserBusinessList(userBuisnessService.getAll())).build();
 	}
 	
@@ -75,7 +75,7 @@ public class UserBuisnessRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}/bestEmployee")
 	public Response getBestEmployee(@PathParam("id") int id) {
-		return Response.status(Response.Status.FOUND)
+		return Response.status(Response.Status.OK)
 				.entity(JsonConverter.ConvertUser(userBuisnessService.getBestEmployee(id))).build();
 	}
 

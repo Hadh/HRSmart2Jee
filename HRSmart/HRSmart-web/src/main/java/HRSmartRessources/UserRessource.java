@@ -9,6 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.auth0.jwt.internal.com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -81,11 +82,10 @@ public class UserRessource {
 	}
 //By HDMI
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{user}/{password}")
 	public String authenticate(@PathParam("user") String user,@PathParam("password")String password){
-		return userServiceLocal.authenticate(user,password);
-
+		return "{ \"token\":\""+userServiceLocal.authenticate(user,password)+"\"}";
 	}
 	
 	@GET
