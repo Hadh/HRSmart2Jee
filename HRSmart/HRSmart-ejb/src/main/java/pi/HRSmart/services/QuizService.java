@@ -8,24 +8,23 @@ import pi.HRSmart.persistence.Question;
 import pi.HRSmart.persistence.Quiz;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by alaa on 19/10/16.
  */
-@Stateless
+@Stateful
 public class QuizService implements IQuizServiceLocal{
 
     @EJB(beanName = "AssessmentService")
     IAssessmentServiceLocal AssessmentService;
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     EntityManager em;
 
 
@@ -46,10 +45,18 @@ public class QuizService implements IQuizServiceLocal{
 
     @Override
     public Quiz get(int id) {
-        return em.find(Quiz.class, id);
+        Quiz quiz = em.find(Quiz.class,id);
+        Query query = em.createQuery("select q from Question q join q.quizs qu where qu.id=:id")
+                .setParameter("id",quiz.getId());
+        List<Question> questions = query.getResultList();
+        quiz.setQuestions(questions);
+        System.out.println("size "+ quiz.getQuestions().size());
+
+        return quiz;
     }
 
     @Override
+
     public List<Quiz> all() {
         Query query = em.createQuery("select q from Quiz q");
         return (ArrayList<Quiz>)query.getResultList();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.print.attribute.standard.JobName;
+import javax.transaction.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -555,13 +556,15 @@ public class JsonConverter {
         });
         return qzs;
     }
+
     public static ObjectNode ConvertQuiz(Quiz quiz) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode quizz = mapper.createObjectNode();
         quizz.put("id", quiz.getId());
         quizz.put("duration", quiz.getDuration());
         quizz.put("description", quiz.getDescription());
-        quizz.put("questions", convertQuestion(quiz.getQuestions()));
+		if(quiz.getQuestions() != null)
+        	quizz.put("questions", convertQuestion(quiz.getQuestions()));
         return quizz;
     }
 }

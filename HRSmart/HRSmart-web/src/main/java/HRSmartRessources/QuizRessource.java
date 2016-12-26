@@ -25,15 +25,19 @@ public class QuizRessource {
     QuestionRessource questionRessource;
 
     @GET
+    //@Produces(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response getQuizz(@PathParam(value = "id")int id){
+    public Quiz getQuizz(@PathParam(value = "id")int id){
         Quiz quiz = new Quiz();
-        quiz =  quizService.getWithRelations(id);
-        return Response.status(Response.Status.FOUND)
+        quiz =  quizService.get(id);
+        /*return Response.status(Response.Status.FOUND)
                 .entity(JsonConverter.mainNode()
                         .put("quiz",JsonConverter.ConvertQuiz(quiz)).toString()
-                ).build();
+                ).build();*/
+        //return Response.ok(quiz.getDescription()).build();
+        //return Response.status(Response.Status.OK).entity(quiz).build();
+        return quiz;
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
