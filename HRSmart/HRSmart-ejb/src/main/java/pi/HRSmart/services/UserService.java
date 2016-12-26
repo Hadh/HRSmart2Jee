@@ -3,9 +3,7 @@ package pi.HRSmart.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.crypto.ExemptionMechanismException;
 import javax.ejb.EJB;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +16,6 @@ import pi.HRSmart.interfaces.UserSkillsServiceLocal;
 import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.utilities.Jwt;
-import pi.HRSmart.utilities.SendEmail;
 import pi.HRSmart.utilities.SendWelcomeMail;
 import pi.HRSmart.utilities.getMD5Hash;
 
@@ -31,7 +28,7 @@ public class UserService implements UserServiceLocal {
 
 	@PersistenceContext(unitName = "HRSmart-ejb")
 	EntityManager em;
-	
+
 	@EJB(beanName = "UserSkillsService")
 	UserSkillsServiceLocal userSkillServiceLocal;
 
@@ -47,7 +44,6 @@ public class UserService implements UserServiceLocal {
 
 		return em.find(User.class, id);
 	}
-
 
 	@Override
 	public List<User> getAll() {
@@ -67,7 +63,7 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public void update(User user) {
-		em.merge(em.find(User.class,user.getId()));
+		em.merge(user);
 	}
 
 	@Override
@@ -77,33 +73,48 @@ public class UserService implements UserServiceLocal {
 
 	@Override
 	public String authenticate(String Login, String password) {
-		User user=null;
+		User user = null;
 
-			Query query =
-					em.createQuery("select new User(e.id,e.firstName,e.lastName,e.login,e.password,e.adresse,e.numTel,e.age) " +
-							"from User e where e.login=:login and e.password=:password");
-			query.setParameter("login", Login);
-			query.setParameter("password", password);
-			user=(User)query.getSingleResult();
-			return Jwt.SignJWT("user",user);
+		Query query = em
+				.createQuery("select new User(e.id,e.firstName,e.lastName,e.login,e.password,e.adresse,e.numTel,e.age) "
+						+ "from User e where e.login=:login and e.password=:password");
+		query.setParameter("login", Login);
+		query.setParameter("password", password);
+		user = (User) query.getSingleResult();
+		return Jwt.SignJWT("user", user);
 	}
 
 	@Override
 	public boolean checkConnectedUser(User userToVerify) {
 
-
 		return false;
 	}
 
+	/*		@Override
+public User getUserByEmail(String login) {
+		try {
+			String queryStr = "select new User(e.id, e.firstName, e.lastName, e.login,"
+					+ "e.adresse, e.numTel, e.dateInscription, e.active, e.facebook,"
+					+ "e.linkedin, e.picture, e.twitter, e.skype, e.sexe, e.age)  from User e where e.login=:login";
+			TypedQuery<User> query = em.createQuery(queryStr, User.class);
+			query.setParameter("login", login);
+			List<User> results = query.getResultList();
+			return results.get(0);
+			
+		} catch (Exception e) {
+			return null;
+		}
+	}*/
+	
 	@Override
 	public User getUserByEmail(String login) {
 		try {
-			TypedQuery<User> Myquery =
-					em.createQuery("select e from User e where e.login=:login", User.class);
-
-			Myquery.setParameter("login", "login");
-			return Myquery.getSingleResult();
-
+			
+			TypedQuery<User> query = em.createQuery("select e from User e where e.login = :login", User.class);
+			query.setParameter("login", login);
+			List<User> results = query.getResultList();
+			return results.get(0);
+			
 		} catch (Exception e) {
 			return null;
 		}
@@ -112,12 +123,12 @@ public class UserService implements UserServiceLocal {
 	@Override
 	public String addUser(User user) {
 
-			String beforeHash =  user.getPassword();
-			user.setPassword(getMD5Hash.getMD5Hash(beforeHash));
-			em.persist(user);
-			SendWelcomeMail.SendEmail(user.getLogin(),"Welcome Email","This is a welcome mail!");
+		String beforeHash = user.getPassword();
+		user.setPassword(getMD5Hash.getMD5Hash(beforeHash));
+		em.persist(user);
+		SendWelcomeMail.SendEmail(user.getLogin(), "Welcome Email", "This is a welcome mail!");
 
-			return "done";
+		return "done";
 
 	}
 
@@ -130,16 +141,8 @@ public class UserService implements UserServiceLocal {
 		}
 		return usersByBuisness;
 
-
 	}
 
-
-	//public void inviteUser (User userEmailToAdd,)
-	
-	
-
-
+	// public void inviteUser (User userEmailToAdd,)
 
 }
-
-

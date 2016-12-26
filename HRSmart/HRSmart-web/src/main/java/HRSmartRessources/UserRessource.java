@@ -68,8 +68,8 @@ public class UserRessource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateUser(@PathParam("id") int idUser){
-		userServiceLocal.update(userServiceLocal.get(idUser));
+	public void updateUser(@PathParam("id") int idUser,User u){
+		userServiceLocal.update(u);
 	}
 
 
@@ -94,7 +94,8 @@ public class UserRessource {
 	public String decode(@PathParam("token")String token){
 		
 		String s = Jwt.decodeJWT(token);
-		return Jwt.stringToJson(s).get("user").toString();
+		
+		return s;
 	
 	}
 	

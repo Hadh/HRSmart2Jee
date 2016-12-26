@@ -198,6 +198,48 @@ public class User implements Serializable {
 	public void setTwitter(String twitter) {
 		this.twitter = twitter;
 	}
+	/**
+	 * @param id
+	 * @param firstName
+	 * @param lastName
+	 * @param userBuisness
+	 * @param login
+	 * @param password
+	 * @param adresse
+	 * @param numTel
+	 * @param dateInscription
+	 * @param active
+	 * @param facebook
+	 * @param linkedin
+	 * @param picture
+	 * @param twitter
+	 * @param skype
+	 * @param sexe
+	 * @param age
+	 * @param userSkills
+	 * @param userNotifications
+	 */
+	public User(int id, String firstName, String lastName,  String login,String adresse, String numTel, Date dateInscription, boolean active, String facebook,
+			String linkedin, String picture, String twitter, String skype, String sexe, int age) {
+		super();
+		Id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.login = login;
+		this.adresse = adresse;
+		this.numTel = numTel;
+		this.dateInscription = dateInscription;
+		this.active = active;
+		this.facebook = facebook;
+		this.linkedin = linkedin;
+		this.picture = picture;
+		this.twitter = twitter;
+		this.skype = skype;
+		this.sexe = sexe;
+		this.age = age;
+	}
+	
+	
 	
 	
 }

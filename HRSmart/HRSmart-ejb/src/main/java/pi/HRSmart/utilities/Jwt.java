@@ -12,6 +12,8 @@ import com.auth0.jwt.internal.org.apache.commons.codec.binary.CharSequenceUtils;
 import com.auth0.jwt.internal.org.apache.commons.codec.binary.StringUtils;
 import com.auth0.jwt.internal.org.bouncycastle.util.encoders.Base64;
 
+import pi.HRSmart.persistence.User;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,14 +39,14 @@ public class Jwt {
 		final String secret = "1993";
 		final long iat = System.currentTimeMillis() / 1000L; // issued at claim
 		final long exp = iat + 60L; // expires claim. In this case the token
-									// expires in 60 seconds
+		User u = (User) theObject;		// expires in 60 seconds
 
 		final JWTSigner signer = new JWTSigner(secret);
 		final HashMap<String, Object> claims = new HashMap<String, Object>();
 		claims.put("iss", issuer);
 		claims.put("exp", exp);
 		claims.put("iat", iat);
-		claims.put(nameOfObject, theObject);
+		claims.put(nameOfObject, u.getLogin());
 
 		final String jwt = signer.sign(claims);
 		return jwt;

@@ -102,6 +102,27 @@ public class JsonConverter {
 		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
+	
+	public static String ConvertUserProfile(User user) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+
+		main.put("id", user.getId());
+		main.put("firstName", user.getFirstName());
+		main.put("lastName", user.getLastName());
+		main.put("adresse", user.getAdresse());
+		main.put("numTel", user.getNumTel());
+		main.put("login", user.getLogin());
+		main.put("password", user.getPassword());
+		main.put("age", user.getAge());
+		main.put("facebook", user.getFacebook());
+		main.put("linkedin", user.getLinkedin());
+		main.put("skype", user.getSkype());
+		main.put("twitter", user.getTwitter());
+		main.put("picture", user.getPicture());
+		
+		return main.toString();
+	}
 
 	public static String ConvertListUser(List<User> userList) {
 		ObjectMapper mapper = new ObjectMapper();
