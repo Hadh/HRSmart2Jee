@@ -216,7 +216,6 @@ public class DataBaseFiller {
 		
 		
 		em.persist(us2);
-
 		// User 1 Buisness
 		UserBuisness ub = new UserBuisness();
 		ub.setBuisness(buisness1);
