@@ -33,5 +33,7 @@ public class AddressRessource {
 		String result = JsonConverter.convertListAddress(address);
 		return Response.status(Response.Status.OK).entity(result).build();
 	}
+	
+	
 
 }

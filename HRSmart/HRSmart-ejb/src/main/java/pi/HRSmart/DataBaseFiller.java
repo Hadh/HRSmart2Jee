@@ -35,6 +35,7 @@ public class DataBaseFiller {
 		// Businesses
 		Buisness buisness1 = new Buisness();
 		buisness1.setName("Bob Corp");
+		buisness1.setValid(false);
 		em.persist(buisness1);
 
 		// Skills

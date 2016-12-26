@@ -106,5 +106,5 @@ public class JobOffer implements Serializable {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
+	
 }
