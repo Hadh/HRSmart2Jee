@@ -469,6 +469,7 @@ public class JsonConverter {
 		main.put("description", job.getDescription());
 		main.put("salary", job.getSalary());
 		main.put("title", job.getTitle());
+		main.put("creationDate", job.getCreationDate().toString());
 		return main;
 	}
 
@@ -485,7 +486,10 @@ public class JsonConverter {
 		ObjectNode main = mapper.createObjectNode();
 		ObjectNode id = mapper.createObjectNode();
 		id.put("jobOffer", reward.getJobOffer().getId());
-		id.put("stage", reward.getStage().getId());
+		ObjectNode stage = mapper.createObjectNode();
+		stage.put("id", reward.getStage().getId());
+		stage.put("name", reward.getStage().getName());
+		id.put("stage", stage);
 		main.put("id", id);
 		main.put("value", reward.getValue());
 		return main;
