@@ -44,7 +44,7 @@ public class JobSkillService implements JobSkillServiceLocal {
 	@Override
 	public void add(JobSkill jobSkill) {
 		em.persist(jobSkill);
-
+		em.flush();
 	}
 
 	@Override
