@@ -16,7 +16,7 @@ import java.util.List;
  * Created by alaa on 20/10/16.
  */
 @Stateless
-public class QuestionService implements IQuestionServiceLocal{
+public class QuestionService implements IQuestionServiceLocal {
 
     @PersistenceContext(unitName = "HRSmart-ejb")
     EntityManager em;
@@ -38,23 +38,14 @@ public class QuestionService implements IQuestionServiceLocal{
 
     @Override
     public Question get(int id) {
-        try{
-            //System.out.println("id: " + id);
-            Question q = em.find(Question.class, 1);
-            System.out.println(q);
-            return q;
-            //return em.find(Question.class, id);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+        return em.find(Question.class, id);
     }
 
     @Override
     public ArrayList<Question> all() {
         Query query = em.createQuery("select q from Question q");
 
-        return (ArrayList<Question>)query.getResultList();
+        return (ArrayList<Question>) query.getResultList();
     }
 
 }

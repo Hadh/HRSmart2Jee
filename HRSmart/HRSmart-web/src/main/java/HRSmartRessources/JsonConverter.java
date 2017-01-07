@@ -393,8 +393,16 @@ public class JsonConverter {
 		ObjectNode qs = mapper.createObjectNode();
 		qs.put("id", question.getId());
 		qs.put("body", question.getBody());
-
+		qs.put("skill", convertSkill(question.getSkill()));
+		qs.put("choices",convertChoices(question.getChoices()));
 		return qs;
+	}
+	public static ObjectNode convertSkill(Skill skill){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode s = mapper.createObjectNode();
+		s.put("name",skill.getName());
+
+		return s;
 	}
 
 	public static ObjectNode convertChoice(Choice choice){
@@ -555,10 +563,10 @@ public class JsonConverter {
 		grand.put("skills", SkillArray);
 		return grand.toString();
 	}
-    public static ArrayNode ConvertQuiz(ArrayList <Quiz> quizs){
+    public static ArrayNode ConvertQuiz(List <Quiz> quizs){
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode qzs = mapper.createArrayNode();
-        quizs.stream().forEach(quiz -> {
+        quizs.forEach(quiz -> {
             qzs.add(ConvertQuiz(quiz));
         });
         return qzs;

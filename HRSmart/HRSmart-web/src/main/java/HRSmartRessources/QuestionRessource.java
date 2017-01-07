@@ -30,36 +30,15 @@ public class QuestionRessource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response index(){
-        return Response.status(Response.Status.OK)
-                .entity(
-                        JsonConverter.mainNode()
-                        .put("questions", JsonConverter.convertQuestion(questionService.all()))
-                        .toString()
-                ).build();
+    public String index(){
+        return JsonConverter.convertQuestion(questionService.all()).toString();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response get(@PathParam(value = "id") int id){
-        try{
-            System.out.println("Gettng the entity");
-            System.out.println(questionService.get(id));
-
-            return Response.status(Response.Status.FOUND)
-                    .entity(
-                            JsonConverter.mainNode()
-                                    .put("question",JsonConverter.convertQuestion(questionService.get(id))).toString()
-                    ).build();
-        }catch(Exception e){
-            System.out.println("=================================================");
-            System.out.println(e.getMessage());
-            System.out.println("=================================================");
-            System.out.println(e.getCause());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-
+    public String get(@PathParam(value = "id") int id){
+        return JsonConverter.convertQuestion(questionService.get(id)).toString();
     }
 
     @POST

@@ -46,11 +46,11 @@ public class QuizService implements IQuizServiceLocal{
     @Override
     public Quiz get(int id) {
         Quiz quiz = em.find(Quiz.class,id);
-        Query query = em.createQuery("select q from Question q join q.quizs qu where qu.id=:id")
+        /*Query query = em.createQuery("select q from Question q join q.quizs qu where qu.id=:id")
                 .setParameter("id",quiz.getId());
         List<Question> questions = query.getResultList();
         quiz.setQuestions(questions);
-        System.out.println("size "+ quiz.getQuestions().size());
+        System.out.println("size "+ quiz.getQuestions().size());*/
 
         return quiz;
     }

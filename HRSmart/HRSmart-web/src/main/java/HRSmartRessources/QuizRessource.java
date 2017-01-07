@@ -25,22 +25,16 @@ public class QuizRessource {
     //@Produces(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Quiz getQuizz(@PathParam(value = "id")int id){
-        Quiz quiz = new Quiz();
-        quiz =  quizService.get(id);
-        /*return Response.status(Response.Status.FOUND)
-                .entity(JsonConverter.mainNode()
-                        .put("quiz",JsonConverter.ConvertQuiz(quiz)).toString()
-                ).build();*/
-        //return Response.ok(quiz.getDescription()).build();
-        //return Response.status(Response.Status.OK).entity(quiz).build();
-        return quiz;
+    public String getQuizz(@PathParam("id")int id){
+
+        Quiz quiz =  quizService.get(id);
+        return JsonConverter.ConvertQuiz(quiz).toString();
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response index(){
-        return Response.status(Response.Status.FOUND)
-                .entity(quizService.all()).build();
+    public String index(){
+        String quizs = JsonConverter.ConvertQuiz(quizService.all()).toString();
+        return quizs;
     }
 
     @POST
@@ -55,11 +49,6 @@ public class QuizRessource {
         return Response.status(Response.Status.OK).build();
     }
 
-    /*@PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Quiz){
-
-    }*/
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id")int id){
