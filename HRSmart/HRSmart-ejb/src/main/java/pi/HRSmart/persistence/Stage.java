@@ -65,7 +65,8 @@ public class Stage implements Serializable {
 	public void setRewards(List<Rewards> rewards) {
 		this.rewards = rewards;
 	}
-	
-	
-	
+	@Override
+	public String toString() {
+		return "Stage [id=" + id + ", name=" + name + ", buisness=" + buisness +"]";
+	}
 }

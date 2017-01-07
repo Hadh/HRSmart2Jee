@@ -32,7 +32,7 @@ public class RewardService implements RewardServiceLocal {
 	@Override
 	public void add(Rewards reward) {
 		em.persist(reward);
-
+		em.flush();
 	}
 
 	@Override

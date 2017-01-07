@@ -66,4 +66,10 @@ public class Address implements Serializable{
 		this.buisness = buisness;
 	}
 
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", localisation=" + localisation + ", x=" + x + ", y=" + y + ", buisness="
+				+ buisness + "]";
+	}
+	
 }

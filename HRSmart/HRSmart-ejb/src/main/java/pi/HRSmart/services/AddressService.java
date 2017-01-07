@@ -6,10 +6,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import pi.HRSmart.interfaces.AddressServiceLocal;
 import pi.HRSmart.interfaces.AddressServiceRemote;
 import pi.HRSmart.persistence.Address;
+import pi.HRSmart.persistence.Buisness;
+import pi.HRSmart.persistence.Stage;
 
 @Stateless
 public class AddressService implements AddressServiceLocal, AddressServiceRemote{
@@ -48,8 +51,18 @@ public class AddressService implements AddressServiceLocal, AddressServiceRemote
 
 	@Override
 	public List<Address> getAllByBuisness(int idBuisness) {
-		Query query = em.createQuery("Select a from Address a where a.buisness = " + idBuisness);
+		//Query query = em.createQuery("Select a from Address a where a.buisness = " + idBuisness);
+		Query query = em.createQuery("Select a from Address a JOIN a.buisness c where c.id = " + idBuisness);
 		return (List<Address>) query.getResultList();
+	}
+	
+	@Override
+	public void setBuisnessToAddress(Address address, Buisness buisness) {
+		if( get(address.getId())== null){
+			add(address);
+		}
+		em.createQuery("UPDATE Address a SET a.buisness="
+		+buisness.getId()+" where a.id="+address.getId()).executeUpdate();
 	}
 
 }

@@ -38,6 +38,7 @@ public class BuisnessRessources {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getBuisnessById(@PathParam("id") int id){
+		System.out.println("hereeeeee ok "+id);
 		Buisness buisness = service.get(id);
 		String result = JsonConverter.ConvertBuisness(buisness);
 		return Response.status(Response.Status.OK).entity(result).build();
@@ -47,7 +48,7 @@ public class BuisnessRessources {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllBuisness(){
 		List<Buisness> bu = service.getAllBuisness();
-		String result = JsonConverter.ConvertListBuisnessFull(bu);		
+		String result = JsonConverter.ConvertListBuisness(bu);		
 		return Response.status(Response.Status.OK).entity(result).build();
 	}
 	
@@ -94,6 +95,16 @@ public class BuisnessRessources {
 
 
 	/* this service returns the userbusiness based on his id and it has to be with role HR */
+//	@GET
+//	@QueryParam("{iduser}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public String getUserBusinessByUser(@QueryParam("iduser") int iduser){
+//		UserBuisness ubs = userBuisnessServiceLocal.getUserBusinessByUser(userServiceLocal.get(iduser));
+//		String result = JsonConverter.ConvertUserBusiness(ubs);
+//		return result;
+//	}
+
+
 	@GET
 	@QueryParam("{iduser}")
 	@Produces(MediaType.APPLICATION_JSON)

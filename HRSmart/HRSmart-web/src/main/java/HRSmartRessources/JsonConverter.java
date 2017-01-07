@@ -103,6 +103,27 @@ public class JsonConverter {
 		main.put("UserBuisnesses", UserBuisnesses);
 		return main.toString();
 	}
+	
+	public static String ConvertUserProfile(User user) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+
+		main.put("id", user.getId());
+		main.put("firstName", user.getFirstName());
+		main.put("lastName", user.getLastName());
+		main.put("adresse", user.getAdresse());
+		main.put("numTel", user.getNumTel());
+		main.put("login", user.getLogin());
+		main.put("password", user.getPassword());
+		main.put("age", user.getAge());
+		main.put("facebook", user.getFacebook());
+		main.put("linkedin", user.getLinkedin());
+		main.put("skype", user.getSkype());
+		main.put("twitter", user.getTwitter());
+		main.put("picture", user.getPicture());
+		
+		return main.toString();
+	}
 
 	public static String ConvertListUser(List<User> userList) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -457,6 +478,7 @@ public class JsonConverter {
 		main.put("description", job.getDescription());
 		main.put("salary", job.getSalary());
 		main.put("title", job.getTitle());
+		main.put("creationDate", job.getCreationDate().toString());
 		return main;
 	}
 
@@ -473,7 +495,10 @@ public class JsonConverter {
 		ObjectNode main = mapper.createObjectNode();
 		ObjectNode id = mapper.createObjectNode();
 		id.put("jobOffer", reward.getJobOffer().getId());
-		id.put("stage", reward.getStage().getId());
+		ObjectNode stage = mapper.createObjectNode();
+		stage.put("id", reward.getStage().getId());
+		stage.put("name", reward.getStage().getName());
+		id.put("stage", stage);
 		main.put("id", id);
 		main.put("value", reward.getValue());
 		return main;
@@ -582,4 +607,18 @@ public class JsonConverter {
         	quizz.put("questions", convertQuestion(quiz.getQuestions()));
         return quizz;
     }
+    
+    public static ArrayNode convertSkillList(List<Skill> list){
+    	
+    	 ObjectMapper mapper = new ObjectMapper();
+    	 ArrayNode skills = mapper.createArrayNode();
+    	 for (Skill s : list) {
+         ObjectNode skill = mapper.createObjectNode();
+         skill.put("id", s.getId());
+         skill.put("duration", s.getName());
+         skills.add(skill);
+    	 }
+    	 return skills;
+    }
+    
 }

@@ -91,6 +91,12 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 	}
 
 	@Override
+	public UserBuisness getUserBusinessByUser(User user){ // returns userbusiness that has idUser of that user (HR)
+		/*List<UserBuisness> listB= getByUser(user.getId());
+		List<UserBuisness> finalList=new ArrayList<>();
+		for(UserBuisness ub : listB){
+			if(getRoleByUser(user.getId(),ub.getId().getBuisness().getId())=="HR"){ // is gonna return on BS at the end
+
 	public UserBuisness getUserBusinessByUser(User user) { // returns
 															// userbusiness that
 															// has idUser of
@@ -110,7 +116,8 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 			}
 		}
 		UserBuisness b = finalList.get(0);
-		return b;
+		return b;*/
+		return null;
 	}
 
 	public String SendMail(User user, String to) {

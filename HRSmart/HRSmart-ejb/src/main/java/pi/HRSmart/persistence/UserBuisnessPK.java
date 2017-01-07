@@ -64,5 +64,5 @@ public class UserBuisnessPK implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }
