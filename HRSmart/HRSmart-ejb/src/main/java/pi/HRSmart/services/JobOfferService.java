@@ -1,5 +1,6 @@
 package pi.HRSmart.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -55,6 +56,7 @@ public class JobOfferService implements JobOfferServiceLocal {
 	public void addFull(JobOffer jobOffer) {
 		List<Rewards> listR = jobOffer.getRewards();
 		List<JobSkill> listJS = jobOffer.getJobSkills();
+		jobOffer.setCreationDate(new Date());
 		em.persist(jobOffer);
 		em.flush();
 		em.refresh(jobOffer);
@@ -82,6 +84,7 @@ public class JobOfferService implements JobOfferServiceLocal {
 	public JobOffer update(JobOffer jobOffer) {
 		List<Rewards> listR = jobOffer.getRewards();
 		List<JobSkill> listJS = jobOffer.getJobSkills();
+		jobOffer.setCreationDate(new Date());
 		em.merge(jobOffer);
 		if (listR != null) {
 			for (Rewards r : listR) {

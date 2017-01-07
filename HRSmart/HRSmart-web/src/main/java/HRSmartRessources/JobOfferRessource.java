@@ -15,17 +15,24 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.auth0.jwt.internal.com.fasterxml.jackson.databind.JsonNode;
 
 import pi.HRSmart.interfaces.JobOfferServiceLocal;
 import pi.HRSmart.interfaces.JobSkillServiceLocal;
 import pi.HRSmart.interfaces.RewardServiceLocal;
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.JobOffer;
 import pi.HRSmart.persistence.JobSkill;
 import pi.HRSmart.persistence.JobSkillPk;
 import pi.HRSmart.persistence.Rewards;
 import pi.HRSmart.persistence.RewardsPk;
+import pi.HRSmart.persistence.User;
+import pi.HRSmart.utilities.Jwt;
 
 /**
  * @author Khaled Romdhane
@@ -43,6 +50,9 @@ public class JobOfferRessource {
 
 	@EJB(beanName = "RewardService")
 	RewardServiceLocal rewardService;
+	
+	@EJB(beanName = "UserService")
+	UserServiceLocal userService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -60,7 +70,6 @@ public class JobOfferRessource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addFullJob(JobOffer job) {
-		job.setCreationDate(new Date());
 		service.addFull(job);
 	}
 
@@ -78,6 +87,26 @@ public class JobOfferRessource {
 		
 		return Response.status(Response.Status.OK).entity(service.getJobSalary(job)).build();
 	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("rm")
+	public String getRMJobs(@Context HttpHeaders hh){
+		String token = hh.getHeaderString(HttpHeaders.AUTHORIZATION);
+		if(token != null){
+			token = Jwt.decodeJWT(token);
+			JsonNode jn = Jwt.stringToJson(token);
+			User user = userService.getUserByEmail(jn.get("user").asText());
+			if(canAccess(user)){
+				
+			}
+		}
+		
+		
+		return "n" ;
+	}
 	
+	public static boolean canAccess(User u){
+		return true;
+	}
 
 }

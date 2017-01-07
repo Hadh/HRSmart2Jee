@@ -12,6 +12,7 @@ import com.auth0.jwt.internal.org.apache.commons.codec.binary.CharSequenceUtils;
 import com.auth0.jwt.internal.org.apache.commons.codec.binary.StringUtils;
 import com.auth0.jwt.internal.org.bouncycastle.util.encoders.Base64;
 
+import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.persistence.User;
 
 import java.io.ByteArrayInputStream;

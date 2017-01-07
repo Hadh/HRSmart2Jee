@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.auth0.jwt.internal.com.fasterxml.jackson.databind.JsonNode;
+
 import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
@@ -143,6 +145,12 @@ public User getUserByEmail(String login) {
 
 	}
 
+	
+	public User TokenToUser(String token){
+		String decoded = Jwt.decodeJWT(token);
+		JsonNode jn = Jwt.stringToJson(decoded);
+		return this.getUserByEmail(jn.get("user").asText());
+	}
 	// public void inviteUser (User userEmailToAdd,)
 
 }
