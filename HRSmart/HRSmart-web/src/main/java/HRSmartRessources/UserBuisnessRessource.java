@@ -3,6 +3,8 @@
  */
 package HRSmartRessources;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
+import pi.HRSmart.persistence.User;
 import pi.HRSmart.persistence.UserBuisness;
 import pi.HRSmart.persistence.UserSkill;
 import pi.HRSmart.services.UserBuisnessService;
@@ -64,11 +67,13 @@ public class UserBuisnessRessource {
 				.entity(JsonConverter.ConvertUserBusinessList(userBuisnessService.getByUser(id))).build();
 	}
 
+	//get userBuisness connecte
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		return Response.status(Response.Status.OK)
-				.entity(JsonConverter.ConvertUserBusinessList(userBuisnessService.getAll())).build();
+		List<User> users = serviceUser.getUserByBuisness(idBuisness);
+		String result = JsonConverter.convertListUsersByBuisness(users);
+		return Response.status(Response.Status.OK).entity(result).build();
 	}
 	
 	@GET
