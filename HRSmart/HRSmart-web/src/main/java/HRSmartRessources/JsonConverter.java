@@ -6,6 +6,7 @@ package HRSmartRessources;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.print.attribute.standard.JobName;
 
@@ -143,6 +144,91 @@ public class JsonConverter {
 		main.put("users", users);
 		return main.toString();
 	}
+	public static  String ConvertProfilingMap(Map<User,Integer> scoredList){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode postulants = mapper.createArrayNode();
+		for(Map.Entry<User, Integer> entry : scoredList.entrySet()){
+			ObjectNode user = mapper.createObjectNode();
+			user.put("id",entry.getKey().getId());
+			user.put("FirstName",entry.getKey().getFirstName());
+			user.put("LastName",entry.getKey().getLastName());
+			user.put("Adresse",entry.getKey().getAdresse());
+			user.put("Tel",entry.getKey().getNumTel());
+			ArrayNode userSkill = mapper.createArrayNode();
+			for (UserSkill us : entry.getKey().getUserSkills()){
+
+				ObjectNode skillnode = mapper.createObjectNode();
+				skillnode.put("id", us.getSkill().getId());
+				skillnode.put("name", us.getSkill().getName());
+				userSkill.add(skillnode);
+				userSkill.add(us.getLevel());
+				ArrayNode certifs = mapper.createArrayNode();
+				for (Certificat c : us.getCertificats()) {
+					ObjectNode cert = mapper.createObjectNode();
+					cert.put("id", c.getId());
+					cert.put("name", c.getName());
+					certifs.add(cert);
+
+				}
+				userSkill.add( certifs);
+				user.put("userskill",userSkill);
+
+			}
+			user.put("Score",entry.getValue());
+			postulants.add(user);
+
+		}
+		main.put("Postulants",postulants);
+		return  main.toString();
+	}
+
+	public static String convertPostulationList(List<Postulation> postulations){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode posts = mapper.createArrayNode();
+		for (Postulation p : postulations){
+			ObjectNode postulation = mapper.createObjectNode();
+
+			postulation.put("id",p.getIdPostulation());
+			postulation.put("Date",p.getDatePostulation().toString());
+
+
+			ObjectNode postulant = mapper.createObjectNode();
+
+			postulant.put("id",p.getPostulant().getId());
+			postulant.put("FirstName",p.getPostulant().getFirstName());
+			postulant.put("LastName",p.getPostulant().getLastName());
+			postulant.put("Age",p.getPostulant().getAge());
+			postulant.put("address",p.getPostulant().getAdresse());
+
+			postulation.put("Postulant",postulant);
+
+			posts.add(postulation);
+		}
+		main.put("Postulations",posts);
+		return main.toString();
+	}
+	public static String convertPostulation(Postulation postulation){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+		ArrayNode post = mapper.createArrayNode();
+		ObjectNode p = mapper.createObjectNode();
+		p.put("id",postulation.getIdPostulation());
+		p.put("Date",postulation.getDatePostulation().toString());
+		ObjectNode postulant = mapper.createObjectNode();
+		postulant.put("id",postulation.getPostulant().getId());
+		postulant.put("firstname",postulation.getPostulant().getFirstName());
+		postulant.put("lastname",postulation.getPostulant().getLastName());
+		postulant.put("login",postulation.getPostulant().getLogin());
+
+
+		p.put("Postulant",postulant);
+		post.add(p);
+		main.put("Postulation",post);
+		return main.toString();
+	}
+
 
 	public static String ConvertListCertificat(List<Certificat> list) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -600,7 +686,7 @@ public class JsonConverter {
     	 for (Skill s : list) {
          ObjectNode skill = mapper.createObjectNode();
          skill.put("id", s.getId());
-         skill.put("duration", s.getName());
+         skill.put("name", s.getName());
          skills.add(skill);
     	 }
     	 return skills;

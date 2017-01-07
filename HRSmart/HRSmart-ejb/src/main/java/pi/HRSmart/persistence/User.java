@@ -33,6 +33,7 @@ public class User implements Serializable {
 	private String skype;
 	private String sexe;
 	private int age;
+	private int points;
 	private List <UserSkill> userSkills;
 	private List<Notification> userNotifications;
 
@@ -198,29 +199,12 @@ public class User implements Serializable {
 	public void setTwitter(String twitter) {
 		this.twitter = twitter;
 	}
-	/**
-	 * @param id
-	 * @param firstName
-	 * @param lastName
-	 * @param userBuisness
-	 * @param login
-	 * @param password
-	 * @param adresse
-	 * @param numTel
-	 * @param dateInscription
-	 * @param active
-	 * @param facebook
-	 * @param linkedin
-	 * @param picture
-	 * @param twitter
-	 * @param skype
-	 * @param sexe
-	 * @param age
-	 * @param userSkills
-	 * @param userNotifications
-	 */
+	public int getPoints() {return points;}
+	public void setPoints(int points) {this.points = points;}
+
+
 	public User(int id, String firstName, String lastName,  String login,String adresse, String numTel, Date dateInscription, boolean active, String facebook,
-			String linkedin, String picture, String twitter, String skype, String sexe, int age) {
+			String linkedin, String picture, String twitter, String skype, String sexe, int age,int points) {
 		super();
 		Id = id;
 		this.firstName = firstName;
@@ -237,6 +221,7 @@ public class User implements Serializable {
 		this.skype = skype;
 		this.sexe = sexe;
 		this.age = age;
+		this.points = points;
 	}
 	
 	
