@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -85,6 +86,13 @@ public class JobOfferRessource {
 		service.update(job);
 	}
 
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deletejob(JobOffer job) {
+		job.setActive(false);
+		service.	update(job);
+	}
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("salary")
@@ -93,18 +101,6 @@ public class JobOfferRessource {
 		return Response.status(Response.Status.OK).entity(service.getJobSalary(job)).build();
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("rm")
-	public String getRMJobs(@Context HttpHeaders hh) {
-		String token = hh.getHeaderString(HttpHeaders.AUTHORIZATION);
-		if (token != null) {
-			User user = userService.TokenToUser(token);
-			UserBuisness ub = userService.GetCurrentUserBusiness(user);
-			return JsonConverter.ConvertUserBusiness(ub);
-		}
-
-		return "n";
-	}
+	
 
 }
