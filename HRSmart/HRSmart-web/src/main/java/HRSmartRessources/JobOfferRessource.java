@@ -4,6 +4,8 @@
  */
 package HRSmartRessources;
 
+import java.util.Date;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -58,6 +60,7 @@ public class JobOfferRessource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addFullJob(JobOffer job) {
+		job.setCreationDate(new Date());
 		service.addFull(job);
 	}
 
@@ -65,17 +68,6 @@ public class JobOfferRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updatejob(JobOffer job) {
 		service.update(job);
-
-		if (job.getRewards() != null) {
-			for (Rewards r : job.getRewards()) {
-				rewardService.update(r);
-			}
-		}
-		if (job.getJobSkills() != null) {
-			for (JobSkill js : job.getJobSkills()) {
-				jobSkillService.update(js);
-			}
-		}
 	}
 
 	

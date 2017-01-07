@@ -53,31 +53,55 @@ public class JobOfferService implements JobOfferServiceLocal {
 
 	@Override
 	public void addFull(JobOffer jobOffer) {
+		List<Rewards> listR = jobOffer.getRewards();
+		List<JobSkill> listJS = jobOffer.getJobSkills();
 		em.persist(jobOffer);
 		em.flush();
-		if (jobOffer.getRewards() != null) {
-			for (Rewards r : jobOffer.getRewards()) {
+		em.refresh(jobOffer);
+		if (listR != null) {
+			for (Rewards r : listR) {
 				RewardsPk pk = new RewardsPk();
 				pk.setStage(r.getStage());
-				pk.setJobOffer(em.merge(jobOffer));
+				pk.setJobOffer(jobOffer);
 				r.setId(pk);
-				rewardService.add(r);
+				em.persist(r);
 			}
 		}
-		if (jobOffer.getJobSkills() != null) {
-			for (JobSkill js : jobOffer.getJobSkills()) {
+		if (listJS != null) {
+			for (JobSkill js : listJS) {
 				JobSkillPk pk = new JobSkillPk();
 				pk.setSkill(js.getSkill());
-				pk.setJobOffer(em.merge(jobOffer));
+				pk.setJobOffer(jobOffer);
 				js.setId(pk);
-				jobSkillService.add(js);
+				em.persist(js);
 			}
 		}
 	}
 
 	@Override
 	public JobOffer update(JobOffer jobOffer) {
-		return em.merge(jobOffer);
+		List<Rewards> listR = jobOffer.getRewards();
+		List<JobSkill> listJS = jobOffer.getJobSkills();
+		em.merge(jobOffer);
+		if (listR != null) {
+			for (Rewards r : listR) {
+				RewardsPk pk = new RewardsPk();
+				pk.setStage(r.getStage());
+				pk.setJobOffer(jobOffer);
+				r.setId(pk);
+				em.merge(r);
+			}
+		}
+		if (listJS != null) {
+			for (JobSkill js : listJS) {
+				JobSkillPk pk = new JobSkillPk();
+				pk.setSkill(js.getSkill());
+				pk.setJobOffer(jobOffer);
+				js.setId(pk);
+				em.merge(js);
+			}
+		}
+		return jobOffer;
 
 	}
 
