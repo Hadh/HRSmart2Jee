@@ -149,6 +149,7 @@ public User getUserByEmail(String login) {
 	public User TokenToUser(String token){
 		String decoded = Jwt.decodeJWT(token);
 		JsonNode jn = Jwt.stringToJson(decoded);
+		
 		return this.getUserByEmail(jn.get("user").asText());
 	}
 	// public void inviteUser (User userEmailToAdd,)

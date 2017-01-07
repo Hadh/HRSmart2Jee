@@ -21,4 +21,5 @@ public interface UserServiceLocal {
 	public String addUser(User user);
 	public List<User> getUserByBuisness(int idBuisness);
 	public List<User> getAll() ;
+	public User TokenToUser(String token);
 }

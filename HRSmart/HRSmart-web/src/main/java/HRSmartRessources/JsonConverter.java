@@ -456,8 +456,12 @@ public class JsonConverter {
 			buisness.put("id", ub.getBuisness().getId());
 			buisness.put("name", ub.getBuisness().getName());
 			ObjectNode id = mapper.createObjectNode();
-			id.put("buisnesses", buisness);
-			id.put("user", ub.getUser().getId());
+			id.put("buisness", buisness);
+			ObjectNode user = mapper.createObjectNode();
+			user.put("id", ub.getUser().getId());
+			user.put("firstName", ub.getUser().getFirstName());
+			user.put("lastName", ub.getUser().getLastName());
+			id.put("user", user);
 			userBuisness.put("id", id);
 			userBuisness.put("role", ub.getRole());
 			userBuisness.put("hireDate", ub.getHireDate().toString());
