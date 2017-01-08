@@ -21,18 +21,21 @@ public class ChoiceService implements IChoiceServiceLocal{
 
 
     @Override
-    public void add(Choice choice) {
+    public Choice add(Choice choice) {
         em.persist(choice);
+        em.refresh(choice);
+        return choice;
     }
 
     @Override
-    public void update(Choice choice) {
-        em.merge(choice);
+    public Choice update(Choice choice) {
+        return em.merge(choice);
     }
 
     @Override
-    public void remove(Choice choice) {
+    public List<Choice> remove(Choice choice) {
         em.remove(em.merge(choice));
+        return all();
     }
 
     @Override

@@ -12,10 +12,11 @@ import java.util.List;
  */
 
 public interface IQuestionServiceLocal {
-    void add(Question question);
-    void update(Question question);
-    void remove(Question question);
+    Question add(Question question);
+    Question update(Question question);
+    List<Question> remove(Question question);
     Question get(int id);
     List<Question> all();
+    List<Question> getBySkill(String skill);
 
 }

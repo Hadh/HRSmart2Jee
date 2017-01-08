@@ -414,13 +414,16 @@ public class JsonConverter {
 		ObjectNode qs = mapper.createObjectNode();
 		qs.put("id", question.getId());
 		qs.put("body", question.getBody());
-		qs.put("skill", convertSkill(question.getSkill()));
-		qs.put("choices",convertChoices(question.getChoices()));
+		if(question.getSkill() != null)
+			qs.put("skill", convertSkill(question.getSkill()));
+		if(question.getChoices()!=null)
+			qs.put("choices",convertChoices(question.getChoices()));
 		return qs;
 	}
 	public static ObjectNode convertSkill(Skill skill){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode s = mapper.createObjectNode();
+		s.put("id",skill.getId());
 		s.put("name",skill.getName());
 
 		return s;

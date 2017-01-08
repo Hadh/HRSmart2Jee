@@ -6,6 +6,7 @@ import pi.HRSmart.interfaces.IQuizServiceLocal;
 import pi.HRSmart.persistence.Assessment;
 import pi.HRSmart.persistence.Question;
 import pi.HRSmart.persistence.Quiz;
+import pi.HRSmart.persistence.Skill;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -29,28 +30,28 @@ public class QuizService implements IQuizServiceLocal{
 
 
     @Override
-    public void add(Quiz quiz) {
+    public Quiz add(Quiz quiz) {
         em.persist(quiz);
+        em.refresh(quiz);
+        return quiz;
     }
 
     @Override
-    public void update(Quiz quiz) {
-        em.merge(quiz);
+    public Quiz update(Quiz quiz) {
+       return em.merge(quiz);
     }
 
     @Override
     public void remove(Quiz quiz) {
+
         em.remove(em.merge(quiz));
+        all();
     }
 
     @Override
     public Quiz get(int id) {
         Quiz quiz = em.find(Quiz.class,id);
-        /*Query query = em.createQuery("select q from Question q join q.quizs qu where qu.id=:id")
-                .setParameter("id",quiz.getId());
-        List<Question> questions = query.getResultList();
-        quiz.setQuestions(questions);
-        System.out.println("size "+ quiz.getQuestions().size());*/
+
 
         return quiz;
     }
@@ -69,4 +70,20 @@ public class QuizService implements IQuizServiceLocal{
 
         return quiz;
     }
+
+    @Override
+    public void addWithRelation(Quiz quiz) {
+
+    }
+
+    @Override
+    public List<Quiz> getQuizBySkill(String skill) {
+
+        Query q = em.createQuery("select q from Quiz q join q.questions qu join qu.skill s where s.name=:skillname")
+                .setParameter("skillname", skill);
+
+        return (ArrayList<Quiz>) q.getResultList();
+    }
+
+
 }

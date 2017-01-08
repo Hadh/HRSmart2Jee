@@ -30,23 +30,33 @@ public class QuizRessource {
         Quiz quiz =  quizService.get(id);
         return JsonConverter.ConvertQuiz(quiz).toString();
     }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String index(){
-        String quizs = JsonConverter.ConvertQuiz(quizService.all()).toString();
-        return quizs;
+    public String GetQuizBySkill(@QueryParam(value="skill") String skill){
+        List<Quiz> quizs = new ArrayList<>();
+        if (skill != null)
+           quizs  = quizService.getQuizBySkill(skill);
+        else
+            quizs = quizService.all();
+
+        return JsonConverter.ConvertQuiz(quizs).toString();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Quiz quiz){
-        quizService.add(quiz);
-        if(quiz.getQuestions() != null){
-            quiz.getQuestions().stream().forEach(question -> {
-                questionRessource.add(question);
-            });
-        }
-        return Response.status(Response.Status.OK).build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public String add(Quiz quiz){
+        Quiz q =  quizService.add(quiz);
+        return JsonConverter.ConvertQuiz(q).toString();
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String update(Quiz quiz){
+        Quiz q =  quizService.update(quiz);
+        return JsonConverter.ConvertQuiz(q).toString();
     }
 
     @DELETE
