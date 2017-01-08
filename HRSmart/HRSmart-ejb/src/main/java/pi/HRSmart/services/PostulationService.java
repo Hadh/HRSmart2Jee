@@ -69,10 +69,17 @@ public class PostulationService implements PostulationServiceLocal {
     @Override
     public List<Assessment> getPostulationResults(Postulation ps) {
         Query query = em.createQuery(
-                "select a from Assessment a left join a.postulation where a.postulation = :ps"
+                "select a from Assessment a left join a.pk.postulation where a.pk.postulation = :ps"
         ).setParameter("ps", ps.getIdPostulation());
 
         return (ArrayList<Assessment>) query.getResultList();
+    }
+
+    @Override
+    public Postulation getPostulationByUser(int idUser) {
+        Query query =  em.createQuery("select p from Postulation p where p.postulant.id=:id");
+        query.setParameter("id",idUser);
+        return (Postulation) query.getSingleResult();
     }
 
 

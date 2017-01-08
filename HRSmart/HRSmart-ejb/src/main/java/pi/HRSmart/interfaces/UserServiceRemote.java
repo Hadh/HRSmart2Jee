@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 
 import pi.HRSmart.persistence.User;
+import pi.HRSmart.persistence.UserBuisness;
 
 @Remote
 public interface UserServiceRemote {
@@ -22,4 +23,7 @@ public interface UserServiceRemote {
     public String addUser(User user);
     public List<User> getUserByBuisness(int idBuisness);
     public List<User> getAll() ;
+    public User TokenToUser(String token);
+    public UserBuisness GetCurrentUserBusiness(User user) ;
+    
 }

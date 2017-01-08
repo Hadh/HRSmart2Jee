@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.auth0.jwt.internal.com.fasterxml.jackson.databind.JsonNode;
+
 import pi.HRSmart.interfaces.UserBuisnessServiceLocal;
 import pi.HRSmart.interfaces.UserServiceLocal;
 import pi.HRSmart.interfaces.UserSkillsServiceLocal;
@@ -90,31 +92,27 @@ public class UserService implements UserServiceLocal {
 		return false;
 	}
 
-	/*		@Override
-public User getUserByEmail(String login) {
-		try {
-			String queryStr = "select new User(e.id, e.firstName, e.lastName, e.login,"
-					+ "e.adresse, e.numTel, e.dateInscription, e.active, e.facebook,"
-					+ "e.linkedin, e.picture, e.twitter, e.skype, e.sexe, e.age)  from User e where e.login=:login";
-			TypedQuery<User> query = em.createQuery(queryStr, User.class);
-			query.setParameter("login", login);
-			List<User> results = query.getResultList();
-			return results.get(0);
-			
-		} catch (Exception e) {
-			return null;
-		}
-	}*/
-	
+	/*
+	 * @Override public User getUserByEmail(String login) { try { String
+	 * queryStr = "select new User(e.id, e.firstName, e.lastName, e.login," +
+	 * "e.adresse, e.numTel, e.dateInscription, e.active, e.facebook," +
+	 * "e.linkedin, e.picture, e.twitter, e.skype, e.sexe, e.age)  from User e where e.login=:login"
+	 * ; TypedQuery<User> query = em.createQuery(queryStr, User.class);
+	 * query.setParameter("login", login); List<User> results =
+	 * query.getResultList(); return results.get(0);
+	 * 
+	 * } catch (Exception e) { return null; } }
+	 */
+
 	@Override
 	public User getUserByEmail(String login) {
 		try {
-			
+
 			TypedQuery<User> query = em.createQuery("select e from User e where e.login = :login", User.class);
 			query.setParameter("login", login);
 			List<User> results = query.getResultList();
 			return results.get(0);
-			
+
 		} catch (Exception e) {
 			return null;
 		}
@@ -143,6 +141,25 @@ public User getUserByEmail(String login) {
 
 	}
 
+	public UserBuisness GetCurrentUserBusiness(User user) {
+		UserBuisness userbuisness = null;
+		List<UserBuisness> userBuisnesses = userBuisnessServiceLocal.getByUser(user.getId());
+		for (UserBuisness ub : userBuisnesses) {
+				if (!(ub.getRole().equals("EX"))) {
+					userbuisness = ub;
+					break;
+				}
+			
+		}
+		return userbuisness;
+	}
+
+	public User TokenToUser(String token) {
+		String decoded = Jwt.decodeJWT(token);
+		JsonNode jn = Jwt.stringToJson(decoded);
+
+		return this.getUserByEmail(jn.get("user").asText());
+	}
 	// public void inviteUser (User userEmailToAdd,)
 
 }

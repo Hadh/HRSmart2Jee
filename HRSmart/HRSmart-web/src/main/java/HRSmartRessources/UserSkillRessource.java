@@ -66,6 +66,7 @@ public class UserSkillRessource {
 	// updateUserSkill and their certificats done
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateuserSkill(UserSkill userSkill) {
 		userSkillsService.update(userSkill);
 		return Response.status(Response.Status.OK).build();
@@ -75,10 +76,9 @@ public class UserSkillRessource {
 	// deleteUSerSkill Done
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteuserSkill(UserSkill userSkill) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteuserSkill(UserSkill userSkill) {
 		userSkillsService.remove(userSkill);
-		return Response.status(Response.Status.OK).build();
-
 	}
 
 	@GET
@@ -96,4 +96,7 @@ public class UserSkillRessource {
 			
 			return Response.status(Response.Status.OK).entity(JsonConverter.ConvertListUserSkill(userSkillsService.getByUser(id))).build();
 		}
+		
+		
+
 }

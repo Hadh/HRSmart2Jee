@@ -67,6 +67,6 @@ public class RewardService implements RewardServiceLocal {
 	@Override
 	public Rewards getCVStage(int jobId) {
 		Query query = em.createQuery("Select r from Rewards r where r.value=0 AND r.id.jobOffer = " + jobId);
-		return (Rewards) query.getResultList();	}
+		return (Rewards) query.getResultList().get(0);	}
 
 }

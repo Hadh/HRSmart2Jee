@@ -26,32 +26,65 @@ public class ProfilingService implements ProfilingServiceLocal {
     RewardServiceLocal rewardServiceLocal;
     @EJB(beanName = "UserService")
     UserServiceLocal userServiceLocal;
+    @EJB(beanName = "JobOfferService")
+    JobOfferServiceLocal jobOfferServiceLocal;
 
 
 
 
     @Override
-    public void Profile(JobOffer jobOffer) {
+    public Map<User,Integer> Profile(int id) {
+
+        JobOffer jobOffer = jobOfferServiceLocal.getFull(id);
 
         List<JobSkill> jobSkills = jobOffer.getJobSkills();
         List<Skill> skillSet = jobSkills.stream().map(e -> e.getSkill()).collect(Collectors.toList());
         List<Postulation> ps = rewardServiceLocal.getCVStage(jobOffer.getId()).getPostulations();
         List<User> postulants = ps.stream().map(e->
-            userServiceLocal.getFull(e.getPostulant().getId())).collect(Collectors.toList());
-
-        Map<User,Integer> scoredList = new HashMap<>();
-        postulants.forEach(e->scoredList.put(e,0));
+                userServiceLocal.getFull(e.getPostulant().getId())).collect(Collectors.toList());
 
 
 
+
+        Map<User,Integer> DataStream = new HashMap<>();
+        postulants.forEach(e->DataStream.put(e,0));
+
+        Map<User,Integer> ScoredList = new HashMap<>();
+
+        ScoredList = Score(DataStream,skillSet);
+
+
+        return  ScoredList;
     }
 
     @Override
-    public Map<User, Integer> Score(Map<User, Integer> scored) {
+    public Map<User,Integer> Score(Map<User,Integer> scored,List<Skill> skillset) {
+
+        Integer index = 0;
+        Map<User,Integer> FinalScore = new HashMap<>();
+
+        for(Skill s :skillset){
+            for (User u:scored.keySet()){
+                for (UserSkill userskill: u.getUserSkills()){
+                    if(userskill.getSkill().getName().equals(s.getName())){
+                        index=userskill.getLevel()/10;
+                        FinalScore.merge(u,index,(integer, integer2) -> integer+=integer2);
+                    }
+//                    for (Certificat cert:userskill.getCertificats()){
+//                        for (Certificat certset:s.getCertificats()){
+//                            if (cert.getName().equals(certset.getName())){
+//
+//                                FinalScore.merge(u,1,(integer, integer2) -> integer+=integer2);
+//                            }
+//                        }
+//                    }
+                }
+
+            }
+        }
 
 
 
-
-        return null;
+        return FinalScore;
     }
 }
