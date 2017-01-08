@@ -677,7 +677,7 @@ public class JsonConverter {
 		return grand.toString();
 	}
 
-	public static ArrayNode ConvertQuiz(ArrayList<Quiz> quizs) {
+	public static ArrayNode ConvertQuiz(List<Quiz> quizs) {
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayNode qzs = mapper.createArrayNode();
 		quizs.stream().forEach(quiz -> {
