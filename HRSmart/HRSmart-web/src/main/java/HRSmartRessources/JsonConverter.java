@@ -161,8 +161,8 @@ public class JsonConverter {
 				ObjectNode skillnode = mapper.createObjectNode();
 				skillnode.put("id", us.getSkill().getId());
 				skillnode.put("name", us.getSkill().getName());
-				userSkill.add(skillnode);
-				userSkill.add(us.getLevel());
+				skillnode.put("level",us.getLevel());
+
 				ArrayNode certifs = mapper.createArrayNode();
 				for (Certificat c : us.getCertificats()) {
 					ObjectNode cert = mapper.createObjectNode();
@@ -171,7 +171,9 @@ public class JsonConverter {
 					certifs.add(cert);
 
 				}
-				userSkill.add( certifs);
+				skillnode.put("certificats",certifs);
+				userSkill.add(skillnode);
+
 				user.put("userskill",userSkill);
 
 			}
@@ -192,7 +194,22 @@ public class JsonConverter {
 
 			postulation.put("id",p.getIdPostulation());
 			postulation.put("Date",p.getDatePostulation().toString());
+			ObjectNode jobOffer = mapper.createObjectNode();
+			jobOffer.put("title",p.getReward().getJobOffer().getTitle());
+			jobOffer.put("description",p.getReward().getJobOffer().getDescription());
+			jobOffer.put("BuisnessName",p.getReward().getJobOffer().getBuisness().getName());
+			jobOffer.put("id",p.getReward().getJobOffer().getId());
+			ArrayNode jobskills = mapper.createArrayNode();
+			for (JobSkill js : p.getReward().getJobOffer().getJobSkills()){
+				ObjectNode skill = mapper.createObjectNode();
+				skill.put("skillName",js.getSkill().getName());
+				jobskills.add(skill);
+			}
+			jobOffer.put("JobSkills",jobskills);
+			postulation.put("tracking",p.getReward().getValue());
+			postulation.put("stageid",p.getReward().getStage().getId());
 
+			postulation.put("jobOffer",jobOffer);
 
 			ObjectNode postulant = mapper.createObjectNode();
 
@@ -201,6 +218,21 @@ public class JsonConverter {
 			postulant.put("LastName",p.getPostulant().getLastName());
 			postulant.put("Age",p.getPostulant().getAge());
 			postulant.put("address",p.getPostulant().getAdresse());
+			ArrayNode Skills = mapper.createArrayNode();
+			for(UserSkill s : p.getPostulant().getUserSkills()){
+				ObjectNode skill = mapper.createObjectNode();
+				skill.put("name",s.getSkill().getName());
+				ArrayNode certificats = mapper.createArrayNode();
+				for(Certificat c : s.getCertificats()){
+					ObjectNode certificat = mapper.createObjectNode();
+					certificat.put("name",c.getName());
+					certificats.add(certificat);
+				}
+				skill.put("Certificats",certificats);
+				Skills.add(skill);
+
+			}
+			postulant.put("Skills",Skills);
 
 			postulation.put("Postulant",postulant);
 
@@ -695,5 +727,6 @@ public class JsonConverter {
     	 }
     	 return skills;
     }
+
     
 }
