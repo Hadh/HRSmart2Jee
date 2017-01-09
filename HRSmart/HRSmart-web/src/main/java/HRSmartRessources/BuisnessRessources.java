@@ -54,9 +54,13 @@ public class BuisnessRessources {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addBuisness(Buisness buisness){
-		service.add(buisness);
-		return Response.status(Response.Status.CREATED).build();
+	public String addBuisness(Buisness buisness){
+		buisness = service.add(buisness);
+		buisness.setAddress(null);
+		buisness.setJobOffers(null);
+		buisness.setStages(null);
+		buisness.setUserBuisness(null);
+		return JsonConverter.ConvertBuisnessMin(buisness);
 	}
 	
 	@PUT

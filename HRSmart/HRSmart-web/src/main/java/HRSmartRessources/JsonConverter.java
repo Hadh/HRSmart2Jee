@@ -348,6 +348,15 @@ public class JsonConverter {
 		main.put("buisness", Buisnessz);
 		return main.toString();
 	}
+	public static String ConvertBuisnessMin(Buisness buisness) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode main = mapper.createObjectNode();
+
+		main.put("id", buisness.getId());
+		main.put("name", buisness.getName());
+
+		return main.toString();
+	}
 
 	public static String ConvertBuisness(Buisness buisness) {
 

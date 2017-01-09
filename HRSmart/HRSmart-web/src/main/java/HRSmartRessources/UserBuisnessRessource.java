@@ -3,6 +3,7 @@
  */
 package HRSmartRessources;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -45,6 +46,7 @@ public class UserBuisnessRessource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response adduserBuisness(UserBuisness userbuisness) {
+		userbuisness.setHireDate(new Date());
 		userBuisnessService.add(userbuisness);
 		return Response.status(Response.Status.CREATED).build();
 	}

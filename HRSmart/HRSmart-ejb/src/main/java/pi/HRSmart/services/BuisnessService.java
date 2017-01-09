@@ -36,9 +36,10 @@ public class BuisnessService implements BuisnessServiceLocal, BuisnessServiceRem
 	EntityManager em;
 
 	@Override
-	public void add(Buisness Buisness) {
-		em.persist(Buisness);
-		
+	public Buisness add(Buisness Buisness) {
+		 em.persist(Buisness);
+		 em.refresh(Buisness);
+		 return Buisness;
 	}
 
 	@Override

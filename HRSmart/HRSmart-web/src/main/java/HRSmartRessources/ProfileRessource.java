@@ -36,6 +36,7 @@ public class ProfileRessource {
 	public String getProfile(@Context HttpHeaders hh) {
 		String token = hh.getHeaderString(HttpHeaders.AUTHORIZATION);
 		token = Jwt.decodeJWT(token);
+		System.out.println(token);
 		JsonNode jn = Jwt.stringToJson(token);
 		
 		return JsonConverter.ConvertUserProfile((userServiceLocal.getUserByEmail((jn.get("user").asText()))));

@@ -7,7 +7,7 @@ import pi.HRSmart.persistence.*;
 @Local
 public interface BuisnessServiceLocal {
 
-	void add(Buisness Buisness);
+	Buisness add(Buisness Buisness);
   	void update(Buisness Buisness);
 	void remove(Buisness Buisness);
 	Buisness get(int id);

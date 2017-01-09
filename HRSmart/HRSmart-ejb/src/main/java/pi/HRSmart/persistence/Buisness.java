@@ -20,6 +20,7 @@ public class Buisness implements Serializable {
 
 	private int id;
 	private String name;
+	private String description;
 	private boolean valid ;
 	private List<Address> address;
 	private List<JobOffer> jobOffers;
@@ -97,6 +98,14 @@ public class Buisness implements Serializable {
 
 	public void setValid(boolean valid) {
 		this.valid = valid;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

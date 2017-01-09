@@ -16,7 +16,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by BoB on 10/31/2016.
@@ -90,12 +89,7 @@ public class PostulationRessource {
     @DELETE
     @Consumes("application/json")
     public Response deletePostulation(Postulation postulation,@Context HttpHeaders hh){
-        String token = hh.getHeaderString(HttpHeaders.AUTHORIZATION);
-        String decoded = Jwt.decodeJWT(token);
-        JsonNode jn= Jwt.stringToJson(decoded);
-        User id=userServiceLocal.getUserByEmail(jn.get("user").asText());
-        postulation.setPostulant(id);
-
+        postulation.setDatePostulation(new Date());
         service.delete(postulation);
         return Response.status(Response.Status.OK).build();
     }

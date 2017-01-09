@@ -44,8 +44,15 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 
 	@Override
 	public void add(UserBuisness userBuisness) {
+		System.out.println(userBuisness.getUser().getId());
+		System.out.println(userBuisness.getBuisness().getId());
+		User u = em.find(User.class, userBuisness.getUser().getId());
+		Buisness b = em.find(Buisness.class, userBuisness.getBuisness().getId());
+		UserBuisnessPK pk = new UserBuisnessPK();
+		pk.setBuisness(b);
+		pk.setUser(u);
+		userBuisness.setId(pk);
 		em.persist(userBuisness);
-
 	}
 
 	@Override
@@ -91,32 +98,25 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 	}
 
 	@Override
-	public UserBuisness getUserBusinessByUser(User user){ // returns userbusiness that has idUser of that user (HR)
-		/*List<UserBuisness> listB= getByUser(user.getId());
-		List<UserBuisness> finalList=new ArrayList<>();
-		for(UserBuisness ub : listB){
-			if(getRoleByUser(user.getId(),ub.getId().getBuisness().getId())=="HR"){ // is gonna return on BS at the end
-
 	public UserBuisness getUserBusinessByUser(User user) { // returns
 															// userbusiness that
 															// has idUser of
 															// that user (HR)
-		List<UserBuisness> listB = getByUser(user.getId());
-		List<UserBuisness> finalList = new ArrayList<>();
-		for (UserBuisness ub : listB) {
-			if (getRoleByUser(user.getId(), ub.getId().getBuisness().getId()) == "HR") { // is
-																							// gonna
-																							// return
-																							// on
-																							// BS
-																							// at
-																							// the
-																							// end
-				finalList.add(ub);
-			}
-		}
-		UserBuisness b = finalList.get(0);
-		return b;*/
+		/*
+		 * List<UserBuisness> listB= getByUser(user.getId()); List<UserBuisness>
+		 * finalList=new ArrayList<>(); for(UserBuisness ub : listB){
+		 * if(getRoleByUser(user.getId(),ub.getId().getBuisness().getId())=="HR"
+		 * ){ // is gonna return on BS at the end
+		 * 
+		 * public UserBuisness getUserBusinessByUser(User user) { // returns //
+		 * userbusiness that // has idUser of // that user (HR)
+		 * List<UserBuisness> listB = getByUser(user.getId());
+		 * List<UserBuisness> finalList = new ArrayList<>(); for (UserBuisness
+		 * ub : listB) { if (getRoleByUser(user.getId(),
+		 * ub.getId().getBuisness().getId()) == "HR") { // is // gonna // return
+		 * // on // BS // at // the // end finalList.add(ub); } } UserBuisness b
+		 * = finalList.get(0); return b;
+		 */
 		return null;
 	}
 
@@ -145,18 +145,16 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 		while (verif == false) {
 			verif = true;
 			for (int i = 0; i < users.size() - 1; i++) {
-				System.out.println("i."+i);
+				System.out.println("i." + i);
 				int counter = 0;
-				for (UserSkill us1 : users.get(i ).getUserSkills()) {
-					System.out.println("userskill"+us1.getLevel());
+				for (UserSkill us1 : users.get(i).getUserSkills()) {
+					System.out.println("userskill" + us1.getLevel());
 					boolean exist = false;
 					for (UserSkill us2 : users.get(i + 1).getUserSkills()) {
 						if (us1.getSkill().getId() == us2.getSkill().getId()) {
 							if (us1.getLevel() < us2.getLevel()) {
 								counter--;
-							}
-							else if (us1.getLevel() > us2.getLevel()) 
-							{
+							} else if (us1.getLevel() > us2.getLevel()) {
 								counter++;
 							}
 							exist = true;
@@ -167,9 +165,9 @@ public class UserBuisnessService implements UserBuisnessServiceLocal {
 					}
 				}
 				if (counter < 0) {
-					User aux = users.get(i );
+					User aux = users.get(i);
 					users.set(i, users.get(i + 1));
-					users.set(i  + 1, aux);
+					users.set(i + 1, aux);
 					verif = false;
 				}
 			}

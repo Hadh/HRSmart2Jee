@@ -82,7 +82,7 @@ public class Jwt {
 	public static String cleanJson(String jsonString) {
 
 		jsonString = jsonString.substring(0, jsonString.length() - 3);
-		jsonString = jsonString + "}";
+		jsonString = jsonString + "\"}";
 		return jsonString;
 
 	}

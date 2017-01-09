@@ -25,5 +25,5 @@ public interface UserServiceRemote {
     public List<User> getAll() ;
     public User TokenToUser(String token);
     public UserBuisness GetCurrentUserBusiness(User user) ;
-    
+    public List<User> getNonEmployed();
 }

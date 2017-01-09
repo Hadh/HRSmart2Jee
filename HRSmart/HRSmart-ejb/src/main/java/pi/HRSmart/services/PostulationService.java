@@ -45,7 +45,7 @@ public class PostulationService implements PostulationServiceLocal {
 
     @Override
     public void delete(Postulation postulation) {
-        em.remove(postulation);
+        em.remove(em.merge(postulation));
     }
 
     @Override

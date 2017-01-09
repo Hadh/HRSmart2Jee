@@ -6,7 +6,7 @@ import pi.HRSmart.persistence.Buisness;
 
 @Remote
 public interface BuisnessServiceRemote {
-	void add(Buisness Buisness);
+	Buisness add(Buisness Buisness);
   	void update(Buisness Buisness);
 	void remove(Buisness Buisness);
 	Buisness get(int id);

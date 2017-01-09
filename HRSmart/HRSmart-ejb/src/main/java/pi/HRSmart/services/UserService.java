@@ -121,8 +121,6 @@ public class UserService implements UserServiceLocal {
 	@Override
 	public String addUser(User user) {
 
-		String beforeHash = user.getPassword();
-		user.setPassword(getMD5Hash.getMD5Hash(beforeHash));
 		em.persist(user);
 		SendWelcomeMail.SendEmail(user.getLogin(), "Welcome Email", "This is a welcome mail!");
 
@@ -162,4 +160,12 @@ public class UserService implements UserServiceLocal {
 	}
 	// public void inviteUser (User userEmailToAdd,)
 
+	
+	@Override
+	public List<User> getNonEmployed() {
+
+		Query query = em.createQuery("SELECT u FROM User u");
+		return (List<User>) query.getResultList();
+
+	}
 }

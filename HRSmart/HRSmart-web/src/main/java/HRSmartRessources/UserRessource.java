@@ -1,6 +1,7 @@
 package HRSmartRessources;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -77,6 +78,7 @@ public class UserRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("users")
 	public Response addUser(User user){
+		user.setDateInscription(new Date());
 		userServiceLocal.addUser(user);
 		return Response.status(Response.Status.CREATED).build();
 	}

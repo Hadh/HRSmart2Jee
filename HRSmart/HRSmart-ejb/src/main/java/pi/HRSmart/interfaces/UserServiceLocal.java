@@ -24,4 +24,5 @@ public interface UserServiceLocal {
 	public List<User> getAll() ;
 	public User TokenToUser(String token);
     public UserBuisness GetCurrentUserBusiness(User user) ;
+    public List<User> getNonEmployed();
 }
