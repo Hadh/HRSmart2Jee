@@ -47,7 +47,7 @@ public class Quiz implements Serializable{
         this.result = result;
     }
 
-    @OneToMany(mappedBy = "pk.quiz")
+    @OneToMany(mappedBy = "pk.quiz", cascade = CascadeType.REMOVE)
     public List<Assessment> getAssessments() {
         return assessments;
     }
@@ -65,7 +65,7 @@ public class Quiz implements Serializable{
         this.description = descrption;
     }
 
-    @ManyToMany/*(fetch = FetchType.EAGER)*/
+    @ManyToMany(cascade = CascadeType.REMOVE)
     public List<Question> getQuestions() {
         return this.questions;
     }

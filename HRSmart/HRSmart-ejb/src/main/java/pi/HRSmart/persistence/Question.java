@@ -45,7 +45,7 @@ public class Question implements Serializable{
         this.skill = skill;
     }
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     public List<Choice> getChoices() {
         return choices;
     }

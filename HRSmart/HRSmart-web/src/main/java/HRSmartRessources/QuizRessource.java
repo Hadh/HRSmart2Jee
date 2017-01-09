@@ -1,6 +1,8 @@
 package HRSmartRessources;
 
+import pi.HRSmart.interfaces.IQuestionServiceLocal;
 import pi.HRSmart.interfaces.IQuizServiceLocal;
+import pi.HRSmart.persistence.Question;
 import pi.HRSmart.persistence.Quiz;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -19,7 +21,8 @@ public class QuizRessource {
 
     @EJB(beanName = "QuizService")
     IQuizServiceLocal quizService ;
-    QuestionRessource questionRessource;
+    @EJB
+    IQuestionServiceLocal questionService;
 
     @GET
     //@Produces(MediaType.APPLICATION_JSON)
@@ -47,8 +50,17 @@ public class QuizRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String add(Quiz quiz){
+
+        List<Question> questions = quiz.getQuestions();
+        List<Question> PersistedQuestions = new ArrayList<>();
         Quiz q =  quizService.add(quiz);
-        return JsonConverter.ConvertQuiz(q).toString();
+        for(Question qu : questions){
+            PersistedQuestions.add(questionService.add(qu));
+        }
+        q.setQuestions(PersistedQuestions);
+
+
+        return JsonConverter.ConvertQuiz(quizService.update(q)).toString();
     }
 
     @PUT

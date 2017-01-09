@@ -30,7 +30,7 @@ public class DataBaseFiller {
 	// this method will be executed everytime the project is deployed
 	// put all entities you want in the database here
 
-	//@PostConstruct
+	@PostConstruct
 	public void init() {
 
 		// Businesses
