@@ -1,6 +1,7 @@
 package pi.HRSmart.interfaces;
 
 import pi.HRSmart.persistence.Quiz;
+import pi.HRSmart.persistence.Skill;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -10,11 +11,13 @@ import java.util.List;
  */
 @Local
 public interface IQuizServiceLocal {
-    void add(Quiz quiz);
-    void update(Quiz quiz);
+    Quiz add(Quiz quiz);
+    Quiz update(Quiz quiz);
     void remove(Quiz quiz);
     Quiz get(int id);
     List<Quiz> all();
     Quiz getWithRelations(int id);
+    void addWithRelation(Quiz quiz);
+    List<Quiz> getQuizBySkill(String skill);
 
 }

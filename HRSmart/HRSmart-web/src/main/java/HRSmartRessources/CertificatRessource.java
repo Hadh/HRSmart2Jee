@@ -80,5 +80,12 @@ public class CertificatRessource {
 				.entity(JsonConverter.ConvertListCertificat(serviceCertificat.getAll())).build();
 
 	}
+	//getCertificatBySkill
+			@GET
+			@Produces(MediaType.APPLICATION_JSON)
+			@Path("byskill/{id}")
+			public Response getCertificatBySkill(@PathParam("id")int id){
+				return Response.status(Response.Status.OK).entity(JsonConverter.ConvertListCertificat(serviceCertificat.getBySkill(id))).build();
+			}
 
 }

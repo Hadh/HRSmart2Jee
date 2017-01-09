@@ -6,50 +6,58 @@ import pi.HRSmart.interfaces.IQuizServiceLocal;
 import pi.HRSmart.persistence.Assessment;
 import pi.HRSmart.persistence.Question;
 import pi.HRSmart.persistence.Quiz;
+import pi.HRSmart.persistence.Skill;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by alaa on 19/10/16.
  */
-@Stateless
+@Stateful
 public class QuizService implements IQuizServiceLocal{
 
     @EJB(beanName = "AssessmentService")
     IAssessmentServiceLocal AssessmentService;
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     EntityManager em;
 
 
     @Override
-    public void add(Quiz quiz) {
+    public Quiz add(Quiz quiz) {
         em.persist(quiz);
+        em.refresh(quiz);
+        return quiz;
     }
 
     @Override
-    public void update(Quiz quiz) {
-        em.merge(quiz);
+    public Quiz update(Quiz quiz) {
+       return em.merge(quiz);
     }
 
     @Override
     public void remove(Quiz quiz) {
+
         em.remove(em.merge(quiz));
+        all();
     }
 
     @Override
     public Quiz get(int id) {
-        return em.find(Quiz.class, id);
+        Quiz quiz = em.find(Quiz.class,id);
+
+
+        return quiz;
     }
 
     @Override
+
     public List<Quiz> all() {
         Query query = em.createQuery("select q from Quiz q");
         return (ArrayList<Quiz>)query.getResultList();
@@ -62,4 +70,20 @@ public class QuizService implements IQuizServiceLocal{
 
         return quiz;
     }
+
+    @Override
+    public void addWithRelation(Quiz quiz) {
+
+    }
+
+    @Override
+    public List<Quiz> getQuizBySkill(String skill) {
+
+        Query q = em.createQuery("select q from Quiz q join q.questions qu join qu.skill s where s.name=:skillname")
+                .setParameter("skillname", skill);
+
+        return (ArrayList<Quiz>) q.getResultList();
+    }
+
+
 }

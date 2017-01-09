@@ -22,40 +22,43 @@ public class QuizRessource {
     QuestionRessource questionRessource;
 
     @GET
+    //@Produces(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response getQuizz(@PathParam(value = "id")int id){
-        Quiz quiz = new Quiz();
-        quiz =  quizService.getWithRelations(id);
-        return Response.status(Response.Status.FOUND)
-                .entity(JsonConverter.mainNode()
-                        .put("quiz",JsonConverter.ConvertQuiz(quiz)).toString()
-                ).build();
+    public String getQuizz(@PathParam("id")int id){
+
+        Quiz quiz =  quizService.get(id);
+        return JsonConverter.ConvertQuiz(quiz).toString();
     }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response index(){
-        return Response.status(Response.Status.FOUND)
-                .entity(quizService.all()).build();
+    public String GetQuizBySkill(@QueryParam(value="skill") String skill){
+        List<Quiz> quizs = new ArrayList<>();
+        if (skill != null)
+           quizs  = quizService.getQuizBySkill(skill);
+        else
+            quizs = quizService.all();
+
+        return JsonConverter.ConvertQuiz(quizs).toString();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Quiz quiz){
-        quizService.add(quiz);
-        if(quiz.getQuestions() != null){
-            quiz.getQuestions().stream().forEach(question -> {
-                questionRessource.add(question);
-            });
-        }
-        return Response.status(Response.Status.OK).build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public String add(Quiz quiz){
+        Quiz q =  quizService.add(quiz);
+        return JsonConverter.ConvertQuiz(q).toString();
     }
 
-    /*@PUT
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Quiz){
+    @Produces(MediaType.APPLICATION_JSON)
+    public String update(Quiz quiz){
+        Quiz q =  quizService.update(quiz);
+        return JsonConverter.ConvertQuiz(q).toString();
+    }
 
-    }*/
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id")int id){

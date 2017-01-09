@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import pi.HRSmart.persistence.User;
+import pi.HRSmart.persistence.UserBuisness;
 
 @Local
 public interface UserServiceLocal {
@@ -21,4 +22,6 @@ public interface UserServiceLocal {
 	public String addUser(User user);
 	public List<User> getUserByBuisness(int idBuisness);
 	public List<User> getAll() ;
+	public User TokenToUser(String token);
+    public UserBuisness GetCurrentUserBusiness(User user) ;
 }

@@ -36,7 +36,7 @@ public class Question implements Serializable{
     public void setBody(String body) {
         this.body = body;
     }
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne
     public Skill getSkill() {
         return skill;
     }
@@ -45,7 +45,7 @@ public class Question implements Serializable{
         this.skill = skill;
     }
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     public List<Choice> getChoices() {
         return choices;
     }

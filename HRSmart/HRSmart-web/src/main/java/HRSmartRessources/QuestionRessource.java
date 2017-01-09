@@ -10,9 +10,11 @@ import pi.HRSmart.services.SkillService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by alaa on 01/11/16.
@@ -28,76 +30,47 @@ public class QuestionRessource {
     @EJB(beanName = "SkillService")
     SkillServiceLocal SkillService;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response index(){
-        return Response.status(Response.Status.OK)
-                .entity(
-                        JsonConverter.mainNode()
-                        .put("questions", JsonConverter.convertQuestion(questionService.all()))
-                        .toString()
-                ).build();
-    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Response get(@PathParam(value = "id") int id){
-        try{
-            System.out.println("Gettng the entity");
-            System.out.println(questionService.get(id));
+    public String get(@PathParam(value = "id") int id){
+        return JsonConverter.convertQuestion(questionService.get(id)).toString();
+    }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
 
-            return Response.status(Response.Status.FOUND)
-                    .entity(
-                            JsonConverter.mainNode()
-                                    .put("question",JsonConverter.convertQuestion(questionService.get(id))).toString()
-                    ).build();
-        }catch(Exception e){
-            System.out.println("=================================================");
-            System.out.println(e.getMessage());
-            System.out.println("=================================================");
-            System.out.println(e.getCause());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-
+    public String get(@QueryParam(value = "skill") String skill){
+        List<Question> questions;
+        if(skill !=null)
+            return JsonConverter.convertQuestion(questionService.getBySkill(skill)).toString();
+        return JsonConverter.convertQuestion(questionService.all()).toString();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(Question question){
-        questionService.add(question);
-        questionService.update(question);
-        try{
-            if(question.getChoices() != null){
-                for (Choice choice: question.getChoices()){
-                    ChoiceService.add(choice);
-                }
-            }
-            return Response.status(Response.Status.OK).build();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+    @Produces(MediaType.APPLICATION_JSON)
+    public String add(Question question){
+        Question q = questionService.add(question);
 
+        return JsonConverter.convertQuestion(q).toString();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(Question question){
-        questionService.update(question);
-        if(question.getChoices() != null){
-            for (Choice choice: question.getChoices()){
-                ChoiceService.update(choice);
-            }
-        }
-        return Response.status(Response.Status.OK).build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public String update(Question question){
+        Question q = questionService.update(question);
+
+        return JsonConverter.convertChoices(q.getChoices()).toString();
     }
 
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") int id){
-        questionService.remove(questionService.get(id));
-        return Response.status(Response.Status.OK).build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public String delete(@PathParam("id") int id){
+        List<Question> q = questionService.remove(questionService.get(id));
+        return JsonConverter.convertQuestion(q).toString();
     }
 
 

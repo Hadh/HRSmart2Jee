@@ -161,8 +161,8 @@ public class JsonConverter {
 				ObjectNode skillnode = mapper.createObjectNode();
 				skillnode.put("id", us.getSkill().getId());
 				skillnode.put("name", us.getSkill().getName());
-				skillnode.put("level",us.getLevel());
-
+				userSkill.add(skillnode);
+				userSkill.add(us.getLevel());
 				ArrayNode certifs = mapper.createArrayNode();
 				for (Certificat c : us.getCertificats()) {
 					ObjectNode cert = mapper.createObjectNode();
@@ -488,8 +488,12 @@ public class JsonConverter {
 			buisness.put("id", ub.getBuisness().getId());
 			buisness.put("name", ub.getBuisness().getName());
 			ObjectNode id = mapper.createObjectNode();
-			id.put("buisnesses", buisness);
-			id.put("user", ub.getUser().getId());
+			id.put("buisness", buisness);
+			ObjectNode user = mapper.createObjectNode();
+			user.put("id", ub.getUser().getId());
+			user.put("firstName", ub.getUser().getFirstName());
+			user.put("lastName", ub.getUser().getLastName());
+			id.put("user", user);
 			userBuisness.put("id", id);
 			userBuisness.put("role", ub.getRole());
 			userBuisness.put("hireDate", ub.getHireDate().toString());
@@ -533,6 +537,14 @@ public class JsonConverter {
 		qs.put("body", question.getBody());
 
 		return qs;
+	}
+	public static ObjectNode convertSkill(Skill skill){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode s = mapper.createObjectNode();
+		s.put("id",skill.getId());
+		s.put("name",skill.getName());
+
+		return s;
 	}
 
 	public static ObjectNode convertChoice(Choice choice){
@@ -697,36 +709,47 @@ public class JsonConverter {
 		grand.put("skills", SkillArray);
 		return grand.toString();
 	}
-    public static ArrayNode ConvertQuiz(ArrayList <Quiz> quizs){
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode qzs = mapper.createArrayNode();
-        quizs.stream().forEach(quiz -> {
-            qzs.add(ConvertQuiz(quiz));
-        });
-        return qzs;
-    }
-    public static ObjectNode ConvertQuiz(Quiz quiz) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode quizz = mapper.createObjectNode();
-        quizz.put("id", quiz.getId());
-        quizz.put("duration", quiz.getDuration());
-        quizz.put("description", quiz.getDescription());
-        quizz.put("questions", convertQuestion(quiz.getQuestions()));
-        return quizz;
-    }
-    
-    public static ArrayNode convertSkillList(List<Skill> list){
-    	
-    	 ObjectMapper mapper = new ObjectMapper();
-    	 ArrayNode skills = mapper.createArrayNode();
-    	 for (Skill s : list) {
-         ObjectNode skill = mapper.createObjectNode();
-         skill.put("id", s.getId());
-         skill.put("name", s.getName());
-         skills.add(skill);
-    	 }
-    	 return skills;
-    }
 
-    
+	public static ArrayNode ConvertQuiz(List<Quiz> quizs) {
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode qzs = mapper.createArrayNode();
+		quizs.stream().forEach(quiz -> {
+			qzs.add(ConvertQuiz(quiz));
+		});
+		return qzs;
+	}
+
+	public static ObjectNode ConvertQuiz(Quiz quiz) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode quizz = mapper.createObjectNode();
+		quizz.put("id", quiz.getId());
+		quizz.put("duration", quiz.getDuration());
+		quizz.put("description", quiz.getDescription());
+		quizz.put("questions", convertQuestion(quiz.getQuestions()));
+		return quizz;
+	}
+
+	public static ObjectNode UserMinNode(User u) {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode user = mapper.createObjectNode();
+		user.put("id", u.getId());
+		user.put("email", u.getLogin());
+		user.put("firstName", u.getFirstName());
+		user.put("lastName", u.getLastName());
+		return user;
+	}
+
+	public static ArrayNode convertSkillList(List<Skill> list) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode skills = mapper.createArrayNode();
+		for (Skill s : list) {
+			ObjectNode skill = mapper.createObjectNode();
+			skill.put("id", s.getId());
+			skill.put("name", s.getName());
+			skills.add(skill);
+		}
+		return skills;
+	}
+
 }

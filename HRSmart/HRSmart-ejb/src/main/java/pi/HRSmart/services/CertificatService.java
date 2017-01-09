@@ -76,7 +76,7 @@ public class CertificatService implements CertificatServiceLocal {
 		 return (List<Certificat>) query.getResultList();
 	}
 
-	
+
 	
 	
 

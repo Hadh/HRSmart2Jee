@@ -65,9 +65,9 @@ public class Quiz implements Serializable{
         this.description = descrption;
     }
 
-    @ManyToMany
+    @ManyToMany/*(fetch = FetchType.EAGER)*/
     public List<Question> getQuestions() {
-        return questions;
+        return this.questions;
     }
 
     public void setQuestions(List<Question> questions) {

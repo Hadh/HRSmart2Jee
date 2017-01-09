@@ -11,9 +11,9 @@ import java.util.List;
 @Local
 public interface IChoiceServiceLocal {
 
-    void add(Choice choice);
-    void update(Choice choice);
-    void remove(Choice choice);
+    Choice add(Choice choice);
+    Choice update(Choice choice);
+    List<Choice> remove(Choice choice);
     Choice get(int id);
     List<Choice> all();
     List<Choice> getMultiple(int[] ids);
