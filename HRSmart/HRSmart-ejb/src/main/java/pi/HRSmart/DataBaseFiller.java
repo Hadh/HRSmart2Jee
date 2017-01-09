@@ -283,6 +283,7 @@ public class DataBaseFiller {
 		Postulation p = new Postulation();
 		p.setPostulant(user1);
 		p.setReward(em.merge(re));
+		p.setDatePostulation(new Date());
 		em.persist(p);
 
 		// :3 hhhh

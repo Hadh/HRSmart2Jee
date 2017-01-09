@@ -19,5 +19,6 @@ public interface PostulationServiceLocal {
     List<Postulation> filterPostulationsByQuizResult(int threshold, Skill sk);
     List<Assessment> getPostulationResults(Postulation ps);
     Postulation getPostulationByUser(int idUser);
+    List<Postulation> getAllByUser(int idUser);
 
 }

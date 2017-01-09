@@ -1,10 +1,11 @@
 package pi.HRSmart.services;
 
+import pi.HRSmart.interfaces.JobOfferServiceLocal;
 import pi.HRSmart.interfaces.PostulationServiceLocal;
-import pi.HRSmart.persistence.Assessment;
-import pi.HRSmart.persistence.Postulation;
-import pi.HRSmart.persistence.Skill;
+import pi.HRSmart.interfaces.UserServiceLocal;
+import pi.HRSmart.persistence.*;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +23,11 @@ public class PostulationService implements PostulationServiceLocal {
 
     @PersistenceContext(unitName = "HRSmart-ejb")
     EntityManager em;
+    @EJB(beanName = "UserService")
+    UserServiceLocal userServiceLocal;
+
+    @EJB(beanName = "JobOfferService")
+    JobOfferServiceLocal jobOfferServiceLocal;
 
     public PostulationService() {
         // TODO Auto-generated constructor stub
@@ -80,6 +86,28 @@ public class PostulationService implements PostulationServiceLocal {
         Query query =  em.createQuery("select p from Postulation p where p.postulant.id=:id");
         query.setParameter("id",idUser);
         return (Postulation) query.getSingleResult();
+    }
+
+    @Override
+    public List<Postulation> getAllByUser(int idUser) {
+        Query query =  em.createQuery("select p from Postulation p where p.postulant.id=:id");
+        query.setParameter("id",idUser);
+        User u = userServiceLocal.getFull(idUser);
+
+
+        List<Postulation> ps= (List<Postulation>) query.getResultList();
+        for(Postulation p : ps){
+            p.setPostulant(u);
+            int jobofferid= p.getReward().getJobOffer().getId();
+            JobOffer jo = jobOfferServiceLocal.getFull(jobofferid);
+            Rewards r = p.getReward();
+            r.setJobOffer(jo);
+            p.setReward(r);
+
+        }
+
+
+        return ps;
     }
 
 
